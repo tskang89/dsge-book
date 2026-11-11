@@ -48,6 +48,8 @@ python3 motion/tools/unlock_book.py DSGE_book_source.html $SCRATCH/book
 
 ### 구성 원칙 (사용자 피드백으로 확정된 것)
 1. **도입과 연결**: 타이틀 → “제(N-1)장 돌아보기”(앞 장 핵심을 한 장면으로 되짚고 “이 장부터 …”로 넘기기) → “이 장에서 다루는 것” 로드맵(번호 카드) 순으로 시작하고, 맺음말·다음 장 예고로 끝낸다.
+   마지막 장면(outro)은 시작 화면처럼 보이지 않게 “— 제N장 끝 —” 표시 + 장 제목 + “다음: 제(N+1)장 …” 과
+   마무리 자막(“이것으로 제N장을 마칩니다. 다음 장에서는 …”)을 넣고, 끝에서 화면을 서서히 어둡게 한다(자막은 빈 칸으로 끝냄).
    앞 장 영상의 마지막 예고 문장과 이 장의 첫 연결 문장이 서로 맞물리게 쓴다. 다른 장의 초안이 다른 브랜치에 있을 수 있으니
    `git ls-remote --heads origin` 과 `git ls-tree -r --name-only origin/<브랜치> | grep motion` 으로 먼저 찾아 내용을 확인한다
    (복호화: `motion/tools/unlock_book.py` 의 `unlock_page`).
