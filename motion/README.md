@@ -14,4 +14,4 @@
 
 작업 절차와 규칙은 `.claude/skills/dsge-motion/SKILL.md` 에 있다. 암호는 저장소에 두지 않으며 `DSGE_PW` 환경변수로만 쓴다.
 
-완성된 장: 제2장 기본 RBC 모형 → `/RBC_ch2_motion.html`, 제3장 Dynare를 이용한 모형 풀이 → `/Dynare_ch3_motion.html`, 제4장 베이지안 추정 → `/Bayesian_ch4_motion.html`
+완성된 장: 제2장 기본 RBC 모형 → `/RBC_ch2_motion.html`, 제3장 Dynare를 이용한 모형 풀이 → `/Dynare_ch3_motion.html`, 제4장 베이지안 추정 → `/Bayesian_ch4_motion.html`, 제5장 가격 경직성 → `/PriceRigidity_ch5_motion.html`, 제6장 뉴케인지안 3방정식 모형 → `/ThreeEquation_ch6_motion.html`
