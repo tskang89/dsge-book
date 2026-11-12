@@ -1,13 +1,14 @@
 ---
 name: dsge-motion
-description: 『동태 확률 일반균형 모형』 교재의 장(章)별 모션 그래픽(자막이 붙은 애니메이션 해설 영상, 암호화된 HTML)을 만들거나 고칠 때 쓴다. "제N장 모션 그래픽 만들어줘", "모션 그래픽 수정", "영상에 장면 추가" 같은 요청이면 먼저 이 스킬을 따른다.
+description: 『동태 확률 일반균형 모형』 교재의 장(章)별 모션 그래픽(자막이 붙은 애니메이션 해설 영상, 암호 없는 HTML)을 만들거나 고칠 때 쓴다. "제N장 모션 그래픽 만들어줘", "모션 그래픽 수정", "영상에 장면 추가" 같은 요청이면 먼저 이 스킬을 따른다.
 ---
 
 # 교재 장별 모션 그래픽 제작
 
-제2장(기본 RBC 모형)에서 확립한 방식이다. 결과물은 저장소 루트의 암호화된 HTML 한 파일
+제2장(기본 RBC 모형)에서 확립한 방식이다. 결과물은 저장소 루트의 HTML 한 파일
 (예: `RBC_ch2_motion.html`)이며 GitHub Pages(`https://tskang89.github.io/dsge-book/<파일>`)로 공개된다.
-교재 원문은 암호로 보호되어 있으므로 **교재 내용이 담긴 평문은 절대 커밋하지 않는다.**
+**공개 파일(`*_motion.html`)에는 암호를 걸지 않는다**(모든 장, 저장소 소유자 지시).
+교재 원문과 장면 원본은 암호로 보호하므로 **교재 원문·장면 원본(`scenes.js`) 평문은 커밋하지 않는다**(장면은 `scenes.js.enc` 로만).
 
 **시각 규칙은 저장소 루트의 `style-guide.md` 를 따른다**(짙은 남색 배경, 금색·하늘색 강조, Pretendard,
 0.5초 ease-in-out 전환, 수식은 한 줄씩 왼→오로 써짐, 곡선은 왼→오로 그려짐). 작업 전에 반드시 읽는다.
@@ -91,9 +92,9 @@ node motion/tools/check.js $SCRATCH/out.html $SCRATCH/chk      # 장면별 캡�
 
 ```bash
 python3 motion/tools/secret.py enc $SCRATCH/scenes.js motion/chapters/chNN/scenes.js.enc   # 장면 원본(암호화)
-python3 motion/tools/publish.py $SCRATCH/out.html <이름>_motion.html "제N장 … — 모션 그래픽"  # 루트에 암호 페이지
+python3 motion/tools/publish.py $SCRATCH/out.html <이름>_motion.html   # 루트에 공개(암호 없음)
 ```
-- `publish.py` 는 루트 `index.html` 의 암호 화면을 틀로 쓰고 복호화 검증까지 한다.
+- `publish.py` 는 빌드 결과를 그대로 루트에 복사한다(암호 없음). 예전 암호 페이지는 `--unlock <파일>` 로 평문화.
 - 사용자에게 미리보기를 줄 때는 Artifact 로 게시(같은 file_path 로 재게시하면 링크 유지).
 - `index.html` 은 사이트 갱신 스크립트가 다시 만드므로 수정하지 않는다(목차 링크는 사용자가 스크립트에서 추가).
 
@@ -112,9 +113,9 @@ python3 motion/tools/publish.py $SCRATCH/out.html <이름>_motion.html "제N장 
 python3 motion/tools/secret.py dec motion/chapters/chNN/scenes.js.enc $SCRATCH/chNN.js
 python3 motion/tools/build.py $SCRATCH/chNN.js $SCRATCH/chNN.html --title "<기존 <title>>"
 node motion/tools/check.js $SCRATCH/chNN.html $SCRATCH/chkNN
-python3 motion/tools/publish.py $SCRATCH/chNN.html <이름>_motion.html "<기존 암호 화면 제목>"
+python3 motion/tools/publish.py $SCRATCH/chNN.html <이름>_motion.html
 ```
-| 장 | 공개 파일 | `--title` | 암호 화면 제목 |
+| 장 | 공개 파일 | `--title` | (예전 암호 화면 제목) |
 |---|---|---|---|
 | 1 | `Overview_ch1_motion.html` | 제1장 DSGE 개관 모션 그래픽 | 제1장 DSGE 모형 개관 — 모션 그래픽 |
 | 2 | `RBC_ch2_motion.html` | 제2장 RBC 모션 그래픽 | 제2장 기본 RBC 모형 — 모션 그래픽 |
@@ -124,6 +125,7 @@ python3 motion/tools/publish.py $SCRATCH/chNN.html <이름>_motion.html "<기존
 | 6 | `ThreeEquation_ch6_motion.html` | 제6장 뉴케인지안 3방정식 모형 모션 그래픽 | 제6장 뉴케인지안 3방정식 모형 — 모션 그래픽 |
 | 7 | `OptimalPolicy_ch7_motion.html` | 제7장 최적 통화정책 모션 그래픽 | 제7장 최적 통화정책 — 모션 그래픽 |
 | 8 | `TwoCountry_ch8_motion.html` | 제8장 두국가 모형 모션 그래픽 | 제8장 두국가 모형 — 모션 그래픽 |
+| 9 | `SmallOpenEconomy_ch9_motion.html` | 제9장 소규모 개방경제 모형 모션 그래픽 | — |
 
 ## 부록: 음성(요청 시에만)
 제2장에서 오프라인 한국어 TTS 를 검증했다: sherpa-onnx(`pip install sherpa-onnx`) +
