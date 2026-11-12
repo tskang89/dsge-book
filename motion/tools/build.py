@@ -3,8 +3,10 @@
 
   python3 motion/tools/build.py 장면.js 출력.html --title "제3장 ... 모션 그래픽" [--audio 내레이션.m4a]
 
-- KaTeX(npm, motion/node_modules)와 폰트(KaTeX woff2, Noto Sans/Serif CJK KR 부분집합)를 모두 내장한다.
-- 한글 폰트는 apt 의 fonts-noto-cjk 에서 가져와 원본에 쓰인 글자만 남긴다.
+- KaTeX(npm, motion/node_modules)와 폰트(KaTeX woff2, Pretendard 부분집합)를 모두 내장한다.
+- 본문 글꼴은 Pretendard(npm `pretendard`, OFL-1.1)이며 원본에 쓰인 글자만 남긴다.
+  Pretendard 에 없는 기호(①, ⟹ 등)만 apt 의 fonts-noto-cjk 에서 보충 글꼴(KFall)로 내장한다.
+- 스타일 규칙은 저장소 루트의 style-guide.md 를 따른다.
 - --audio 를 주지 않으면 음성 트랙 없이(자막만) 만든다. 기본은 음성 없음.
 """
 import argparse, base64, io, os, re, sys
@@ -14,10 +16,11 @@ from fontTools.ttLib import TTFont
 HERE = os.path.dirname(os.path.abspath(__file__))
 MOTION = os.path.dirname(HERE)
 NOTO = "/usr/share/fonts/opentype/noto/"
+PRET = os.path.join(MOTION, "node_modules", "pretendard", "dist", "public", "static")
 
 
 def subset_font(path, text):
-    f = TTFont(path, fontNumber=1)  # TTC 안의 1번 = KR
+    f = TTFont(path, fontNumber=1) if path.endswith(".ttc") else TTFont(path)  # TTC 안의 1번 = KR
     o = subset.Options(); o.flavor = "woff2"; o.layout_features = ["*"]; o.name_IDs = ["*"]
     s = subset.Subsetter(o); s.populate(text=text); s.subset(f)
     b = io.BytesIO(); f.flavor = "woff2"; f.save(b)
@@ -36,11 +39,17 @@ def main():
     src = tpl.replace("/*@@SCENES@@*/", sc).replace("@@TITLE@@", a.title)
 
     text = "".join(sorted(set(src) | {chr(i) for i in range(32, 127)} | set("·—–→⟹…“”‘’①②③④⑤⚡✓✗⚖▶❚")))
+    if not os.path.isdir(PRET):
+        sys.exit("motion/ 에서 `npm ci` 로 Pretendard 를 먼저 설치하세요.")
+    face = '@font-face{font-family:"%s";font-weight:%d;font-display:block;src:url(data:font/woff2;base64,%s) format("woff2")}\n'
     ff = ""
-    for fam, w, p in [("KSans", 400, "NotoSansCJK-Regular.ttc"), ("KSans", 700, "NotoSansCJK-Bold.ttc"),
-                      ("KSerif", 700, "NotoSerifCJK-Bold.ttc")]:
-        ff += '@font-face{font-family:"%s";font-weight:%d;font-display:block;src:url(data:font/woff2;base64,%s) format("woff2")}\n' % (
-            fam, w, subset_font(NOTO + p, text))
+    for w, p in [(400, "Pretendard-Regular.otf"), (700, "Pretendard-Bold.otf")]:
+        ff += face % ("Pretendard", w, subset_font(os.path.join(PRET, p), text))
+    cmap = TTFont(os.path.join(PRET, "Pretendard-Regular.otf")).getBestCmap()
+    rest = "".join(ch for ch in text if ord(ch) not in cmap and ord(ch) > 32)
+    if rest:
+        for w, p in [(400, "NotoSansCJK-Regular.ttc"), (700, "NotoSansCJK-Bold.ttc")]:
+            ff += face % ("KFall", w, subset_font(NOTO + p, rest))
 
     kd = os.path.join(MOTION, "node_modules", "katex", "dist")
     if not os.path.isdir(kd):
@@ -49,7 +58,7 @@ def main():
     css = re.sub(r'src:url\(fonts/([^)]+\.woff2)\) format\("woff2"\)[^;}]*;?',
                  lambda m: 'src:url(data:font/woff2;base64,%s) format("woff2");' % base64.b64encode(
                      open(os.path.join(kd, "fonts", m.group(1)), "rb").read()).decode(), css)
-    css += '\n.katex{font-family:KaTeX_Main,"KSans","Noto Sans CJK KR",serif}'
+    css += '\n.katex{font-family:KaTeX_Main,"Pretendard","KFall",serif}'
     js = open(os.path.join(kd, "katex.min.js"), encoding="utf-8").read()
 
     out = src.replace("/*@@FONTS@@*/", ff).replace("/*@@KATEXCSS@@*/", css).replace("/*@@KATEXJS@@*/", js)

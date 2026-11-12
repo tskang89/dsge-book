@@ -10,8 +10,9 @@
 /*@@KATEXCSS@@*/
 :root{--bg:#111a2b;--bg2:#18233a;--card:#1c2840;--ink:#ece6d6;--muted:#9aa3b5;--dim:#5f6a80;
   --gold:#d8b76a;--gold2:#c9a75c;--blue:#7fb3e6;--teal:#6fcfb7;--red:#e88a6f;--rule:#2f3a52;
-  --sans:"KSans","Noto Sans KR","Noto Sans CJK KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
-  --serif:"KSerif","Noto Serif KR","Noto Serif CJK KR",Georgia,serif}
+  --sans:"Pretendard","KFall","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --serif:var(--sans);
+  --dur:.5s;--ease:cubic-bezier(.65,0,.35,1)}
 *{box-sizing:border-box}
 html,body{margin:0;height:100%;background:#0a0f1a;color:var(--ink);font-family:var(--sans);overflow:hidden}
 #wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
@@ -87,9 +88,14 @@ function M(parent,x,y,tex,cls,css){return A(parent,x,y,K(tex,false),cls||"eq",cs
 function S(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e}
 function LY(p){return E("div","a",null,{left:"0px",top:"0px",width:W+"px",height:H+"px"},p)}
 function svgLayer(parent){return S("svg",{width:W,height:H,viewBox:`0 0 ${W} ${H}`,style:"position:absolute;left:0;top:0;overflow:visible"},parent)}
-/* 등장/퇴장: opacity + 이동 */
-function ap(el,lt,a,b,o){o=o||{};const d=o.d||.7,dy=o.dy==null?28:o.dy,dx=o.dx||0;
-  let u=eout((lt-a)/d);if(b!=null)u=Math.min(u,1-ease((lt-b)/(o.od||.6)));
+/* 등장/퇴장 (style-guide.md): 일반 요소 = 0.5초 ease-in-out 페이드+이동,
+   수식 요소(.katex 포함, 카드 제외) = 왼쪽→오른쪽으로 써지듯 등장(0.8초 ease-in-out) */
+const TR=.5,TR_EQ=.8;
+function isEq(el){if(el._eq==null)el._eq=!!el.querySelector(".katex")&&!el.classList.contains("card")&&!el.querySelector(".card");return el._eq}
+function ap(el,lt,a,b,o){o=o||{};const eq=isEq(el)&&!o.fade,d=o.d||(eq?TR_EQ:TR),dy=o.dy==null?28:o.dy,dx=o.dx||0;
+  const ui=ease((lt-a)/d),uo=b!=null?1-ease((lt-b)/(o.od||TR)):1;let u=Math.min(ui,uo);
+  if(eq){el.style.clipPath=ui>=1?"none":`inset(-80px ${(1-ui)*100}% -80px -80px)`;el.style.opacity=uo*Math.min(1,ui*4);el.style.transform="none";
+    el.style.visibility=u<=0.001?"hidden":"visible";return u}
   el.style.opacity=u;const s=o.s?lerp(o.s,1,u):1;
   el.style.transform=`translate(${(1-u)*dx}px,${(1-u)*dy}px) scale(${s})`;el.style.visibility=u<=0.001?"hidden":"visible";return u}
 function wipe(el,lt,a,d){const u=ease((lt-a)/(d||1.2));el.style.clipPath=`inset(-20px ${100-u*100}% -20px -20px)`;el.style.opacity=u>0?1:0;return u}
@@ -120,10 +126,10 @@ SC.forEach(s=>{if(s.start>0){E("div","tick",null,{left:(s.start/TOTAL*100)+"%"},
 let lastCap=null;
 function renderAt(T){T=clamp(T,0,TOTAL-0.001);
   for(const s of SC){const lt=T-s.start;if(lt<0||lt>=s.dur){s.el.style.display="none";continue}
-    s.el.style.display="block";s.el.style.opacity=Math.min(clamp(lt/.5),clamp((s.dur-lt)/.5));s.update(s.ctx,lt);
+    s.el.style.display="block";s.el.style.opacity=Math.min(ease(lt/TR),ease((s.dur-lt)/TR));s.update(s.ctx,lt);
     let k=0;for(let i=0;i<s.caps.length;i++)if(lt>=s.caps[i][0])k=i;const key=s.id+k;
     if(key!==lastCap){capEl.innerHTML=s.capH[k];lastCap=key}
-    const ce=s.caps[k+1]?s.caps[k+1][0]:s.dur;const co=Math.min(clamp((lt-s.caps[k][0])/.35),clamp((ce-lt)/.35));
+    const ce=s.caps[k+1]?s.caps[k+1][0]:s.dur;const co=Math.min(ease((lt-s.caps[k][0])/TR),ease((ce-lt)/TR));
     capEl.parentNode.style.opacity=s.capH[k]?co:0}
   progF.style.width=(T/TOTAL*100)+"%"}
 window.renderAt=renderAt;window.TOTAL=TOTAL;
