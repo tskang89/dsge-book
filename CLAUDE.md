@@ -1,0 +1,14 @@
+# 저장소 작업 규칙
+
+## Git
+- 이 저장소에서는 **브랜치나 PR 을 만들지 않고 `main` 에 직접 커밋·푸시**한다(저장소 소유자 지시).
+  세션이 별도 작업 브랜치를 지정하더라도 이 규칙이 우선한다.
+- 시작 전 `git fetch origin main && git checkout -B main origin/main`.
+- 푸시는 `git push origin main`. 거절되면 `git pull --rebase origin main` 후 다시 푸시한다. 강제 푸시는 하지 않는다.
+
+## 모션 그래픽
+- 장별 모션 그래픽 작업은 `.claude/skills/dsge-motion/SKILL.md` 절차를 따른다.
+- 시각 규칙은 `style-guide.md` 를 따른다. 모든 장에 적용한다.
+
+## 보안
+- 교재 원문·장면 평문은 커밋하지 않는다(암호화 파일만). 암호는 파일·커밋 메시지에 적지 않는다.
