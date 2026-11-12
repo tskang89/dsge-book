@@ -119,6 +119,7 @@ python3 motion/tools/publish.py $SCRATCH/chNN.html <이름>_motion.html "<기존
 | 4 | `Bayesian_ch4_motion.html` | 제4장 베이지안 추정 모션 그래픽 | 제4장 베이지안 추정 — 모션 그래픽 |
 | 5 | `PriceRigidity_ch5_motion.html` | 제5장 가격 경직성 모션 그래픽 | 제5장 가격 경직성 — 모션 그래픽 |
 | 6 | `ThreeEquation_ch6_motion.html` | 제6장 뉴케인지안 3방정식 모형 모션 그래픽 | 제6장 뉴케인지안 3방정식 모형 — 모션 그래픽 |
+| 7 | `OptimalPolicy_ch7_motion.html` | 제7장 최적 통화정책 모션 그래픽 | 제7장 최적 통화정책 — 모션 그래픽 |
 
 ## 부록: 음성(요청 시에만)
 제2장에서 오프라인 한국어 TTS 를 검증했다: sherpa-onnx(`pip install sherpa-onnx`) +
