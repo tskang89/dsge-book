@@ -2,7 +2,8 @@ from manim import *
 import json, manimpango, numpy as np
 from scipy.interpolate import PchipInterpolator
 from scipy.stats import gaussian_kde, beta as BETA
-F="/home/user/dsge-book/motion/node_modules/pretendard/dist/public/static/"
+import os
+F=os.path.join(os.path.dirname(os.path.abspath(__file__)),"..","node_modules","pretendard","dist","public","static","")
 for w in ["Regular","SemiBold","Bold","Light","ExtraBold"]: manimpango.register_font(F+f"Pretendard-{w}.otf")
 BG="#111a2b";YEL="#F4D345";BLU="#58C4DD";GRN="#83C167";RED="#FC6255";INK="#ECE6D6";MUT="#8b95a8";GR="#2e3a52";AXC="#5f6a80"
 config.background_color=BG

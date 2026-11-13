@@ -1,0 +1,5 @@
+# 표지·그래프 클립용 Manim 환경 (venv: /opt/mvenv). LaTeX 없이 Text(Pretendard)만 쓴다.
+manim==0.22.1
+global-land-mask==1.0.0
+scipy
+numpy

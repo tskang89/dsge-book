@@ -17,9 +17,10 @@ description: 『동태 확률 일반균형 모형』 교재의 장(章)별 모�
 ## 0. 준비 (세션마다)
 
 ```bash
-apt-get update && apt-get install -y fonts-noto-cjk   # 보충 기호 글꼴(빌드 시 부분집합으로 내장)
-cd motion && npm ci && pip install fonttools brotli cryptography   # npm ci 가 KaTeX 와 Pretendard 를 설치
+bash motion/tools/setup_env.sh   # 멱등. 클라우드 환경 설정 스크립트가 이미 돌렸으면 즉시 끝난다
 ```
+설치되는 것: 보충 기호 글꼴(fonts-noto-cjk), ffmpeg, KaTeX·Pretendard(`npm ci`), fonttools·brotli·cryptography·statsmodels,
+**Dynare 6 + Octave**(교재 .mod 직접 실행), **Manim CE 0.22**(venv `/opt/mvenv`, LaTeX 없음).
 
 - 암호는 **사용자에게 받아** `export DSGE_PW=...` 로만 쓴다. 파일·커밋 메시지·PR에 적지 않는다.
 - 작업 파일(원고, 평문 장면, 빌드 결과, 캡처)은 전부 스크래치 폴더에 둔다.
@@ -70,7 +71,13 @@ python3 motion/tools/unlock_book.py DSGE_book_source.html $SCRATCH/book
    곡선을 경계값으로 잘라(clamp) 생기는 가짜 수평선 금지 → SVG clipPath 로 자른다. 모의 경로는 표본 평균이 0 근처인 시드를 고른다.
 7. **한 화면에 하나의 핵심**: 내용이 많으면 장면을 나눈다. 요소끼리·자막과 겹치지 않게 한다.
 8. **음성 내레이션은 넣지 않는다**(사용자가 요청할 때만, 아래 부록).
-9. 수치는 원고 모수로 직접 계산해 검산한다(정상상태 값 등).
+9. 수치는 원고 모수로 직접 계산해 검산한다(정상상태 값 등). **충격반응·정상상태는 교재 .mod 를 Dynare 로 직접 풀어 쓴다**:
+   `python3 motion/tools/dyn_irf.py $SCRATCH/book/Download_Codes/<모형>/<모형>.mod $SCRATCH/irf/chN.json [--set PHIPI=2.5]`
+   → `{"irfs":{"변수_충격":[…]},"ss":{…},"params":{…}}`. 모수를 바꾼 비교(예: φπ, 개방도)도 `--set` 으로 만든다. 결과 JSON 은 커밋하지 않는다.
+10. **움직임이 핵심인 그래프는 Manim 클립**으로 만들어 장면에 영상으로 넣을 수 있다(표지가 예: `motion/covers/`).
+   공통 스타일 `motion/tools/manim_kit.py`(색·Pretendard `T()`·`curve()` 촘촘한 표본화·`ticks()` 눈금·`to_web()` 압축)를 쓴다.
+   LaTeX 가 없으므로 MathTex·DecimalNumber·`numbers_to_include` 는 쓰지 않는다. 실행: `/opt/mvenv/bin/manim -qh …`.
+   장면 삽입 방식은 `motion/covers/apply_cover.py`(영상을 장면 시간에 맞춰 재생·탐색)를 본뜬다. 영상은 30fps·무음·crf 27 로 줄여 넣는다.
 
 ## 3. 빌드 → 점검 (반드시 눈으로 확인)
 

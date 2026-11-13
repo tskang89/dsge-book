@@ -10,7 +10,7 @@
 | 8, 9 | `covers5.py` 의 `G8`, `G9` (세계 지도 기반) |
 
 ```bash
-cd motion/covers   # manim CE 0.22, global_land_mask, Pretendard 글꼴 필요
+cd motion/covers   # bash motion/tools/setup_env.sh 로 준비. manim = /opt/mvenv/bin/manim
 manim -qh --disable_caching -o g8 covers5.py G8
 ffmpeg -i <렌더.mp4> -an -r 30 -c:v libx264 -preset slow -crf 27 -pix_fmt yuv420p -movflags +faststart c8.mp4
 # 장면 원본(복호화한 scenes.js)의 title 장면을 영상으로 바꾼다
