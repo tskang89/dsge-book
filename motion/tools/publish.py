@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """빌드된 모션 그래픽 HTML을 저장소 루트에 공개한다(암호 없음).
 
-  python3 motion/tools/publish.py 빌드.html  RBC_ch2_motion.html
+  python3 motion/tools/publish.py 빌드.html  RBC_ch2_motion.html  [--audio 음성.m4a]
+
+- --audio: 빌드 때 --audio-url <이름>.m4a 로 만든 페이지의 음성 파일을 루트에 같은 이름(<이름>.m4a)으로 둔다.
 
 - 저장소 소유자 지시로 모션 그래픽 공개 파일(`*_motion.html`)에는 암호를 걸지 않는다(모든 장).
   빌드 결과(자기완결 HTML)를 그대로 루트에 복사한다.
@@ -27,6 +29,9 @@ def unlock(name):
 
 def main():
     args = sys.argv[1:]
+    audio = None
+    if "--audio" in args:
+        i = args.index("--audio"); audio = args[i + 1]; del args[i:i + 2]
     if len(args) == 2 and args[0] == "--unlock":
         return unlock(args[1])
     if len(args) not in (2, 3):  # 세 번째 인자(예전 암호 화면 제목)는 무시한다
@@ -37,6 +42,11 @@ def main():
     dst = os.path.join(ROOT, name)
     shutil.copyfile(src, dst)
     print(f"{dst}: {os.path.getsize(dst):,} bytes (암호 없음)")
+    if audio:
+        adst = os.path.join(ROOT, os.path.splitext(name)[0] + ".m4a")
+        assert os.path.basename(adst) in open(dst, encoding="utf-8").read(), "페이지가 이 음성 파일을 부르지 않습니다(--audio-url 확인)."
+        shutil.copyfile(audio, adst)
+        print(f"{adst}: {os.path.getsize(adst)/1e6:.1f} MB")
 
 
 if __name__ == "__main__":

@@ -57,6 +57,7 @@ svg text{font-family:var(--sans)}svg text:not([fill]){fill:var(--ink)}
 #ui{position:fixed;left:0;right:0;bottom:0;display:flex;gap:10px;align-items:center;padding:10px 16px;
   background:linear-gradient(transparent,rgba(0,0,0,.85));opacity:0;transition:opacity .3s;font-size:14px;color:#ddd}
 #wrap:hover~#ui,#ui:hover,#ui.show{opacity:1}
+#ui button.off{background:#3a465e;color:#c9cfdb}
 #ui button{background:#c9a75c;color:#111a2b;border:0;border-radius:3px;padding:7px 14px;font-weight:700;cursor:pointer;font-family:inherit}
 #ui input[type=range]{flex:1;accent-color:#c9a75c;min-width:60px}
 #ui select{background:#1c2840;color:#eee;border:1px solid #2f3a52;border-radius:3px;padding:6px;font-family:inherit;max-width:38vw}
@@ -67,9 +68,9 @@ body.render #ui,body.render #start{display:none}
 </head>
 <body>
 <div id="wrap"><div id="stage"><div id="cap"><div class="in"></div></div><div id="prog"><div class="f"></div></div></div></div>
-<div id="ui"><button id="pp">▶ 재생</button><span id="tm">0:00 / 0:00</span><input id="sk" type="range" min="0" max="1000" value="0" step="1"><select id="ch"></select><button id="fs">전체화면</button></div>
+<div id="ui"><button id="pp">▶ 재생</button><span id="tm">0:00 / 0:00</span><input id="sk" type="range" min="0" max="1000" value="0" step="1"><select id="ch"></select><button id="cc" title="자막 켜기/끄기 (C)">자막</button><button id="fs">전체화면</button></div>
 <audio id="nar" preload="auto" src="@@NARR@@"></audio>
-<div id="start"><div>▶ 재생 (스페이스바: 재생/정지, ←/→: 5초 이동)</div></div>
+<div id="start"><div>▶ 재생 (스페이스바: 재생/정지, ←/→: 5초 이동, C: 자막)</div></div>
 <script>/*@@KATEXJS@@*/</script>
 <script>
 "use strict";
@@ -168,12 +169,18 @@ const nar=document.getElementById("nar");function narSet(){try{if(Math.abs(nar.c
 function setT(x){T=clamp(x,0,TOTAL);T0=T;t0=performance.now();narSet();renderAt(T);sk.value=Math.round(T/TOTAL*1000);tm.textContent=fmt(T)+" / "+fmt(TOTAL);
   let ci=0;SC.forEach((s,i)=>{if(T>=s.start)ci=i});ch.value=ci}
 function play(on){playing=on;if(on){narSet();nar.play().catch(()=>{})}else nar.pause();pp.textContent=on?"❚❚ 정지":"▶ 재생";t0=performance.now();T0=T;document.getElementById("start").style.display="none";if(on)requestAnimationFrame(loop)}
-function loop(){if(!playing)return;if(!nar.paused&&nar.readyState>=2&&nar.currentTime>0){T=nar.currentTime;T0=T;t0=performance.now()}else T=T0+(performance.now()-t0)/1000;if(T>=TOTAL){setT(TOTAL);play(false);return}
+function loop(){if(!playing)return;const Tc=T0+(performance.now()-t0)/1000;if(!nar.paused&&nar.readyState>=2&&nar.currentTime>0&&Math.abs(nar.currentTime-Tc)<1.5){T=nar.currentTime;T0=T;t0=performance.now()}else{T=Tc;if(!nar.paused&&nar.readyState>=2&&Math.abs(nar.currentTime-Tc)>=1.5)narSet()}if(T>=TOTAL){setT(TOTAL);play(false);return}
   renderAt(T);sk.value=Math.round(T/TOTAL*1000);tm.textContent=fmt(T)+" / "+fmt(TOTAL);let ci=0;SC.forEach((s,i)=>{if(T>=s.start)ci=i});if(ch.value!=ci)ch.value=ci;requestAnimationFrame(loop)}
 pp.onclick=()=>play(!playing);sk.oninput=()=>setT(sk.value/1000*TOTAL);ch.onchange=()=>setT(SC[ch.value].start+.01);
 document.getElementById("start").onclick=()=>play(true);
+/* 자막 켜기/끄기: 음성이 있으면 기본은 끔, 없으면 켬. ?cap=1 / ?cap=0 으로 강제, 사용자가 고른 값은 기억한다 */
+const cc=document.getElementById("cc"),HAS_NAR=!!nar.getAttribute("src");let capOn=!HAS_NAR;
+try{const v=localStorage.getItem("dsge_cap");if(v!==null&&HAS_NAR)capOn=v==="1"}catch(e){}
+{const q=/[?&]cap=([01])/.exec(location.search);if(q)capOn=q[1]==="1"}
+function capApply(){document.getElementById("cap").style.visibility=capOn?"":"hidden";cc.textContent=capOn?"자막 켬":"자막 끔";cc.classList.toggle("off",!capOn)}
+cc.onclick=()=>{capOn=!capOn;try{localStorage.setItem("dsge_cap",capOn?"1":"0")}catch(e){}capApply()};capApply();
 document.getElementById("fs").onclick=()=>{document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()};
-addEventListener("keydown",e=>{if(e.code==="Space"){e.preventDefault();play(!playing)}else if(e.code==="ArrowRight")setT(T+5);else if(e.code==="ArrowLeft")setT(T-5)});
+addEventListener("keydown",e=>{if(e.code==="Space"){e.preventDefault();play(!playing)}else if(e.code==="ArrowRight")setT(T+5);else if(e.code==="ArrowLeft")setT(T-5);else if(e.code==="KeyC")cc.onclick()});
 setT(0);
 </script>
 </body>

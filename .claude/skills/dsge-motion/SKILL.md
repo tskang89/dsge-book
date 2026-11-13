@@ -70,7 +70,7 @@ python3 motion/tools/unlock_book.py DSGE_book_source.html $SCRATCH/book
 6. **그래프는 정확하게**: 실제 자료(예: statsmodels macrodata 미국 GDP + HP 필터)를 쓰고, x·y축과 눈금을 그린다.
    곡선을 경계값으로 잘라(clamp) 생기는 가짜 수평선 금지 → SVG clipPath 로 자른다. 모의 경로는 표본 평균이 0 근처인 시드를 고른다.
 7. **한 화면에 하나의 핵심**: 내용이 많으면 장면을 나눈다. 요소끼리·자막과 겹치지 않게 한다.
-8. **음성 내레이션을 넣을 계획이다**(사용자 지시, 아래 부록). 음성이 들어가면 자막은 보이지 않게 할 계획이므로,
+8. **음성 내레이션이 들어간다**(사용자 지시, 아래 부록). 자막은 기본으로 꺼져 있으므로(버튼으로 켬),
    자막에만 있는 정보가 없도록 낭독 원고가 내용을 모두 말로 담는다. **자막을 고치면 같은 키의 낭독 원고 줄도 함께 고친다.**
 9. 수치는 원고 모수로 직접 계산해 검산한다(정상상태 값 등). **충격반응·정상상태는 교재 .mod 를 Dynare 로 직접 풀어 쓴다**:
    `python3 motion/tools/dyn_irf.py $SCRATCH/book/Download_Codes/<모형>/<모형>.mod $SCRATCH/irf/chN.json [--set PHIPI=2.5]`
@@ -121,7 +121,7 @@ python3 motion/tools/publish.py $SCRATCH/out.html <이름>_motion.html   # 루�
 python3 motion/tools/secret.py dec motion/chapters/chNN/scenes.js.enc $SCRATCH/chNN.js
 python3 motion/tools/build.py $SCRATCH/chNN.js $SCRATCH/chNN.html --title "<기존 <title>>"
 node motion/tools/check.js $SCRATCH/chNN.html $SCRATCH/chkNN
-python3 motion/tools/publish.py $SCRATCH/chNN.html <이름>_motion.html
+python3 motion/tools/publish.py $SCRATCH/chNN.html <이름>_motion.html --audio <음성>   # 음성 장: 부록 참고(--audio-url 로 빌드)
 ```
 | 장 | 공개 파일 | `--title` | (예전 암호 화면 제목) |
 |---|---|---|---|
@@ -135,13 +135,28 @@ python3 motion/tools/publish.py $SCRATCH/chNN.html <이름>_motion.html
 | 8 | `TwoCountry_ch8_motion.html` | 제8장 두국가 모형 모션 그래픽 | 제8장 두국가 모형 — 모션 그래픽 |
 | 9 | `SmallOpenEconomy_ch9_motion.html` | 제9장 소규모 개방경제 모형 모션 그래픽 | — |
 
-## 부록: 음성
-제2장에서 오프라인 한국어 TTS 를 검증했다: sherpa-onnx(`pip install sherpa-onnx`) +
-GitHub 릴리스 `k2-fsa/sherpa-onnx` 의 `tts-models/sherpa-onnx-supertonic-tts-int8-2026-03-06.tar.bz2`
-(Supertonic 2, 한국어, 화자 0~4 여성·5~9 남성, `GenerationConfig.extra={"lang":"ko"}`, speed 1.15).
-낭독 원고는 수식·기호를 한글로 풀어 쓰고(시그마, 베타…), 소수는 “영 점 구구”처럼 띄어 쓴다.
-발음 검증은 `asr-models/sherpa-onnx-zipformer-korean-2024-06-24` 로 받아쓰기 비교.
-자막 구간 길이를 음성 길이에 맞춰 늘리는 것이 `SEG` 이며, 빌드 시 `--audio narr.m4a`.
-낭독 원고: **전 장** `motion/chapters/chNN/narration.txt.enc`(암호화). 형식은 자막 한 줄당 `장면id 자막번호|낭독문` 한 줄
-(자막번호는 `caps` 배열의 0부터 센 위치, 빈 자막 제외). 작성·검증 규칙은 `motion/narration_rules.md`
-(기호·숫자·영문은 모두 한글로, 긴 식은 뜻으로, φ=“피”·π=“파이”, 낭독문에 라틴 문자·숫자·수식 기호가 남지 않을 것).
+## 부록: 음성 (전 장 적용)
+전 장에 음성이 들어가 있다. 음성 파일은 페이지에 내장하지 않고 같은 폴더의 `<이름>_motion.m4a` 를 불러온다.
+자막은 음성이 있으면 **기본으로 꺼져 있고** 재생기의 「자막」 버튼(또는 C 키, `?cap=1`)으로 켠다.
+
+- 낭독 원고: `motion/chapters/chNN/narration.txt.enc`(암호화). 형식은 자막 한 줄당 `장면id 자막번호|낭독문` 한 줄
+  (자막번호는 `caps` 배열의 0부터 센 위치, 빈 자막 제외). 작성·검증 규칙은 `motion/narration_rules.md`
+  (기호·숫자·영문은 모두 한글로, 긴 식은 뜻으로, φ=“피”·π=“파이”, 낭독문에 라틴 문자·숫자·수식 기호가 남지 않을 것).
+  **자막을 고치거나 장면을 추가하면 같은 키의 낭독 줄도 고치고, 아래 2~5단계를 다시 돌린다.**
+- 엔진: sherpa-onnx(`pip install sherpa-onnx soundfile`) + Supertonic 2 한국어(`tts-models/sherpa-onnx-supertonic-tts-int8-2026-03-06.tar.bz2`),
+  화자 0(여성), speed 1.15. 받아쓰기 검증은 `asr-models/sherpa-onnx-zipformer-korean-2024-06-24`. 모델은 스크래치 폴더에 받는다.
+
+```bash
+# 1) 원고: 장면 원본 + 원고 복호화 (자막 목록은 node motion/tools/caps_dump.js 장면.js 로 확인)
+DSGE_PW=… python3 motion/tools/secret.py dec motion/chapters/chNN/narration.txt.enc $SCRATCH/narr.txt
+# 2) 줄별 음성
+python3 motion/tools/narrate.py tts  $SCRATCH/narr.txt $SCRATCH/wav --model <supertonic 폴더> --sid 0
+# 3) 받아쓰기 점검(인식기 자체 오차가 커서 평균 CER 0.13 안팎이 정상. 튀는 줄만 듣고 원고를 고친다)
+python3 motion/tools/narrate.py asr  $SCRATCH/narr.txt $SCRATCH/wav --model <zipformer 폴더> --top 20
+# 4) 시간 맞춤: 장면 원본에 SEG(자막 구간별 길이 = 음성 + 여유)를 넣고 음성 트랙(m4a, 48k 모노)을 만든다
+python3 motion/tools/narrate.py sync $SCRATCH/scenes.js $SCRATCH/narr.txt $SCRATCH/wav $SCRATCH/seg.js $SCRATCH/<이름>_motion.m4a
+# 5) 빌드 · 점검 · 공개 (SEG 가 든 seg.js 를 scenes.js.enc 로 암호화해 저장)
+python3 motion/tools/build.py $SCRATCH/seg.js $SCRATCH/out.html --title "…" --audio-url <이름>_motion.m4a
+python3 motion/tools/publish.py $SCRATCH/out.html <이름>_motion.html --audio $SCRATCH/<이름>_motion.m4a
+```
+- 로컬에서 재생 확인할 때는 HTTP Range 를 지원하는 서버를 쓴다(파이썬 `http.server` 는 음성 탐색이 안 된다. GitHub Pages 는 된다).

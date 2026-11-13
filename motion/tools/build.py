@@ -8,6 +8,7 @@
   Pretendard 에 없는 기호(①, ⟹ 등)만 apt 의 fonts-noto-cjk 에서 보충 글꼴(KFall)로 내장한다.
 - 스타일 규칙은 저장소 루트의 style-guide.md 를 따른다.
 - --audio 를 주지 않으면 음성 트랙 없이(자막만) 만든다. 기본은 음성 없음.
+- --audio-url 은 음성을 내장하지 않고 같은 폴더의 파일(예: X_motion.m4a)을 불러온다(용량·스트리밍에 유리).
 """
 import argparse, base64, io, os, re, sys
 from fontTools import subset
@@ -32,6 +33,7 @@ def main():
     ap.add_argument("scenes"); ap.add_argument("out")
     ap.add_argument("--title", required=True)
     ap.add_argument("--audio")
+    ap.add_argument("--audio-url", help="음성 파일을 내장하지 않고 이 상대 경로에서 불러온다(예: X_motion.m4a)")
     a = ap.parse_args()
 
     tpl = open(os.path.join(MOTION, "engine", "template.html"), encoding="utf-8").read()
@@ -62,7 +64,9 @@ def main():
     js = open(os.path.join(kd, "katex.min.js"), encoding="utf-8").read()
 
     out = src.replace("/*@@FONTS@@*/", ff).replace("/*@@KATEXCSS@@*/", css).replace("/*@@KATEXJS@@*/", js)
-    if a.audio:
+    if a.audio_url:
+        out = out.replace("@@NARR@@", a.audio_url)
+    elif a.audio:
         out = out.replace("@@NARR@@", "data:audio/mp4;base64," + base64.b64encode(open(a.audio, "rb").read()).decode())
     else:
         out = out.replace(' src="@@NARR@@"', "")
