@@ -29,8 +29,8 @@ a 에이, b 비, c 씨, d 디, e 이, f 에프, g 지, h 에이치, i 아이, j 
 - 식 번호 (5) → “식 오”, (11)·(12) → “식 십일과 십이”.
 
 ## 5. 영문·약어·코드
-- 약어는 소리 나는 대로 한글: DSGE 디에스지이, RBC 알비씨, NK 엔케이, HP 에이치피, GDP 지디피, CPI 씨피아이, PPI 피피아이, UIP 유아이피, PCP 피씨피, LCP 엘씨피, DCP 디씨피, PTM 피티엠, CES 씨이에스, CRRA 씨알알에이, MCMC 엠씨엠씨, MH 엠에이치, HPD 에이치피디, SDF 에스디에프, NFA 엔에프에이, TB 티비, CA 씨에이, AR 에이알, IRF 아이알에프, VAR 브이에이알, BK 블랑샤-칸, OLS 오엘에스.
-- 고유명사·소프트웨어: Dynare 다이너리, Octave 옥타브, MATLAB 매트랩, Manim 마님, Kalman 칼만. 영어 단어 병기(예: “측정오차(measurement error)”)는 영어를 뺀다.
+- 약어는 소리 나는 대로 한글: DSGE 디에스지이, RBC 알비씨, NK 엔케이, HP 에이치피, GDP 지디피, CPI 씨피아이, PPI 피피아이, UIP 유아이피, PCP 피씨피, LCP 엘씨피, DCP 디씨피, PTM 피티엠, CES 씨이에스, CRRA 씨알알에이, MCMC 엠씨엠씨, MH 엠에이치, HPD 에이치피디, SDF 에스디에프, NFA 엔에프에이, TB 티비, CA 씨에이, AR 에이알(AR(1)은 에이알원), IRF 아이알에프, VAR 브이에이알, BK 블랑샤-칸, OLS 오엘에스.
+- 고유명사·소프트웨어: Dynare 다이네어, Octave 옥타브, MATLAB 매트랩, Manim 마님, Kalman 칼만. 영어 단어 병기(예: “측정오차(measurement error)”)는 영어를 뺀다.
 - 코드 식별자는 소리 나는 대로 띄어 읽는다: steady_state_model “스테디 스테이트 모델”, stoch_simul “스토크 시뮬”, varobs “바 옵스”, estimated_params “에스티메이티드 파람스”, mh_jscale “엠에이치 제이스케일”, dy_obs “디와이 옵스”, rbc.mod “알비씨 점 모드”. order=1 → “오더 일”.
 - 인명은 한글 표기(자막에 이미 한글이면 그대로). 영문 인명이면 한글로: Kass and Raftery “카스와 래프터리”, Brooks-Gelman “브룩스 겔만”.
 
