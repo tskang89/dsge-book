@@ -5,6 +5,8 @@
   python3 motion/tools/narrate.py tts  원고.txt  $SCRATCH/wav  --model <supertonic 폴더> [--sid 0] [--speed 1.15]
   # 2) 받아쓰기로 발음 점검: 글자 오류율(CER)이 큰 줄을 보여 준다
   python3 motion/tools/narrate.py asr  원고.txt  $SCRATCH/wav  --model <zipformer-korean 폴더> [--top 30]
+  #    CER 이 큰 줄은 여러 번 다시 만들어 가장 잘 들리는 것을 남긴다
+  python3 motion/tools/narrate.py retake 원고.txt $SCRATCH/wav --tts-model <supertonic> --asr-model <zipformer> [--cer 0.25 --tries 4]
   # 3) 장면 시간을 음성 길이에 맞추고(SEG 를 넣은 장면 파일), 음성 트랙(m4a)을 만든다
   python3 motion/tools/narrate.py sync 장면.js 원고.txt $SCRATCH/wav  $SCRATCH/장면_seg.js  $SCRATCH/narr.m4a
   # 4) 빌드: 음성은 별도 파일로 두고 같은 폴더에서 불러온다
@@ -120,6 +122,42 @@ def cmd_asr(a):
         json.dump([{"cer": c, "key": k, "text": t, "asr": h} for c, k, t, h in rows], open(a.json, "w", encoding="utf-8"), ensure_ascii=False, indent=0)
 
 
+def cmd_retake(a):
+    """받아쓰기 CER 이 큰 줄을 여러 번 다시 만들어 가장 잘 알아들리는 것을 남긴다(TTS 는 매번 조금씩 다르다)."""
+    import sherpa_onnx as so, soundfile as sf, numpy as np
+    T = a.tts_model
+    mc = so.OfflineTtsSupertonicModelConfig(f"{T}/duration_predictor.int8.onnx", f"{T}/text_encoder.int8.onnx",
+            f"{T}/vector_estimator.int8.onnx", f"{T}/vocoder.int8.onnx", f"{T}/tts.json", f"{T}/unicode_indexer.bin", f"{T}/voice.bin")
+    tts = so.OfflineTts(so.OfflineTtsConfig(model=so.OfflineTtsModelConfig(supertonic=mc, num_threads=a.threads), max_num_sentences=1))
+    M = a.asr_model
+    rec = so.OfflineRecognizer.from_transducer(encoder=f"{M}/encoder-epoch-99-avg-1.int8.onnx", decoder=f"{M}/decoder-epoch-99-avg-1.onnx",
+                                               joiner=f"{M}/joiner-epoch-99-avg-1.int8.onnx", tokens=f"{M}/tokens.txt", num_threads=a.threads)
+    def score(x, sr, text):
+        if sr != 16000:
+            idx = np.arange(0, len(x), sr / 16000.0); x = np.interp(idx, np.arange(len(x)), x).astype("float32")
+        st = rec.create_stream(); st.accept_waveform(16000, x); rec.decode_stream(st)
+        return cer(text, st.result.text)
+    fixed = 0; rows = []
+    for k, t in read_narr(a.narr):
+        fn = wav_name(a.wav, k)
+        x, sr = sf.read(fn, dtype="float32")
+        best = score(x, sr, t); c0 = best
+        if best <= a.cer:
+            continue
+        for _ in range(a.tries):
+            g = so.GenerationConfig(); g.sid = a.sid; g.speed = a.speed; g.extra = {"lang": "ko"}
+            au = tts.generate(t, g); y = np.asarray(au.samples, dtype="float32")
+            c = score(y, au.sample_rate, t)
+            if c < best:
+                best = c; sf.write(fn, y, au.sample_rate)
+            if best <= a.cer / 2:
+                break
+        fixed += best < c0; rows.append((c0, best, k))
+    print(f"retake: 대상 {len(rows)}줄, 개선 {fixed}줄")
+    for c0, c1, k in sorted(rows, key=lambda r: -r[1])[:a.top]:
+        print(f"  {k}: {c0:.2f} → {c1:.2f}")
+
+
 def cmd_sync(a):
     import soundfile as sf, numpy as np
     scenes = json.loads(subprocess.check_output(["node", os.path.join(HERE, "caps_dump.js"), a.scenes]))
@@ -178,10 +216,15 @@ def main():
     p.add_argument("--threads", type=int, default=4); p.add_argument("--only"); p.add_argument("--force", action="store_true")
     p = sp.add_parser("asr"); p.add_argument("narr"); p.add_argument("wav"); p.add_argument("--model", required=True)
     p.add_argument("--threads", type=int, default=4); p.add_argument("--top", type=int, default=30); p.add_argument("--json")
+    p = sp.add_parser("retake"); p.add_argument("narr"); p.add_argument("wav")
+    p.add_argument("--tts-model", required=True); p.add_argument("--asr-model", required=True)
+    p.add_argument("--cer", type=float, default=0.25); p.add_argument("--tries", type=int, default=4)
+    p.add_argument("--sid", type=int, default=0); p.add_argument("--speed", type=float, default=1.15)
+    p.add_argument("--threads", type=int, default=4); p.add_argument("--top", type=int, default=10)
     p = sp.add_parser("sync"); p.add_argument("scenes"); p.add_argument("narr"); p.add_argument("wav")
     p.add_argument("out_scenes"); p.add_argument("out_audio"); p.add_argument("--bitrate", default="48k")
     a = ap.parse_args()
-    {"tts": cmd_tts, "asr": cmd_asr, "sync": cmd_sync}[a.cmd](a)
+    {"tts": cmd_tts, "asr": cmd_asr, "retake": cmd_retake, "sync": cmd_sync}[a.cmd](a)
 
 
 if __name__ == "__main__":
