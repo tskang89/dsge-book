@@ -4,7 +4,7 @@
 |---|---|
 | `engine/template.html` | 공통 엔진(무대·자막·재생기·수식/그래프 도우미). 교재 내용 없음 |
 | `chapters/chNN/scenes.js.enc` | 장별 장면 원본(**암호화**, 제1~9장) |
-| `chapters/chNN/narration.txt.enc` | (선택) 낭독 원고(**암호화**) |
+| `chapters/chNN/narration.txt.enc` | 낭독 원고(**암호화**, 전 장). 규칙: `narration_rules.md` |
 | `tools/unlock_book.py` | `DSGE_book_source.html` 에서 교재 LaTeX 원문 풀기 |
 | `tools/secret.py` | 장면·원고 파일 암호화/복호화 |
 | `tools/build.py` | 엔진 + 장면 → 자기완결 HTML (KaTeX·폰트 내장) |

@@ -70,7 +70,8 @@ python3 motion/tools/unlock_book.py DSGE_book_source.html $SCRATCH/book
 6. **그래프는 정확하게**: 실제 자료(예: statsmodels macrodata 미국 GDP + HP 필터)를 쓰고, x·y축과 눈금을 그린다.
    곡선을 경계값으로 잘라(clamp) 생기는 가짜 수평선 금지 → SVG clipPath 로 자른다. 모의 경로는 표본 평균이 0 근처인 시드를 고른다.
 7. **한 화면에 하나의 핵심**: 내용이 많으면 장면을 나눈다. 요소끼리·자막과 겹치지 않게 한다.
-8. **음성 내레이션은 넣지 않는다**(사용자가 요청할 때만, 아래 부록).
+8. **음성 내레이션을 넣을 계획이다**(사용자 지시, 아래 부록). 음성이 들어가면 자막은 보이지 않게 할 계획이므로,
+   자막에만 있는 정보가 없도록 낭독 원고가 내용을 모두 말로 담는다. **자막을 고치면 같은 키의 낭독 원고 줄도 함께 고친다.**
 9. 수치는 원고 모수로 직접 계산해 검산한다(정상상태 값 등). **충격반응·정상상태는 교재 .mod 를 Dynare 로 직접 풀어 쓴다**:
    `python3 motion/tools/dyn_irf.py $SCRATCH/book/Download_Codes/<모형>/<모형>.mod $SCRATCH/irf/chN.json [--set PHIPI=2.5]`
    → `{"irfs":{"변수_충격":[…]},"ss":{…},"params":{…}}`. 모수를 바꾼 비교(예: φπ, 개방도)도 `--set` 으로 만든다. 결과 JSON 은 커밋하지 않는다.
@@ -134,11 +135,13 @@ python3 motion/tools/publish.py $SCRATCH/chNN.html <이름>_motion.html
 | 8 | `TwoCountry_ch8_motion.html` | 제8장 두국가 모형 모션 그래픽 | 제8장 두국가 모형 — 모션 그래픽 |
 | 9 | `SmallOpenEconomy_ch9_motion.html` | 제9장 소규모 개방경제 모형 모션 그래픽 | — |
 
-## 부록: 음성(요청 시에만)
+## 부록: 음성
 제2장에서 오프라인 한국어 TTS 를 검증했다: sherpa-onnx(`pip install sherpa-onnx`) +
 GitHub 릴리스 `k2-fsa/sherpa-onnx` 의 `tts-models/sherpa-onnx-supertonic-tts-int8-2026-03-06.tar.bz2`
 (Supertonic 2, 한국어, 화자 0~4 여성·5~9 남성, `GenerationConfig.extra={"lang":"ko"}`, speed 1.15).
 낭독 원고는 수식·기호를 한글로 풀어 쓰고(시그마, 베타…), 소수는 “영 점 구구”처럼 띄어 쓴다.
 발음 검증은 `asr-models/sherpa-onnx-zipformer-korean-2024-06-24` 로 받아쓰기 비교.
 자막 구간 길이를 음성 길이에 맞춰 늘리는 것이 `SEG` 이며, 빌드 시 `--audio narr.m4a`.
-제2장 낭독 원고: `motion/chapters/ch02/narration.txt.enc`.
+낭독 원고: **전 장** `motion/chapters/chNN/narration.txt.enc`(암호화). 형식은 자막 한 줄당 `장면id 자막번호|낭독문` 한 줄
+(자막번호는 `caps` 배열의 0부터 센 위치, 빈 자막 제외). 작성·검증 규칙은 `motion/narration_rules.md`
+(기호·숫자·영문은 모두 한글로, 긴 식은 뜻으로, φ=“피”·π=“파이”, 낭독문에 라틴 문자·숫자·수식 기호가 남지 않을 것).
