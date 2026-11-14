@@ -16,7 +16,7 @@
 | 5 | Akerlof (1970) "The Market for 'Lemons'", *QJE* | 중고차 시장에서 좋은 차가 사라지는 이유 | 품질 분포가 차례로 잘려 나감 | 완료 (005, 2026-11-14) |
 | 6 | Waldfogel (1993) "The Deadweight Loss of Christmas", *AER* | 크리스마스 선물은 가치를 파괴한다? | 받는 사람 가치 < 선물 가격 | 완료 (006, 2026-11-14) |
 | 7 | Fisman & Miguel (2007) "Corruption, Norms, and Legal Enforcement: Evidence from Diplomatic Parking Tickets", *JPE* | 외교관 주차 위반으로 나라별 부패를 잰다? | 면책특권 아래 국가별 미납 딱지 | 완료 (007, 2026-11-14) |
-| 8 | Goldin & Rouse (2000) "Orchestrating Impartiality", *AER* | 오디션에 커튼을 쳤더니 생긴 일 | 블라인드 오디션과 여성 합격 | 대기 |
+| 8 | Goldin & Rouse (2000) "Orchestrating Impartiality", *AER* | 오디션에 커튼을 쳤더니 생긴 일 | 블라인드 오디션과 여성 합격 | 완료 (008, 2026-11-14) |
 | 9 | Kahneman, Knetsch & Thaler (1990) "Experimental Tests of the Endowment Effect and the Coase Theorem", *JPE* | 내 손에 들어온 머그컵은 왜 두 배로 비쌀까? | 팔려는 값 vs 사려는 값 | 대기 |
 | 10 | Madrian & Shea (2001) "The Power of Suggestion: Inertia in 401(k) Participation", *QJE* | 체크박스 하나가 노후를 바꾼다? | 자동 가입 → 가입률 급등 | 대기 |
 | 11 | Chiappori, Levitt & Groseclose (2002) "Testing Mixed-Strategy Equilibria When Players Are Heterogeneous: The Case of Penalty Kicks in Soccer", *AER* | 승부차기, 어디로 차야 할까? | 키커·골키퍼 혼합전략 | 대기 |
