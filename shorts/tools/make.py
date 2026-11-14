@@ -100,20 +100,24 @@ class Voice:
 
 
 def tts_lines(lines, wavdir, a):
-    """줄별 음성(문장 해시로 캐시). --asr 가 있으면 CER 이 큰 줄은 최대 --tries 번 다시 만든다."""
+    """줄별 음성(문장 해시로 캐시). --asr 가 있으면 **캐시된 줄까지 모든 줄을** 받아쓰기로 점검해 출력하고,
+    한 글자라도 다르게 들리는(CER>0.03) 줄은 최대 --tries 번 다시 만들어 가장 또렷한 것을 남긴다."""
     import soundfile as sf
     os.makedirs(wavdir, exist_ok=True)
     v = None; out = {}; report = []
     for ln in lines:
         h = hashlib.sha1(f"{ln['say']}|{a.speed}|{a.sid}".encode()).hexdigest()[:12]
         fn = os.path.join(wavdir, h + ".wav"); out[ln["key"]] = fn
-        if os.path.exists(fn):
+        if os.path.exists(fn) and not a.asr:
             continue
         v = v or Voice(a.tts, a.asr, a.speed, a.sid)
-        x, sr = v.gen(ln["say"])
+        if os.path.exists(fn):
+            x, sr = sf.read(fn, dtype="float32")
+        else:
+            x, sr = v.gen(ln["say"])
         if v.rec:
             best, hyp = v.score(x, sr, ln["say"]); c0 = best
-            for _ in range(a.tries if best > .03 else 0):   # 한 글자라도 틀리게 들리면 다시 만든다
+            for _ in range(a.tries if best > .03 else 0):
                 y, sr2 = v.gen(ln["say"]); c, hy = v.score(y, sr2, ln["say"])
                 if c < best:
                     best, hyp, x, sr = c, hy, y, sr2
@@ -123,9 +127,11 @@ def tts_lines(lines, wavdir, a):
         sf.write(fn, x, sr)
     if report:
         report.sort(key=lambda r: -r[0])
-        print(f"asr: 평균 CER {sum(r[0] for r in report)/len(report):.3f} (새로 만든 {len(report)}줄)")
+        print(f"asr: 평균 CER {sum(r[0] for r in report)/len(report):.3f} (전체 {len(report)}줄 점검)")
         for c, c0, k, t, hy in report:   # 모든 줄의 받아쓰기를 보인다(뭉개진 발음은 CER 이 낮아도 눈으로 찾는다)
             print(f"  {c:.2f} (처음 {c0:.2f}) {k}\n     원고: {t}\n     인식: {hy}")
+    elif not a.asr:
+        print("⚠ 받아쓰기 점검을 하지 않았다(--asr 없음). 최종본 전에는 반드시 --asr 로 점검할 것.")
     return out
 
 
