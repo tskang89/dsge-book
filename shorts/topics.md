@@ -11,7 +11,7 @@
 |---|---|---|---|---|
 | 1 | Hotelling (1929) "Stability in Competition", *Economic Journal* | 아이스크림 가게는 왜 꼭 붙어 있을까? | 경쟁자는 가운데로 모인다 | 완료 (001, 2026-11-14) |
 | 2 | DellaVigna & Malmendier (2006) "Paying Not to Go to the Gym", *AER* | 헬스장 월 회원권, 정말 이득일까? | 월권 회원의 1회 이용 단가가 1회권보다 비쌌다 | 완료 (002, 2026-11-14) |
-| 3 | Bertrand & Mullainathan (2004) "Are Emily and Greg More Employable than Lakisha and Jamal?", *AER* | 이력서 이름만 바꿨더니 연락이 달라졌다? | 가짜 이력서 실험, 회신율 격차 막대 | 대기 |
+| 3 | Bertrand & Mullainathan (2004) "Are Emily and Greg More Employable than Lakisha and Jamal?", *AER* | 이력서 이름만 바꿨더니 연락이 달라졌다? | 가짜 이력서 실험, 회신율 격차 막대 | 완료 (003, 2026-11-14) |
 | 4 | Duggan & Levitt (2002) "Winning Isn't Everything: Corruption in Sumo Wrestling", *AER* | 스모 승부 조작을 통계로 잡아냈다? | 7승 7패 선수의 마지막 날 승률이 튄다 | 대기 |
 | 5 | Akerlof (1970) "The Market for 'Lemons'", *QJE* | 중고차 시장에서 좋은 차가 사라지는 이유 | 품질 분포가 차례로 잘려 나감 | 대기 |
 | 6 | Waldfogel (1993) "The Deadweight Loss of Christmas", *AER* | 크리스마스 선물은 가치를 파괴한다? | 받는 사람 가치 < 선물 가격 | 대기 |
