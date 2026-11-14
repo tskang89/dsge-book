@@ -16,17 +16,27 @@ export SCRATCH=<스크래치 폴더>
 bash shorts/tools/setup.sh $SCRATCH/models                     # ffmpeg·sherpa-onnx·모델(TTS/ASR) 멱등 설치
 ```
 
-## 1. 주제 고르기
-`shorts/topics.md` 에서 맨 위 `대기` 주제를 고른다(사용자가 주제를 주면 그것). 번호 NNN = 지금까지 만든 편 수 + 1.
-사실·수치·연도·인물은 **웹 검색으로 확인**한다(원 논문·공식 자료 우선). 확인 못 한 일화는 쓰지 않거나 “~라는 이야기가 있다”로 낮춘다.
+## 1. 주제 고르기 — 유명 학술지 논문 한 편 (사용자 지시)
+매 편은 **경제학 유명 학술지에 실린 논문 한 편**을 다룬다(Top 5: AER·QJE·JPE·Econometrica·REStud 우선, 다음으로 EJ·Economica·AEJ·JF 등).
+`shorts/topics.md` 에서 맨 위 `대기` 논문을 고른다(사용자가 주제를 주면 그것). 번호 NNN = 지금까지 만든 편 수 + 1.
+- **서지 확인**: 웹 검색으로 저자·연도·제목·학술지·권(호): 쪽을 원문(학술지 페이지, DOI, NBER/SSRN 판)에서 확인해 `EP.paper` 에 넣는다.
+- **수치 확인**: 영상에 쓰는 숫자(회신율, 승률, 퍼센트 등)는 초록·본문 표에서 찾은 값만 쓰고, 출처 위치를 episode.js 머리 주석에 적는다.
+  확인 못 한 숫자는 쓰지 않는다. 후속 연구로 반박·재현 실패가 알려진 결과면 마지막에 한 줄로 밝힌다.
+- 논문을 쉽게 풀되 **과장하지 않는다**(상관을 인과로, 한 실험을 일반 법칙으로 말하지 않기).
 
 ## 2. 대본 = episode.js
 ```js
-Object.assign(EP, {no: 2, title: "코브라 효과", hook: "…", bgm: {seed: 23, bpm: 100, mood: "bright"},
-  yt: {title: "… #경제 #shorts", tags: ["경제", "…", "shorts"]}});
+Object.assign(EP, {no: 2, title: "헬스장 회원권의 역설", hook: "…", bgm: {seed: 23, bpm: 100, mood: "bright"},
+  paper: {journal: "American Economic Review", year: 2006, authors: "Stefano DellaVigna & Ulrike Malmendier",
+          title: "Paying Not to Go to the Gym", ko: "헬스장에 안 가려고 돈을 낸다", cite: "96(3): 694–719", url: "https://doi.org/…"},
+  yt: {title: "… #경제 #shorts", desc: "한두 줄 요약", tags: ["경제", "…", "shorts"]}});
 scene({id: "hook", lines: [[자막, 낭독문, 효과음?], …], build(el){…return c}, update(c, lt, L){…}});
 ```
-- 구성(6~8장면, 줄 14~18개, 낭독 합계 약 300~330자): **훅 질문(첫 2초)** → 설정 → 핵심 메커니즘(그림이 움직이며) → 반전/결과(숫자 하나) → 현실 사례 1~2 → 이름 공개 + “구독하고 매일 하나씩 만나요.”
+- 구성(6~8장면, 줄 14~18개, 낭독 합계 약 300~330자):
+  **훅 질문(첫 2초)** → **논문 카드**(“천구백칠십 년, 쿼털리 저널 오브 이코노믹스에 실린 논문”: `paperCard(el, y)` 로 학술지·연도·저자·원제 표시)
+  → 실험·자료 설계(그림) → **핵심 결과 숫자 하나**(막대·그래프가 움직이며) → 왜 그럴까(메커니즘) → 일상에 주는 시사점 → “구독하고 매일 하나씩 만나요.”
+- 학술지 이름 읽기: AER “아메리칸 이코노믹 리뷰”, QJE “쿼털리 저널 오브 이코노믹스”, JPE “저널 오브 폴리티컬 이코노미”,
+  Econometrica “이코노메트리카”, REStud “리뷰 오브 이코노믹 스터디스”, EJ “이코노믹 저널”. 저자 이름은 한글 표기(“레빗”, “세일러”).
 - 줄 시간은 음성 길이로 자동으로 정해진다. 애니메이션은 `L[i]`(i번째 줄 시작 시각)에 맞춰 건다.
 - 자막: 12~22자, 핵심어는 `**굵게**`(금색). 숫자·기호 가능.
 - 낭독문: `motion/narration_rules.md` 의 읽기 규칙을 따른다 — **한글·문장부호만**(숫자·영문·기호 금지: 1929년 → “천구백이십구 년”, A → “에이”, 60% → “육십 퍼센트”). 자막과 같은 뜻, 구어체, 짧게.
@@ -49,5 +59,5 @@ python3 shorts/tools/make.py …같은 인자…                                
 
 ## 4. 저장
 - `shorts/topics.md` 상태를 `완료 (NNN, YYYY-MM-DD)` 로 바꾼다.
-- 커밋: `episode.js`, `upload.txt`(자동 생성: 제목·태그·설명), `videos/NNN_slug.mp4`, `topics.md` 를 한 커밋으로. `git push origin main`.
+- 커밋: `episode.js`, `upload.txt`(자동 생성: 제목·설명·논문 출처·태그), `videos/NNN_slug.mp4`, `topics.md` 를 한 커밋으로. `git push origin main`.
 - 사용자에게 MP4 를 SendUserFile 로 보낸다(예약 실행이면 status=proactive). 업로드 문구(upload.txt)도 함께 알려 준다.

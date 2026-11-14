@@ -1,47 +1,47 @@
-# 오늘의 경제 — 주제 목록
+# 오늘의 경제 — 주제 목록 (유명 학술지 논문 편)
 
-하루 한 편. 위에서부터 `대기` 인 주제를 하나 골라 만들고, 끝나면 상태를 `완료 (NNN, 날짜)` 로 바꾼다.
-새 주제는 아래에 자유롭게 덧붙인다. 고르는 기준: **그림 하나로 보이는가**, **첫 2초 질문이 궁금한가**, **일상과 닿는가**.
+**원칙: 매 편은 경제학 유명 학술지에 실린 논문 한 편**을 다룬다(사용자 지시).
+우선순위: Top 5(AER, QJE, JPE, Econometrica, REStud) → Economic Journal, Economica, AEJ, J. Finance 등 주요 학술지.
+고르는 기준: **결과가 놀라운가**(첫 2초 질문), **실험·자료가 그림 하나로 보이는가**, **일상과 닿는가**.
 
-| # | 주제 | 첫 2초 질문(훅) | 그림 아이디어 | 상태 |
+위에서부터 `대기` 를 하나 골라 만들고, 끝나면 `완료 (NNN, 날짜)` 로 바꾼다.
+서지(저자·연도·학술지·권호)와 핵심 수치는 **제작할 때 원문·초록으로 다시 확인**한다. 아래 숫자는 메모일 뿐이다.
+
+| # | 논문 (저자, 연도, 학술지) | 첫 2초 질문(훅) | 핵심 결과·그림 | 상태 |
 |---|---|---|---|---|
-| 1 | 호텔링의 법칙 | 아이스크림 가게는 왜 꼭 붙어 있을까? | 해변 위 두 가게가 가운데로 | 완료 (001, 2026-11-14) |
-| 2 | 코브라 효과 | 코브라를 잡으면 돈을 줬더니 코브라가 늘었다? | 포상금 ↑ → 사육 농장 ↑ 그래프 | 대기 |
-| 3 | 기펜재 | 값이 오르면 더 많이 사는 물건이 있다? | 감자·고기 예산 막대 | 대기 |
-| 4 | 레몬 시장(정보 비대칭) | 중고차 시장에서 좋은 차가 사라지는 이유 | 품질 분포가 차례로 잘려 나감 | 대기 |
-| 5 | 죄수의 딜레마 | 둘 다 침묵하면 좋은데 왜 자백할까? | 2×2 보수표, 화살표 | 대기 |
-| 6 | 매몰비용의 오류 | 재미없는 영화, 표값 때문에 끝까지 본다? | 지난 비용은 사라지는 막대 | 대기 |
-| 7 | 빅맥 지수 | 햄버거 값으로 환율을 잰다고? | 나라별 버거 가격 막대 → 고평가/저평가 | 대기 |
-| 8 | 굿하트의 법칙 | 지표를 목표로 삼으면 지표가 망가진다 | 못 공장(무게·개수 목표) | 대기 |
-| 9 | 제번스의 역설 | 연비가 좋아지면 석유를 덜 쓸까? | 효율 ↑ → 사용량 ↑ | 대기 |
-| 10 | 그레셤의 법칙 | 악화가 양화를 구축한다 | 금화 깎기, 좋은 동전이 서랍으로 | 대기 |
-| 11 | 보몰의 비용병 | 공연 티켓은 왜 계속 비싸질까? | 공장 생산성 vs 현악 4중주 | 대기 |
-| 12 | 비교우위 | 모든 걸 잘해도 무역하면 이득? | 두 나라 생산 가능 곡선 | 대기 |
-| 13 | 립스틱 효과 | 불황인데 립스틱은 더 팔린다? | 소득 ↓ 대체 소비 | 대기 |
-| 14 | 공유지의 비극 | 모두의 목초지는 왜 황무지가 될까? | 양 수 ↑ 풀 ↓ | 대기 |
-| 15 | 72의 법칙 | 돈이 두 배가 되는 데 몇 년? | 복리 곡선, 72÷금리 | 대기 |
-| 16 | 승자의 저주 | 경매에서 이긴 사람이 손해 보는 이유 | 입찰가 분포와 진짜 가치 | 대기 |
-| 17 | 브라에스 역설 | 도로를 하나 더 놓았더니 더 막힌다? | 도로망과 통행 시간 | 대기 |
-| 18 | 캉티용 효과 | 돈을 풀면 누가 먼저 이득을 볼까? | 돈이 퍼지는 동심원 | 대기 |
-| 19 | 필립스 곡선 | 물가와 실업은 시소를 탄다? | 산점도 → 곡선 → 무너짐 | 대기 |
-| 20 | 유동성 함정 | 금리를 0으로 내려도 경기가 안 살아난다? | 금리 바닥에 붙은 공 | 대기 |
-| 21 | 디드로 효과 | 새 가운 하나에 집 안을 다 바꾸게 된다? | 물건이 연쇄로 바뀜 | 대기 |
-| 22 | 베블런재 | 비쌀수록 더 잘 팔리는 물건 | 우상향 수요곡선 | 대기 |
-| 23 | 앵커링(닻 내림 효과) | 정가 99만 원, 지금 49만 원! | 기준점에 끌려가는 판단 | 대기 |
-| 24 | 손실 회피 | 만 원 잃는 아픔 > 만 원 얻는 기쁨? | 가치함수 비대칭 | 대기 |
-| 25 | 쌍곡형 할인 | 다이어트는 왜 늘 내일부터일까? | 할인 곡선 교차 | 대기 |
-| 26 | 피구세 | 담배세는 벌금일까 가격일까? | 사회적 비용 곡선 이동 | 대기 |
-| 27 | 래퍼 곡선 | 세율을 올리면 세수가 줄 수도 있다? | 뒤집힌 U 곡선 | 대기 |
-| 28 | 수요의 가격 탄력성 | 왜 기름값이 올라도 덜 안 쓸까? | 탄력적/비탄력적 수요 | 대기 |
-| 29 | 무임승차자 문제 | 등대는 누가 세울까? | 공공재 기여 게임 | 대기 |
-| 30 | 신호 이론 | 대학 졸업장은 능력의 증거일까? | 신호 비용과 분리 균형 | 대기 |
-| 31 | 하이퍼인플레이션 | 빵 하나에 수레 가득한 돈? | 물가의 로그 그래프 | 대기 |
-| 32 | 오쿤의 법칙 | 실업률 1%p 오르면 GDP는? | 산점도 + 기울기 | 대기 |
-| 33 | 테일러 준칙 | 중앙은행은 금리를 어떻게 정할까? | 인플레·갭 → 금리 | 대기 |
-| 34 | 구성의 오류(절약의 역설) | 모두가 아끼면 모두가 가난해진다? | 소득 순환 고리 | 대기 |
-| 35 | 네트워크 효과 | 메신저는 왜 하나만 살아남을까? | 연결선이 n² 으로 | 대기 |
-| 36 | 최후통첩 게임 | 100만 원 중 1만 원 주면 받을까? | 제안–거절 실험 결과 | 대기 |
-| 37 | 시뇨리지 | 돈을 찍으면 누가 버는 걸까? | 지폐 원가 vs 액면 | 대기 |
-| 38 | 레온티예프 역설 | 자본 많은 미국이 노동집약재를 수출? | 무역 구성 막대 | 대기 |
-| 39 | 승수효과 | 정부가 1원 쓰면 GDP는 몇 원 늘까? | 기하급수 합 막대 | 대기 |
-| 40 | 루카스 비판 | 과거 자료로 정책 효과를 잴 수 있을까? | 사람들이 규칙을 바꿈 | 대기 |
+| 1 | Hotelling (1929) "Stability in Competition", *Economic Journal* | 아이스크림 가게는 왜 꼭 붙어 있을까? | 경쟁자는 가운데로 모인다 | 완료 (001, 2026-11-14) |
+| 2 | DellaVigna & Malmendier (2006) "Paying Not to Go to the Gym", *AER* | 헬스장 월 회원권, 정말 이득일까? | 월권 회원의 1회 이용 단가가 1회권보다 비쌌다 | 대기 |
+| 3 | Bertrand & Mullainathan (2004) "Are Emily and Greg More Employable than Lakisha and Jamal?", *AER* | 이력서 이름만 바꿨더니 연락이 달라졌다? | 가짜 이력서 실험, 회신율 격차 막대 | 대기 |
+| 4 | Duggan & Levitt (2002) "Winning Isn't Everything: Corruption in Sumo Wrestling", *AER* | 스모 승부 조작을 통계로 잡아냈다? | 7승 7패 선수의 마지막 날 승률이 튄다 | 대기 |
+| 5 | Akerlof (1970) "The Market for 'Lemons'", *QJE* | 중고차 시장에서 좋은 차가 사라지는 이유 | 품질 분포가 차례로 잘려 나감 | 대기 |
+| 6 | Waldfogel (1993) "The Deadweight Loss of Christmas", *AER* | 크리스마스 선물은 가치를 파괴한다? | 받는 사람 가치 < 선물 가격 | 대기 |
+| 7 | Fisman & Miguel (2007) "Corruption, Norms, and Legal Enforcement: Evidence from Diplomatic Parking Tickets", *JPE* | 외교관 주차 위반으로 나라별 부패를 잰다? | 면책특권 아래 국가별 미납 딱지 | 대기 |
+| 8 | Goldin & Rouse (2000) "Orchestrating Impartiality", *AER* | 오디션에 커튼을 쳤더니 생긴 일 | 블라인드 오디션과 여성 합격 | 대기 |
+| 9 | Kahneman, Knetsch & Thaler (1990) "Experimental Tests of the Endowment Effect and the Coase Theorem", *JPE* | 내 손에 들어온 머그컵은 왜 두 배로 비쌀까? | 팔려는 값 vs 사려는 값 | 대기 |
+| 10 | Madrian & Shea (2001) "The Power of Suggestion: Inertia in 401(k) Participation", *QJE* | 체크박스 하나가 노후를 바꾼다? | 자동 가입 → 가입률 급등 | 대기 |
+| 11 | Chiappori, Levitt & Groseclose (2002) "Testing Mixed-Strategy Equilibria When Players Are Heterogeneous: The Case of Penalty Kicks in Soccer", *AER* | 승부차기, 어디로 차야 할까? | 키커·골키퍼 혼합전략 | 대기 |
+| 12 | Gneezy & Rustichini (2000) "Pay Enough or Don't Pay at All", *QJE* | 돈을 조금 주면 오히려 덜 열심히? | 보상 0 / 조금 / 많이 성과 | 대기 |
+| 13 | Camerer, Babcock, Loewenstein & Thaler (1997) "Labor Supply of New York City Cabdrivers: One Day at a Time", *QJE* | 손님 많은 날 택시 기사는 일찍 퇴근한다? | 하루 목표 소득과 노동 공급 | 대기 |
+| 14 | Pope & Schweitzer (2011) "Is Tiger Woods Loss Averse?", *AER* | 타이거 우즈도 손실은 두렵다? | 버디 퍼트 vs 파 퍼트 성공률 | 대기 |
+| 15 | Ariely, Loewenstein & Prelec (2003) "Coherent Arbitrariness", *QJE* | 주민번호 끝자리가 와인 값을 정한다? | 끝 두 자리와 입찰가 | 대기 |
+| 16 | Radford (1945) "The Economic Organisation of a P.O.W. Camp", *Economica* | 포로수용소에선 담배가 돈이었다? | 담배 화폐와 물가 | 대기 |
+| 17 | Kremer (1993) "The O-Ring Theory of Economic Development", *QJE* | 우주왕복선 고무링 하나가 빈부 격차를 설명한다? | 곱셈 생산함수 | 대기 |
+| 18 | Chen, Moskowitz & Shue (2016) "Decision Making Under the Gambler's Fallacy", *QJE* | 판사도 ‘이번엔 반대겠지’ 하고 판결한다? | 연속 판정의 음의 상관 | 대기 |
+| 19 | Hamermesh & Biddle (1994) "Beauty and the Labor Market", *AER* | 외모가 연봉을 바꾼다? | 외모 프리미엄·페널티 | 대기 |
+| 20 | Persico, Postlewaite & Silverman (2004) "The Effect of Adolescent Experience on Labor Market Outcomes: The Case of Height", *JPE* | 키가 연봉을 정한다? 그런데 ‘고1 때’ 키라면? | 성인 키보다 청소년기 키 | 대기 |
+| 21 | Levitt & Venkatesh (2000) "An Economic Analysis of a Drug-Selling Gang's Finances", *QJE* | 마약 판매상은 왜 엄마랑 같이 살까? | 조직 임금 피라미드 | 대기 |
+| 22 | Card & Krueger (1994) "Minimum Wages and Employment", *AER* | 최저임금이 오르면 일자리가 줄까? | 뉴저지 vs 펜실베이니아 패스트푸드 | 대기 |
+| 23 | Angrist & Krueger (1991) "Does Compulsory School Attendance Affect Schooling and Earnings?", *QJE* | 태어난 달이 소득을 바꾼다? | 출생 분기와 교육 연수 | 대기 |
+| 24 | Barber & Odean (2001) "Boys Will Be Boys: Gender, Overconfidence, and Common Stock Investment", *QJE* | 주식 많이 사고파는 사람이 덜 번다? | 거래 회전율과 수익률 | 대기 |
+| 25 | Card & Dahl (2011) "Family Violence and Football", *QJE* | 응원 팀의 예상 밖 패배가 남긴 것 | 기대 대비 패배와 가정 폭력 | 대기 |
+| 26 | Ashraf, Karlan & Yin (2006) "Tying Odysseus to the Mast", *QJE* | 스스로 돈을 묶어 두는 통장, 누가 가입할까? | 약정 저축과 저축액 | 대기 |
+| 27 | Sacerdote (2001) "Peer Effects with Random Assignment: Results for Dartmouth Roommates", *QJE* | 룸메이트가 내 학점을 바꾼다? | 무작위 배정과 학점 | 대기 |
+| 28 | Kahneman & Tversky (1979) "Prospect Theory", *Econometrica* | 만 원 잃는 아픔 > 만 원 얻는 기쁨? | S자 가치함수 | 대기 |
+| 29 | Shiller (1981) "Do Stock Prices Move Too Much to be Justified by Subsequent Changes in Dividends?", *AER* | 주가는 왜 이렇게 출렁일까? | 실제 주가 vs 배당 기반 가치 | 대기 |
+| 30 | Abadie & Gardeazabal (2003) "The Economic Costs of Conflict: A Case Study of the Basque Country", *AER* | 테러가 없었다면? 가상의 바스크를 만들다 | 합성 대조군 그래프 | 대기 |
+| 31 | Nunn & Wantchekon (2011) "The Slave Trade and the Origins of Mistrust in Africa", *AER* | 수백 년 전 노예무역이 오늘의 신뢰를 낮춘다? | 노예 수출 강도 vs 신뢰 | 대기 |
+| 32 | Kearney & Levine (2015) "Media Influences on Social Outcomes: The Impact of MTV's 16 and Pregnant on Teen Childbearing", *AER* | TV 리얼리티 쇼가 10대 출산을 줄였다? | 시청률과 출산율 | 대기 |
+| 33 | DellaVigna & Kaplan (2007) "The Fox News Effect", *QJE* | 뉴스 채널 하나가 선거를 바꿨다? | 케이블 도입 지역 득표율 | 대기 |
+| 34 | Jacob & Levitt (2003) "Rotten Apples", *QJE* | 시험 부정은 학생이 아니라 교사가? | 답안 패턴 탐지 | 대기 |
+| 35 | Gneezy, Niederle & Rustichini (2003) "Performance in Competitive Environments: Gender Differences", *QJE* | 경쟁이 붙으면 성적이 달라진다? | 성과급 방식별 성과 | 대기 |
+| 36 | Ashenfelter (2008) "Predicting the Quality and Prices of Bordeaux Wine", *Economic Journal* | 와인 맛을 날씨 공식으로 맞힌다? | 기온·강수 회귀 | 대기 |

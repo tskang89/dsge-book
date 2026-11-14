@@ -166,6 +166,20 @@ def contact(html, outdir, total):
     return os.path.join(outdir, "contact.jpg")
 
 
+def write_upload(E, fn):
+    """업로드 문구: 제목, 설명(논문 출처), 해시태그."""
+    yt, pp = E.get("yt", {}), E.get("paper")
+    out = [yt.get("title", E.get("title", "")), ""]
+    if yt.get("desc"):
+        out += [yt["desc"], ""]
+    if pp:
+        out += ["📄 논문: " + f'{pp["authors"]} ({pp["year"]}). "{pp["title"]}." {pp["journal"]}' + (f' {pp["cite"]}' if pp.get("cite") else "") + ".", ""]
+        if pp.get("url"):
+            out[-1:] = [pp["url"], ""]
+    out += [" ".join("#" + t for t in yt.get("tags", [])), "", "음악·효과음: 자체 합성 / 음성: 합성 음성(Supertonic)"]
+    open(fn, "w", encoding="utf-8").write("\n".join(out) + "\n")
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("ep"); ap.add_argument("--tts", required=True); ap.add_argument("--asr")
@@ -185,6 +199,7 @@ def main():
     html = os.path.join(work, name + ".html"); build(js, html, timing, audio_url=name + ".m4a")
     pl = plan(html)
     print(f"[3] 길이 {pl['total']:.1f}s" + ("  ⚠ 60초 초과" if pl["total"] > 60 else ""))
+    write_upload(p0["ep"], os.path.join(ep, "upload.txt"))
     json.dump(pl, open(os.path.join(work, "plan.json"), "w"), ensure_ascii=False, indent=1)
     if a.only == "build":
         return
@@ -199,11 +214,6 @@ def main():
     out = os.path.join(vids, name + ".mp4")
     sh("ffmpeg", "-loglevel", "error", "-y", "-i", silent, "-i", m4a, "-map", "0:v", "-map", "1:a", "-c:v", "libx264", "-preset", "slow",
        "-crf", "23", "-pix_fmt", "yuv420p", "-c:a", "copy", "-shortest", "-movflags", "+faststart", out)
-    yt = p0["ep"].get("yt", {})
-    desc = "\n".join([yt.get("title", p0["ep"].get("title", "")), "",
-                      " ".join("#" + t for t in yt.get("tags", [])), "",
-                      "음악·효과음: 자체 합성 / 음성: 합성 음성(Supertonic)"])
-    open(os.path.join(ep, "upload.txt"), "w", encoding="utf-8").write(desc + "\n")
     print(f"[6] 완성 → {out} ({os.path.getsize(out)/1e6:.1f} MB)")
 
 

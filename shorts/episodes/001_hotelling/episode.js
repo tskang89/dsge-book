@@ -5,6 +5,8 @@
    둘 다 ½ → 50:50, 평균 이동 1/4 = 250m(2배), 최대 500m. */
 Object.assign(EP, {no: 1, title: "호텔링의 법칙", hook: "아이스크림 가게는 왜 붙어 있을까?",
   bgm: {seed: 11, bpm: 96, mood: "bright"},
+  paper: {journal: "The Economic Journal", year: 1929, authors: "Harold Hotelling", title: "Stability in Competition",
+          ko: "경쟁의 안정성", cite: "39(153): 41–57"},
   yt: {title: "아이스크림 가게는 왜 꼭 붙어 있을까? | 호텔링의 법칙 #경제 #shorts",
        tags: ["경제", "호텔링의법칙", "게임이론", "내시균형", "중위투표자", "shorts"]}});
 
@@ -232,14 +234,13 @@ scene({id: "outro", tail: 1.2, lines: [
   ["매일 하나씩, **오늘의 경제**", "구독하고 매일 하나씩 만나요."]],
   build(el) {
     const c = {};
-    c.t = CX(el, 520, "호텔링의 법칙", "", {fontSize: "120px", fontWeight: 700, color: "var(--gold)"});
-    c.s = CX(el, 690, "Harold Hotelling, 〈Stability in Competition〉 1929", "sm");
-    c.l = CX(el, 830, "경쟁자는 <b class='gold'>가운데로</b> 모인다", "mid");
-    c.f = CX(el, 1030, "<span class='chip'>구독하고 매일 하나씩 ▶</span>", "");
+    c.t = CX(el, 380, "호텔링의 법칙", "", {fontSize: "110px", fontWeight: 700, color: "var(--gold)"});
+    c.p = paperCard(el, 560);
+    c.f = CX(el, 1080, "<span class='chip'>구독하고 매일 하나씩 ▶</span>", "");
     return c;
   },
   update(c, lt, L) {
-    ap(c.t, lt, 0, null, {s: .7, back: true}); ap(c.s, lt, .4); ap(c.l, lt, .8);
+    ap(c.t, lt, 0, null, {s: .7, back: true}); ap(c.p, lt, .5);
     ap(c.f, lt, L[1], null, {s: .8, back: true});
   }
 });
