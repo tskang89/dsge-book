@@ -7,7 +7,8 @@ description: 「오늘의 경제」 세로 쇼츠(경제 이론·현상 하나�
 
 결과물: `shorts/videos/NNN_slug.mp4` (1080×1920, 30fps, ≤ 59초, AAC 48k 스테레오, −14 LUFS).
 원본: `shorts/episodes/NNN_slug/episode.js` 한 파일(화면 + 자막 + 낭독문). 교재 내용이 아니므로 **암호화하지 않는다**.
-기준 예시는 `shorts/episodes/001_hotelling/episode.js` — 새 편은 이것을 복사해 시작한다.
+기준 예시는 `shorts/episodes/001_hotelling/episode.js`(**v2 스타일**) — 새 편은 이것을 복사해 시작한다.
+**모든 편은 v2 스타일(`style: "v2"`)로 만든다**(사용자 지시). 아래 “4절 v2 그래픽 규칙”을 반드시 지킨다.
 
 ## 0. 준비 (세션마다)
 ```bash
@@ -26,11 +27,14 @@ bash shorts/tools/setup.sh $SCRATCH/models                     # ffmpeg·sherpa-
 
 ## 2. 대본 = episode.js
 ```js
-Object.assign(EP, {no: 2, title: "헬스장 회원권의 역설", hook: "…", bgm: {seed: 23, bpm: 100, mood: "bright"},
+Object.assign(EP, {no: 2, style: "v2", title: "헬스장 회원권의 역설", hook: "…", bgm: {seed: 23, bpm: 100, mood: "bright"},
   paper: {journal: "American Economic Review", year: 2006, authors: "Stefano DellaVigna & Ulrike Malmendier",
           title: "Paying Not to Go to the Gym", ko: "헬스장에 안 가려고 돈을 낸다", cite: "96(3): 694–719", url: "https://doi.org/…"},
   yt: {title: "… #경제 #shorts", desc: "한두 줄 요약", tags: ["경제", "…", "shorts"]}});
-scene({id: "hook", lines: [[자막, 낭독문, 효과음?], …], build(el){…return c}, update(c, lt, L){…}});
+scene({id: "hook", lines: [[자막, 낭독문, 효과음?], …],
+  build(el, hud){…return c},      // el: 카메라가 움직이는 그림 층, hud: 카메라 영향 없는 글자 층(큰 제목·카드·숫자 배지)
+  cam(lt, L){return {x, y, s}},   // 선택: 초점(화면 좌표)과 배율. 없으면 느리게 1→1.045 밀어 들어감
+  update(c, lt, L){…}});
 ```
 - 구성(6~8장면, 줄 14~18개, 낭독 합계 약 300~330자):
   **훅 질문(첫 2초)** → **논문 카드**(“천구백칠십 년, 쿼털리 저널 오브 이코노믹스에 실린 논문”: `paperCard(el, y)` 로 학술지·연도·저자·원제 표시)
@@ -42,9 +46,26 @@ scene({id: "hook", lines: [[자막, 낭독문, 효과음?], …], build(el){…r
 - 낭독문: `motion/narration_rules.md` 의 읽기 규칙을 따른다 — **한글·문장부호만**(숫자·영문·기호 금지: 1929년 → “천구백이십구 년”, A → “에이”, 60% → “육십 퍼센트”). 자막과 같은 뜻, 구어체, 짧게.
 - 효과음(선택, 줄의 3번째 칸): `pop` 등장, `ding` 결론, `coin` 숫자·돈, `whoosh` 이동(`whoosh@0.6` 처럼 줄 시작 뒤 초). 장면 전환 whoosh 는 자동.
 - 배경음악 `bgm`: `mood` = bright(경쾌) / calm(잔잔) / tense(긴장·단조). `seed` 는 편마다 다른 수.
-- 화면: `style-guide.md` 색(짙은 남색, 금색·하늘색 강조). 세로 배치 — 본문 그림 y≈330~1220, 자막 y=1300~, **y>1600 과 오른쪽 120px 는 쇼츠 UI 가 덮으므로 비운다.** 글자는 34px 이상.
-- 엔진 도구(`shorts/engine/template.html`): `A, CX, svgLayer, S, ST(텍스트), ap(등장), sap(SVG 등장), draw(곡선 그리기), P, ease, eback, lerp, mixc(색 섞기), rng, axes, poly, countTo, K(수식)`.
 - 그래프 수치는 직접 계산해 맞춘다(파일 머리 주석에 검산을 적는다).
+
+### v2 그래픽 규칙 (“아마추어 같다”는 피드백으로 정함)
+- **슬라이드처럼 만들지 않는다**: 머리말·제목 띠 없음(엔진이 왼쪽 위에 `오늘의 경제 #NNN` 만 작게 단다). 그림이 **화면 전체를 채운다**(full-bleed).
+  그 편의 **장소·세계**를 하나 정해 배경으로 그린다(001: 노을 해변 — 하늘 그라데이션, 흐르는 물결, 질감 있는 모래). 해변이 아닌 장면은 `stageBg(el)`류 남색 빛 배경.
+- **3D 아이콘**: `img(parent, "이름", 가운데x, 바닥y, 크기)` / `imgAt(e, x, y, 배율, 회전)`. 파일은 `shorts/assets/fluent/<이름>.png`
+  (Microsoft Fluent Emoji 3D, MIT). 없는 것은 받아 쓴다:
+  `curl -sf -o shorts/assets/fluent/<이름>.png "https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/<이름 공백은 %20>/3D/<소문자_이름>_3d.png"`
+  (사람·손 모양은 `…/Default/3D/…_3d_default.png`). 사람은 점·도형 대신 아이콘(80~110px)과 발밑 그림자/색 고리로.
+  아이콘으로 안 되는 사물(수레, 가게, 건물)은 SVG 로 그라데이션·그림자·줄무늬를 넣어 그린다. 기본 도형 그대로(회색 원, 단색 사각형) 두지 않는다.
+- **멈춘 화면 금지**: 배경이 늘 조금씩 움직인다(물결·구름·빛, 사람 들썩임). 등장은 `spr`(스프링)·`kinUp`(단어별 튀어 오름), 이동하는 물체는 속도만큼 기울인다.
+  장면마다 `cam` 으로 당기기/밀기/초점 이동을 하나 이상 넣는다(1.0~1.3배).
+- **숫자가 주인공**: 핵심 수치는 120~150px 굵은 숫자(`hud`), 변화량은 배지(`+10%p`). 영역·몫은 색 면으로 칠한다(점 색깔만으로 표현하지 않기).
+- **큰 제목**: 장면 핵심어는 `kin(hud, y, "…**강조**…", 90~120)` + `kinUp`. 자막은 엔진이 단어별 강조로 자동 처리(상자 없음, 76px).
+- **겹침**: 두 물체가 가까워지면 최소 간격을 둔다(예: 001 의 `w.pair`). 글자는 34px 이상, 눈금 38px 이상.
+- **배치**: 그림 y≈120~1250(하늘·제목 120~560, 주무대 560~1250), 자막 y=1290~1450, **y>1500 과 오른쪽 120px 는 쇼츠 UI 자리라 비운다**(엔진이 아래를 어둡게 깐다).
+- 색: 강조 금색 `#f2c14e`, 하늘색 `#5ab0ff`, 보조 `#6fcfb7`·`#ff8a65`. 한 화면 강조색은 둘~셋.
+- 필름 질감·비네팅은 엔진이 자동으로 깐다(고정 질감 — 프레임마다 바꾸면 용량이 커진다).
+- 엔진 도구: `img, imgAt, kin, kinUp, spr, paperCard, A, CX, svgLayer, S, ST, ap, sap, draw, P, ease, eback, lerp, mixc, rng, axes, poly, countTo, K`.
+  SVG 그라데이션 id 는 장면마다 달라야 한다(같은 id 를 두 장면에서 쓰면 숨은 장면 것을 참조해 안 보인다).
 
 ## 3. 만들기 → 점검
 ```bash
@@ -54,7 +75,7 @@ python3 shorts/tools/make.py …같은 인자…                                
 ```
 - `[3] 길이` 가 59초를 넘으면 낭독문을 줄인다(`--speed` 기본 1.25, 1.3 까지).
 - 받아쓰기(asr) 결과에서 CER 0.3 이상 줄은 낱말을 바꾼다(발음이 뭉개지는 말 피하기). 자동으로 5번까지 다시 만들어 가장 또렷한 것을 쓴다.
-- `$SCRATCH/shorts/NNN_slug/chk/contact.jpg` 를 **반드시 Read 로 열어** 겹침·잘림·빈 화면을 고친다. 특정 시각은
+- `$SCRATCH/shorts/NNN_slug/chk/contact.jpg` 를 **반드시 Read 로 열어** 겹침·잘림·빈 화면·밋밋한 화면을 고친다. 한두 장은 원래 크기로도 본다. 특정 시각은
   `node shorts/tools/render.js <html> <폴더> --stills 3.2,7.5` 로 본다.
 
 ## 4. 저장

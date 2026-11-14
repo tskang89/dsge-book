@@ -218,7 +218,7 @@ def main():
     vids = os.path.join(ROOT, "shorts", "videos"); os.makedirs(vids, exist_ok=True)
     out = a.out or os.path.join(vids, name + ".mp4")
     sh("ffmpeg", "-loglevel", "error", "-y", "-i", silent, "-i", m4a, "-map", "0:v", "-map", "1:a", "-c:v", "libx264", "-preset", "slow",
-       "-crf", "23", "-pix_fmt", "yuv420p", "-c:a", "copy", "-shortest", "-movflags", "+faststart", out)
+       "-crf", "28", "-pix_fmt", "yuv420p", "-c:a", "copy", "-shortest", "-movflags", "+faststart", out)
     print(f"[6] 완성 → {out} ({os.path.getsize(out)/1e6:.1f} MB)")
 
 
