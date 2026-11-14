@@ -13,7 +13,7 @@ Object.assign(EP, {no: 6, style: "v2", title: "크리스마스 선물의 사중�
           title: "The Deadweight Loss of Christmas", ko: "크리스마스의 사중손실", cite: "83(5): 1328–1336",
           url: "https://ideas.repec.org/a/aea/aecrev/v83y1993i5p1328-36.html"},
   yt: {title: "크리스마스 선물은 가치를 없앤다? | 크리스마스의 사중손실 #경제 #shorts",
-       desc: "대학생 58명이 받은 선물 278개. 받은 사람이 매긴 값은 평균 선물값의 약 87%였다 — 10만 원을 들인 선물이 받는 사람에겐 약 8만 7천 원어치(원화 금액은 예시). 사라진 차이를 경제학에서는 사중손실이라 부른다. (설문 기준) 다만 후속 연구(List & Shogren 1998, AER)가 학생들이 적어 낸 값에 선물을 실제로 사 가는 경매로 다시 재자 선물값의 121~135%로 나와, 말로만 묻느냐 실제로 파느냐에 따라 답이 달라졌다.",
+       desc: "예일대 학생 58명이 크리스마스에 받은 선물 278개. 준 사람이 낸 값(짐작)과, 선물에 담긴 마음은 빼고 현금 얼마면 똑같이 좋을지를 물었다. 받은 사람이 매긴 값은 평균 선물값의 약 87%였다 — 10만 원을 들인 선물이 받는 사람에겐 약 8만 7천 원어치(원화 금액은 예시). 사라진 차이를 경제학에서는 사중손실이라 부른다. (설문 기준) 다만 후속 연구(List & Shogren 1998, AER)가 학생들이 적어 낸 값에 선물을 실제로 사 가는 경매로 다시 재자 선물값의 121~135%로 나와, 말로만 묻느냐 실제로 파느냐에 따라 답이 달라졌다.",
        tags: ["경제", "사중손실", "크리스마스", "선물", "미시경제학", "shorts"]}});
 
 const GOLD = "#f2c14e", BLUE = "#5ab0ff", TEAL = "#6fcfb7", CORAL = "#ff8a65", RED = "#e85d5d";
@@ -62,8 +62,9 @@ function homeWorld(el) {
   // 설문 구역: 칠판 + 학생들
   S("rect", {x: 1080 + 110, y: 330, width: 860, height: 560, rx: 24, fill: "#1f3a2c", stroke: "#a87a4a", "stroke-width": 16}, g);
   ST(g, 1080 + 540, 420, "설문", {"font-size": 60, "font-weight": 800, fill: "#fbf8f1"});
-  w.q1 = ST(g, 1080 + 540, 560, "① 준 사람이 낸 값은?", {"font-size": 54, "font-weight": 800, fill: "#fbf8f1", opacity: 0});
-  w.q2 = ST(g, 1080 + 540, 700, "② 현금 얼마면 똑같이 좋을까?", {"font-size": 54, "font-weight": 800, fill: GOLD, opacity: 0});
+  w.q1 = ST(g, 1080 + 540, 530, "① 준 사람이 낸 값은? (짐작)", {"font-size": 54, "font-weight": 800, fill: "#fbf8f1", opacity: 0});
+  w.q2 = ST(g, 1080 + 540, 660, "② 현금 얼마면 똑같이 좋을까?", {"font-size": 54, "font-weight": 800, fill: GOLD, opacity: 0});
+  w.q3 = ST(g, 1080 + 540, 800, "※ 선물에 담긴 마음은 빼고", {"font-size": 48, "font-weight": 800, fill: CORAL, opacity: 0});
   w.studs = ["person", "woman", "man", "person_light", "person_medium", "woman"].map((k, i) => ({e: img(w.layer, k, 1080 + 260 + i * 105, 1140, 200), x: 1080 + 260 + i * 105}));
   w.sg = img(w.layer, "wrapped_gift", 1080 + 880, 1150, 170);
   // 동전 구역
@@ -135,8 +136,10 @@ scene({id: "hook", lines: [
 
 /* 2. 설문 (칠판) */
 scene({id: "survey", lines: [
-  ["대학생 **58명**, 받은 선물 **278개**", "대학생 오십팔 명에게, 받은 선물 이백칠십팔 개에 대해 물었어요.", "pop"],
-  ["① 준 사람이 낸 값 ② 현금 **얼마면** 똑같이 좋을지", "준 사람이 얼마를 냈을지, 그리고 현금 얼마를 받으면 똑같이 좋을지요."]],
+  ["예일대생 **58명**, 받은 선물 **278개**", "미국 예일대 학생 오십팔 명에게, 크리스마스에 받은 선물 이백칠십팔 개에 대해 물었어요.", "pop"],
+  ["① 준 사람이 **얼마를 냈을지** 짐작", "첫째, 준 사람이 얼마를 냈을지 짐작해서 적게 했어요."],
+  ["② 현금 **얼마면** 이 선물과 똑같이 좋을지", "둘째, 선물 대신 현금 얼마면 똑같이 좋을지 적게 했습니다."],
+  ["단, 선물에 담긴 **마음은 빼고**", "이때 선물에 담긴 마음은 빼고 생각하게 했죠."]],
   build(el, hud) {
     const c = {w: homeWorld(el)};
     c.n = bigNum(hud, 150, "", GOLD, 120);
@@ -149,14 +152,14 @@ scene({id: "survey", lines: [
     w.studs.forEach((o, i) => {const t = spr((lt - .7 - i * .1) / .5); imgAt(o.e, o.x, 1140 - 8 * Math.abs(Math.sin(lt * 3 + i)), clamp(t, 0, 1.2), 0); o.e.style.opacity = clamp(t * 2)});
     const tg = spr((lt - 1.4) / .5); imgAt(w.sg, 1080 + 880, 1150, clamp(tg, 0, 1.2), 8 * Math.sin(lt * 3)); w.sg.style.opacity = clamp(tg * 2);
     c.n.innerHTML = `${Math.round(lerp(0, 58, ease((lt - .6) / 1)))}명 · 선물 ${Math.round(lerp(0, 278, ease((lt - 1) / 1.2)))}개`; c.n.style.opacity = P(lt, .6, .3);
-    w.q1.setAttribute("opacity", P(lt, L[1] + .2, .3)); w.q2.setAttribute("opacity", P(lt, L[1] + 1.8, .3));
-    c.o.up(lt, {mood: "normal", point: lt > L[1] ? ease((lt - L[1]) / .4) : 0, look: [.8, -.4]});
+    w.q1.setAttribute("opacity", P(lt, L[1] + .2, .3)); w.q2.setAttribute("opacity", P(lt, L[2] + .2, .3)); w.q3.setAttribute("opacity", P(lt, L[3] + .2, .3));
+    c.o.up(lt, {mood: lt > L[3] ? "skeptical" : "normal", point: lt > L[1] ? ease((lt - L[1]) / .4) : 0, look: [.8, -.4]});
   }
 });
 
 /* 3. 결과: 87% → 10만 원이면 약 8만 7천 원 → 사중손실 (동전) */
 scene({id: "result", lines: [
-  ["설문에서 받은 사람이 매긴 값: 선물값의 평균 **약 87%**", "설문에서 받은 사람이 매긴 값은, 평균적으로 선물값의 약 팔십칠 퍼센트였습니다.", "ding"],
+  ["설문 결과: 받은 사람이 매긴 값은 선물값의 평균 **약 87%**", "두 답을 비교하니, 받은 사람이 매긴 값은 평균적으로 선물값의 약 팔십칠 퍼센트였습니다.", "ding"],
   ["예: 10만 원 선물 → 받는 사람에겐 **약 8만 7천 원**", "예를 들어 십만 원을 들인 선물이, 받는 사람에겐 약 팔만 칠천 원의 가치였던 거죠.", "coin"],
   ["사라진 **약 1만 3천 원** = 사중손실", "사라진 만 삼천 원 정도를, 경제학에서는 사중손실이라고 부릅니다.", "pop"]],
   build(el, hud) {
@@ -188,7 +191,7 @@ scene({id: "result", lines: [
 /* 4. 왜? 취향, 그리고 현금 (현금 구역) */
 scene({id: "why", lines: [
   ["준 사람은 받는 사람의 **취향**을 다 모른다", "준 사람이 받는 사람의 취향을 다 알 수는 없기 때문이죠.", "pop"],
-  ["**현금**이면 이런 손실이 없다", "현금을 주면 이런 손실이 없습니다. 받는 사람이 알아서 고르니까요.", "coin"]],
+  ["**현금**이면 이런 손실이 없다", "현금이면 받는 사람이 알아서 고르니, 이런 손실이 없습니다.", "coin"]],
   build(el, hud) {
     const c = {w: homeWorld(el)};
     c.h = kin(hud, 280, "**취향**은<br>본인이 제일 잘 안다", 92);
