@@ -1,4 +1,4 @@
-/* 오늘의 경제 001 — 호텔링의 법칙 (v2 스타일: 3D 아이콘·단어 강조 자막·카메라)
+/* 오늘의 경제 001 — 호텔링의 법칙 (v3: 부엉이 진행자·3D 아이콘·단어 강조 자막·카메라·모션 블러)
    논문: Hotelling, H. (1929) "Stability in Competition", Economic Journal 39(153): 41–57.
    수치 검산: 손님 [0,1] 균등, 가장 가까운 가게로.
    ¼·¾ 배치 → 50:50, 평균 이동 1/8 = 125m, 최대 250m.  A 0.45, B 0.75 → 경계 0.60 → A 60%.
@@ -45,7 +45,7 @@ function world(el, o) {
   // 자(거리)
   w.ruler = S("g", {opacity: 0}, g2);
   S("line", {x1: BX0, y1: 1150, x2: BX1, y2: 1150, stroke: "#fff", "stroke-width": 4, opacity: .8}, w.ruler);
-  [[0, "0"], [.5, "500m"], [1, "1km"]].forEach(([u, t]) => {
+  [[0, ""], [.5, "500m"], [1, "1km"]].forEach(([u, t]) => {   // 왼쪽 끝은 부엉이 자리라 "0" 표기 생략
     S("line", {x1: bx(u), y1: 1136, x2: bx(u), y2: 1164, stroke: "#fff", "stroke-width": 4}, w.ruler);
     ST(w.ruler, bx(u), 1212, t, {"font-size": 38, "font-weight": 700, fill: "#fff"});
   });
@@ -134,6 +134,7 @@ scene({id: "hook", lines: [
     c.think = img(hud, "thinking", 300, 600, 170);
     c.paper = img(hud, "page", 540, 600, 200);
     c.yr = CX(hud, 170, "1929", "", {fontSize: "170px", fontWeight: 800, color: GOLD, textShadow: "0 6px 0 rgba(0,0,0,.35)"});
+    c.o = host(hud, "owl", {x: 140, y: 1278, s: 0.64});
     return c;
   },
   cam(lt) {return {x: 540, y: 1000, s: lerp(1.3, 1.02, ease(lt / 2.2))}},
@@ -145,6 +146,7 @@ scene({id: "hook", lines: [
     const t1 = spr((lt - .9) / .5); imgAt(c.think, 820, 640, clamp(t1, 0, 1.2), 8 * Math.sin(lt * 3)); c.think.style.opacity = clamp(t1 * 2) * (1 - ease((lt - L[1] + .2) / .3));
     const t2 = spr((lt - L[1]) / .6); imgAt(c.paper, 540, 640, clamp(t2, 0, 1.2), -6 + 6 * clamp(t2)); c.paper.style.opacity = clamp(t2 * 2);
     ap(c.yr, lt, L[1] + .3, null, {s: .5, back: true});
+    c.o.up(lt, {mood: lt < 1.2 ? "surprised" : "normal", look: [.7, -.5]});
   }
 });
 
@@ -152,10 +154,11 @@ scene({id: "hook", lines: [
 scene({id: "setup", lines: [
   ["**1km** 해변에 손님이 고르게", "일 킬로미터 해변에 손님이 고르게 있고,"],
   ["손님은 **가장 가까운** 가게로", "손님은 가장 가까운 가게로 갑니다."]],
-  build(el) {
+  build(el, hud) {
     const c = {w: world(el)};
     c.arrow = S("path", {d: `M${bx(.6)},1050 Q${bx(.66)},930 ${bx(.75) - 110},960`, stroke: "#fff", "stroke-width": 7, fill: "none", "stroke-linecap": "round"}, c.w.fx);
     c.head = S("path", {d: `M${bx(.75) - 110},960 l-32,-6 l12,28 z`, fill: "#fff"}, c.w.fx);
+    c.o = host(hud, "owl", {x: 140, y: 1278, s: 0.64});
     return c;
   },
   cam(lt, L) {const u = ease((lt - L[1]) / 1); return {x: lerp(540, bx(.7), u), y: 1000, s: lerp(1, 1.22, u)}},
@@ -164,6 +167,7 @@ scene({id: "setup", lines: [
     w.set(null, null, {pop: clamp(lt / 1.4), lt, ruler: P(lt, .8)});
     w.A.set(0, 0, 0, 0); w.B.set(bx(.75), spr((lt - L[1]) / .6), 0);
     draw(c.arrow, P(lt, L[1] + .5, .8)); c.head.setAttribute("opacity", P(lt, L[1] + 1.2, .2));
+    c.o.up(lt, {look: [.8, -.3]});
   }
 });
 
@@ -178,6 +182,7 @@ scene({id: "best", lines: [
     S("path", {d: `M${bx(.25)},1080 L${bx(.25)},1100 L${bx(.5)},1100 L${bx(.5)},1080`, stroke: GOLD, "stroke-width": 6, fill: "none"}, c.br);
     ST(c.br, bx(.375), 1076, "최대 250m", {"font-size": 40, "font-weight": 800, fill: "#fff"});
     c.crown = img(hud, "crown", 540, 330, 190);
+    c.o = host(hud, "owl", {x: 140, y: 1278, s: 0.64});
     return c;
   },
   update(c, lt, L) {
@@ -188,6 +193,7 @@ scene({id: "best", lines: [
     c.br.setAttribute("opacity", P(lt, L[1] + 1.6) * (1 - P(lt, L[2], .4)));
     const t = spr((lt - L[2] - .1) / .6); imgAt(c.crown, 540, 330, clamp(t, 0, 1.2), 0); c.crown.style.opacity = clamp(t * 2);
     w.pA.style.visibility = w.pB.style.visibility = lt > L[2] ? "hidden" : "visible";
+    c.o.up(lt, {mood: lt > L[2] ? "happy" : "normal", look: [.6, -.4]});
   }
 });
 
@@ -196,10 +202,11 @@ scene({id: "move", lines: [
   ["그런데 A가 **가운데로** 오면?", "그런데 에이 가게가 가운데로 오면?", "whoosh@0.6"],
   ["경계가 밀려 A의 손님이 **60%**", "경계가 밀려서, 손님 육십 퍼센트를 가져갑니다.", "coin"],
   ["B도 **질세라** 가운데로", "비 가게도 질세라 가운데로 옵니다.", "whoosh@0.5"]],
-  build(el) {
+  build(el, hud) {
     const c = {w: world(el)};
     c.plus = A(el, 0, 505, "+10%p", "", {fontSize: "64px", fontWeight: 800, color: "#10182a", background: GOLD, padding: "6px 24px", borderRadius: "40px"});
     c.bag = img(el, "money_bag", 0, 0, 130);
+    c.o = host(hud, "owl", {x: 140, y: 1278, s: 0.64});
     return c;
   },
   cam(lt, L) {const z = ease((lt - .4) / 1.2) * (1 - ease((lt - L[2]) / 1)); return {x: bx(.55), y: 900, s: lerp(1, 1.12, z)}},
@@ -216,6 +223,7 @@ scene({id: "move", lines: [
     c.plus.style.transform = `scale(${clamp(tp, 0, 1.2)})`;
     const tb = spr((lt - L[1] - .4) / .5); imgAt(c.bag, bx(m / 2) + 190, 640, clamp(tb, 0, 1.2), 10 * Math.sin(lt * 4));
     c.bag.style.opacity = clamp(tb * 2) * (1 - ease((lt - L[2]) / .3));
+    c.o.up(lt, {mood: lt > L[1] && lt < L[2] ? "surprised" : "skeptical", look: [.8, -.3]});
   }
 });
 
@@ -237,6 +245,7 @@ scene({id: "nash", lines: [
     c.h = kin(hud, 170, "**내시 균형**", 120);
     c.sub = CX(hud, 330, "누구도 혼자 옮겨서 더 얻을 게 없는 상태", "", {fontSize: "40px", fontWeight: 700, color: "#fff", textShadow: "0 3px 10px rgba(0,0,0,.6)"});
     c.hs = img(hud, "handshake", 540, 640, 200);
+    c.o = host(hud, "owl", {x: 140, y: 1278, s: 0.64});
     return c;
   },
   cam(lt, L) {return {x: 540, y: 950, s: lerp(1, 1.15, ease(lt / (L[1] + .5)))}},
@@ -251,6 +260,7 @@ scene({id: "nash", lines: [
     w.set(a, b, {lt, paint: 1, line: 1, pct: 1 - ease((lt - L[1] + .3) / .4), ruler: 1});
     kinUp(c.h, lt, L[1], null, .1); ap(c.sub, lt, L[1] + .5);
     const t = spr((lt - L[1] - .3) / .6); imgAt(c.hs, 540, 640, clamp(t, 0, 1.2), 0); c.hs.style.opacity = clamp(t * 2);
+    c.o.up(lt, {mood: lt > L[1] ? "happy" : "normal", point: ease((lt - L[1]) / .5), look: [.6, -.6]});
   }
 });
 
@@ -270,6 +280,7 @@ scene({id: "cost", lines: [
       <div style="display:flex;align-items:center;gap:20px"><div style="width:190px;font-size:36px;font-weight:700">한가운데</div>
         <div class="b2" style="height:58px;border-radius:14px;background:#ff8a65;width:0"></div><div class="t2" style="font-size:46px;font-weight:800;color:#ff8a65">250m</div></div>`;
     c.x2 = A(hud, 820, 120, "×2", "", {fontSize: "110px", fontWeight: 800, color: GOLD, textShadow: "0 6px 0 rgba(0,0,0,.4)"});
+    c.o = host(hud, "owl", {x: 140, y: 1278, s: 0.64});
     return c;
   },
   update(c, lt, L) {
@@ -282,6 +293,7 @@ scene({id: "cost", lines: [
     c.card.querySelector(".b2").style.width = 400 * ease((lt - L[1] - .9) / .8) + "px";
     c.card.querySelector(".t1").style.opacity = P(lt, L[1] + 1, .3); c.card.querySelector(".t2").style.opacity = P(lt, L[1] + 1.6, .3);
     ap(c.x2, lt, L[1] + 1.9, null, {s: .3, back: true, d: .5});
+    c.o.up(lt, {mood: lt > L[1] + 1.8 ? "surprised" : "normal", look: [.5, -.7]});
   }
 });
 
@@ -316,6 +328,7 @@ scene({id: "real", lines: [
     c.p2 = A(el, 0, y0 - 150, "을", "", {width: "110px", height: "110px", borderRadius: "50%", background: BLUE, color: "#10182a",
       fontSize: "54px", fontWeight: 800, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 10px 24px rgba(0,0,0,.4)"});
     c.x0 = x0; c.x1 = x1;
+    c.o = host(hud, "owl", {x: 170, y: 900, s: 0.6});
     return c;
   },
   update(c, lt, L) {
@@ -327,6 +340,7 @@ scene({id: "real", lines: [
     const v = ease((lt - L[1] - .4) / 1.6), tp = clamp(spr((lt - L[1]) / .5), 0, 1.2);
     c.p1.style.left = (lerp(lerp(c.x0, c.x1, .18), 540 - 60, v) - 55) + "px"; c.p2.style.left = (lerp(lerp(c.x0, c.x1, .82), 540 + 60, v) - 55) + "px";
     [c.p1, c.p2].forEach(e => {e.style.opacity = clamp(tp * 2); e.style.transform = `scale(${tp})`});
+    c.o.up(lt, {mood: lt > L[1] + 1.5 ? "happy" : "normal", point: ease((lt - .3) / .5) * (1 - ease((lt - L[1]) / .4)), look: [.8, -.4]});
   }
 });
 
@@ -336,16 +350,18 @@ scene({id: "outro", tail: 1.2, lines: [
   ["매일 하나씩, **오늘의 경제**", "구독하고 매일 하나씩 만나요."]],
   build(el, hud) {
     const c = {}; stageBg(el);
-    c.ic = img(el, "ice_cream", 540, 470, 230);
-    c.h = kin(hud, 520, "호텔링의 법칙", 112);
-    c.p = paperCard(hud, 720);
+    c.ic = img(el, "ice_cream", 540, 400, 210);
+    c.h = kin(hud, 430, "호텔링의 법칙", 112);
+    c.p = paperCard(hud, 600);
     c.f = CX(hud, 1130, "<span class='chip' style='background:#f2c14e;color:#10182a;border-color:#f2c14e'>구독하고 매일 하나씩 ▶</span>", "");
+    c.o = host(hud, "owl", {x: 190, y: 1250, s: 0.85});
     return c;
   },
   cam(lt) {return {x: 540, y: 700, s: lerp(1.06, 1, ease(lt / 3))}},
   update(c, lt, L) {
-    const t = spr(lt / .6); imgAt(c.ic, 540, 470, clamp(t, 0, 1.2), 6 * Math.sin(lt * 2)); c.ic.style.opacity = clamp(t * 2);
+    const t = spr(lt / .6); imgAt(c.ic, 540, 400, clamp(t, 0, 1.2), 6 * Math.sin(lt * 2)); c.ic.style.opacity = clamp(t * 2);
     kinUp(c.h, lt, .2); ap(c.p, lt, .7, null, {s: .92});
     ap(c.f, lt, L[1], null, {s: .7, back: true});
+    c.o.up(lt, {mood: "happy", point: lt > L[1] ? .5 + .5 * Math.sin((lt - L[1]) * 6) : 0, look: [.5, -.6]});
   }
 });
