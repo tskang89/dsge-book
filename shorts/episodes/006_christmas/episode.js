@@ -13,8 +13,8 @@ Object.assign(EP, {no: 6, style: "v2", title: "크리스마스 선물의 사중�
           title: "The Deadweight Loss of Christmas", ko: "크리스마스의 사중손실", cite: "83(5): 1328–1336",
           url: "https://ideas.repec.org/a/aea/aecrev/v83y1993i5p1328-36.html"},
   yt: {title: "크리스마스 선물은 가치를 없앤다? | 크리스마스의 사중손실 #경제 #shorts",
-       desc: "예일대 학생 58명이 크리스마스에 받은 선물 278개. 준 사람이 낸 값(짐작)과, 선물에 담긴 마음은 빼고 현금 얼마면 똑같이 좋을지를 물었다. 받은 사람이 매긴 값은 평균 선물값의 약 87%였다 — 10만 원을 들인 선물이 받는 사람에겐 약 8만 7천 원어치(원화 금액은 예시). 사라진 차이를 경제학에서는 사중손실이라 부른다. (설문 기준) 다만 후속 연구(List & Shogren 1998, AER)가 학생들이 적어 낸 값에 선물을 실제로 사 가는 경매로 다시 재자 선물값의 121~135%로 나와, 말로만 묻느냐 실제로 파느냐에 따라 답이 달라졌다.",
-       tags: ["경제", "사중손실", "크리스마스", "선물", "미시경제학", "shorts"]}});
+       desc: "예일대 학생 58명이 크리스마스에 받은 선물 278개. 준 사람이 낸 값(짐작)과, 선물에 담긴 마음은 빼고 현금 얼마면 똑같이 좋을지를 물었다. 받은 사람이 매긴 값은 평균 선물값의 약 87%였다 — 10만 원을 들인 선물이 받는 사람에겐 약 8만 7천 원어치(원화 금액은 예시). 사라진 차이를 경제학에서는 사중손실(deadweight loss)이라 부른다. (설문 기준) 다만 후속 연구(List & Shogren 1998, AER)가 학생들이 적어 낸 값에 선물을 실제로 사 가는 경매로 다시 재자 선물값의 121~135%로 나와, 말로만 묻느냐 실제로 파느냐에 따라 답이 달라졌다.",
+       tags: ["경제", "사중손실", "deadweightloss", "크리스마스", "선물", "미시경제학", "shorts"]}});
 
 const GOLD = "#f2c14e", BLUE = "#5ab0ff", TEAL = "#6fcfb7", CORAL = "#ff8a65", RED = "#e85d5d";
 const WW = 4320;                       // 세계 너비: 0 거실 | 1080 설문 | 2160 동전 비교 | 3240 현금
@@ -161,13 +161,13 @@ scene({id: "survey", lines: [
 scene({id: "result", lines: [
   ["설문 결과: 받은 사람이 매긴 값은 선물값의 평균 **약 87%**", "두 답을 비교하니, 받은 사람이 매긴 값은 평균적으로 선물값의 약 팔십칠 퍼센트였습니다.", "ding"],
   ["예: 10만 원 선물 → 받는 사람에겐 **약 8만 7천 원**", "예를 들어 십만 원을 들인 선물이, 받는 사람에겐 약 팔만 칠천 원의 가치였던 거죠.", "coin"],
-  ["사라진 **약 1만 3천 원** = 사중손실", "사라진 만 삼천 원 정도를, 경제학에서는 사중손실이라고 부릅니다.", "pop"]],
+  ["사라진 **약 1만 3천 원** = 사중손실(Deadweight Loss)", "사라진 만 삼천 원 정도를, 경제학에서는 사중손실이라고 부릅니다.", "pop"]],
   build(el, hud) {
     const c = {w: homeWorld(el)};
     c.big = bigNum(hud, 150, "약 87%", GOLD, 150);
     c.ex = CX(hud, 330, `<span style="border:3px solid #fff;border-radius:30px;padding:4px 24px">예시 · 동전 1개 = 1만 원</span>`, "", {fontSize: "40px", fontWeight: 800, color: "#fff"});
     c.loss = A(hud, 560, 470, "사라진 약 1만 3천 원", "", {width: "400px", textAlign: "center", fontSize: "44px", fontWeight: 800, color: RED, textShadow: "0 4px 0 rgba(0,0,0,.4)"});
-    c.dl = pill(hud, 180, "사중손실", RED, 80);
+    c.dl = pill(hud, 180, "사중손실<br><span style='font-size:44px'>Deadweight Loss</span>", RED, 80);
     c.smoke = img(hud, "fire", 760, 640, 130);
     c.o = host(hud, "owl", {x: 545, y: 1275, s: .5});
     return c;
