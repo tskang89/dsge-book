@@ -43,10 +43,27 @@ svg text{font-family:var(--sans)}svg text:not([fill]){fill:var(--ink)}
 #ui button{background:#c9a75c;color:#111a2b;border:0;border-radius:3px;padding:7px 14px;font-weight:700;cursor:pointer}
 #ui input{flex:1;accent-color:#c9a75c}
 body.render #ui{display:none}
+/* ===== v2 스타일 (EP.style="v2") ===== */
+body.v2 #hd{display:none}
+#tag{position:absolute;left:56px;top:64px;font-size:30px;font-weight:700;letter-spacing:.06em;color:rgba(255,255,255,.85);
+  text-shadow:0 2px 8px rgba(0,0,0,.5);display:none;z-index:6}
+#tag i{font-style:normal;color:var(--gold)}
+body.v2 #tag{display:block}
+body.v2 #cap{top:1290px;left:40px;right:40px;z-index:6}
+body.v2 #cap .in{background:none;border:0;padding:0;font-size:76px;font-weight:800;line-height:1.22;letter-spacing:-.01em;
+  text-shadow:0 5px 0 rgba(0,0,0,.55),0 0 28px rgba(0,0,0,.65)}
+body.v2 #cap .w{display:inline-block;transition:none;margin:0 .12em}
+body.v2 #prog{top:auto;bottom:0;height:8px;z-index:6}
+#grain{position:absolute;left:0;top:0;width:1080px;height:1920px;pointer-events:none;z-index:5;mix-blend-mode:overlay;opacity:.13;display:none}
+#vig{position:absolute;inset:0;pointer-events:none;z-index:5;display:none;
+  background:radial-gradient(ellipse at 50% 42%,rgba(0,0,0,0) 55%,rgba(0,0,0,.45) 100%)}
+body.v2 #grain,body.v2 #vig{display:block}
+.kin .w{display:inline-block;margin:0 .1em}
+img.ic{position:absolute;filter:drop-shadow(0 10px 14px rgba(0,0,0,.35));transform-origin:50% 100%}
 </style>
 </head>
 <body>
-<div id="stage"><div id="hd"></div><div id="cap"><div class="in"></div></div><div id="prog"><div class="f"></div></div></div>
+<div id="stage"><canvas id="grain" width="540" height="960"></canvas><div id="vig"></div><div id="tag"></div><div id="hd"></div><div id="cap"><div class="in"></div></div><div id="prog"><div class="f"></div></div></div>
 <div id="ui"><button id="pp">▶</button><span id="tm">0:00</span><input id="sk" type="range" min="0" max="1000" value="0"></div>
 <audio id="aud" preload="auto" src="@@AUDIO@@"></audio>
 <script>/*@@KATEXJS@@*/</script>
@@ -84,6 +101,27 @@ function axes(g,x0,y0,w,h,o){o=o||{};S("line",{x1:x0,y1:y0+h,x2:x0+w,y2:y0+h,str
   S("line",{x1:x0,y1:y0,x2:x0,y2:y0+h,stroke:"#5f6a80","stroke-width":3},g);
   if(o.xl)ST(g,x0+w,y0+h+56,o.xl,{"text-anchor":"end","font-size":32,fill:"#9aa3b5"});
   if(o.yl)ST(g,x0+10,y0-20,o.yl,{"text-anchor":"start","font-size":32,fill:"#9aa3b5"})}
+/* ===== v2 도우미 ===== */
+const boldW=s=>s.replace(/\*\*([^*]+)\*\*/g,(m,x)=>x.trim().split(/\s+/).map(w=>"**"+w+"**").join(" "));
+const VLEAD=.12,VGAP=.28;              // make.py 의 LEAD·GAP 과 같아야 한다(단어 강조 자막 시간)
+const spr=x=>x<=0?0:1-Math.exp(-6.5*x)*Math.cos(9.5*x);   // 스프링(살짝 튐)
+const ASSETS=new Proxy({},{get:(o,k)=>{try{return ASSET_DATA[k]}catch(e){return ""}}});
+/* 3D 아이콘(Fluent Emoji, MIT): img(부모, "이름", 가운데x, 바닥y, 크기) — 기준점은 아래 가운데 */
+function img(parent,name,x,y,size){const e=E("img","ic",null,{left:(x-size/2)+"px",top:(y-size)+"px",width:size+"px",height:size+"px"},parent);
+  e.src=ASSETS[name]||"";e._x=x;e._y=y;e._sz=size;return e}
+function imgAt(e,x,y,sc,rot){e.style.left=(x-e._sz/2)+"px";e.style.top=(y-e._sz)+"px";e.style.transform=`scale(${sc==null?1:sc}) rotate(${rot||0}deg)`}
+/* 큰 제목(단어별로 튀어 오름): kin(el, y, "아이스크림 가게는<br>왜 꼭 **붙어** 있을까?", 88) */
+function kin(el,y,text,size){const h=tx(boldW(text)).split(/(<br>)/).map(seg=>seg==="<br>"?seg:seg.split(/\s+/).filter(Boolean).map(w=>`<span class="w">${w}</span>`).join(" ")).join("");
+  const d=CX(el,y,h,"kin",{fontSize:(size||84)+"px",fontWeight:800,lineHeight:1.18,textShadow:"0 5px 0 rgba(0,0,0,.45),0 0 30px rgba(0,0,0,.5)",padding:"0 50px",boxSizing:"border-box"});
+  d._w=[...d.querySelectorAll(".w")];return d}
+function kinUp(d,lt,a,b,step){d._w.forEach((w,i)=>{const u=spr((lt-a-i*(step||.07))/.55),uo=b!=null?1-ease((lt-b)/.4):1;
+  w.style.opacity=clamp(Math.min(u*3,uo));w.style.transform=`translateY(${(1-Math.min(u,1.2))*60}px) scale(${lerp(.6,1,clamp(u,0,1.15))})`})}
+/* 필름 질감: 프레임마다 다른 잡음(재현 가능) */
+const grainC=document.getElementById("grain"),gctx=grainC.getContext("2d");let gimg=null;
+/* 잡음을 프레임마다 바꾸면 영상 용량이 몇 배로 커지므로 한 번만 그린 고정 질감을 쓴다 */
+function grain(T){if(!document.body.classList.contains("v2")||gimg)return;const r=rng(7919);
+  if(!gimg)gimg=gctx.createImageData(540,960);const d=gimg.data;for(let i=0;i<d.length;i+=4){const v=r()*255;d[i]=d[i+1]=d[i+2]=v;d[i+3]=255}
+  gctx.putImageData(gimg,0,0)}
 /* 논문 카드: EP.paper = {journal, year, authors, title, cite, ko}. 학술지·연도를 크게, 원제는 작게 */
 function paperCard(el,y,p){p=p||EP.paper;const c=A(el,90,y,`<div style="display:flex;align-items:center;gap:18px;margin-bottom:22px">
   <span class="chip" style="font-size:34px;padding:6px 22px">${p.journal}</span><span class="gold" style="font-size:44px;font-weight:700">${p.year}</span></div>
@@ -111,22 +149,34 @@ function PLAN(){const lines=[],sfx=[];SC.forEach((s,si)=>{if(si>0)sfx.push({t:s.
   return{total:TOTAL,lines,sfx,ep:EP}}
 /*@@EPISODE@@*/
 /* ---------------- 구동부 ---------------- */
+const V2=EP.style==="v2";if(V2)document.body.classList.add("v2");
 layout();
+document.getElementById("tag").innerHTML=`오늘의 경제 <i>#${String(EP.no||0).padStart(3,"0")}</i>`;
 document.getElementById("hd").innerHTML=`<div class="badge">오늘의 경제 · ${String(EP.no||0).padStart(3,"0")}</div><div class="ttl">${tx(EP.title||"")}</div><div class="bar"></div>`;
 const capEl=document.querySelector("#cap .in"),progF=document.querySelector("#prog .f");
-SC.forEach(s=>{s.el=E("div","scene",null,null,stage);stage.insertBefore(s.el,document.getElementById("hd"));s.ctx=s.build(s.el);
-  s.capH=s.lines.map(l=>tx(l[0]))});
-let lastCap=null;
+SC.forEach(s=>{s.el=E("div","scene",null,null,stage);stage.insertBefore(s.el,document.getElementById("hd"));
+  s.hud=E("div","scene",null,null,stage);stage.insertBefore(s.hud,document.getElementById("hd"));s.ctx=s.build(s.el,s.hud);
+  s.capH=s.lines.map(l=>V2?boldW(l[0]).split(/\s+/).filter(Boolean).map(w=>`<span class="w">${tx(w)}</span>`).join(" "):tx(l[0]))});
+let lastCap=null,capW=[];
 function renderAt(T){T=clamp(T,0,TOTAL-1e-3);
   SC.forEach((s,i)=>{const lt=T-s.start,on=lt>=-.001&&lt<s.dur+(i<SC.length-1?XF:0);
-    s.el.style.display=on?"block":"none";if(!on)return;
-    s.el.style.opacity=i>0&&lt<XF?ease(lt/XF):1;s.update(s.ctx,Math.min(lt,s.dur),s.L)});
+    s.el.style.display=s.hud.style.display=on?"block":"none";if(!on)return;
+    s.el.style.opacity=s.hud.style.opacity=i>0&&lt<XF?ease(lt/XF):1;s.update(s.ctx,Math.min(lt,s.dur),s.L)});
   const s=SC.find(s=>T>=s.start&&T<s.start+s.dur)||SC[SC.length-1],lt=T-s.start;
   let ci=0;while(ci<s.L.length-1&&lt>=s.L[ci+1])ci++;
-  const h=s.capH[ci]||"";if(h!==lastCap){capEl.innerHTML=h;lastCap=h}
+  const h=s.capH[ci]||"";if(h!==lastCap){capEl.innerHTML=h;lastCap=h;capW=[...capEl.querySelectorAll(".w")]}
   const cu=ease((lt-s.L[ci])/.25);capEl.style.opacity=h?cu:0;capEl.style.transform=`scale(${lerp(.92,1,eback(Math.min(1,(lt-s.L[ci])/.3)))})`;
+  if(V2&&capW.length){const ln=s.lines[ci],TM=(typeof TIMING!=="undefined")?TIMING:{},tot=TM[s.id+" "+ci]||((s.L[ci+1]??s.L.end)-s.L[ci]);
+    const v0=s.L[ci]+VLEAD,v1=s.L[ci]+tot-VGAP,len=capW.map(w=>Math.max(1,w.textContent.length)),sum=len.reduce((a,b)=>a+b,0);let acc=0;
+    capW.forEach((w,k)=>{const a=v0+(v1-v0)*acc/sum,b=v0+(v1-v0)*(acc+len[k])/sum;acc+=len[k];
+      const on=lt>=a,cur=lt>=a&&lt<b,gold=!!w.querySelector("b");const pu=spr((lt-a)/.35);
+      w.style.color=cur||gold&&on?"var(--gold)":on?"#fff":"rgba(255,255,255,.72)";
+      w.style.transform=`scale(${on?lerp(1.12,1,clamp(pu)):1})`})}
+  if(V2)cam(s,lt);grain(T);
   const hd=document.getElementById("hd");hd.style.opacity=(s.noHd?0:1)*1;
   progF.style.width=(T/TOTAL*100)+"%"}
+function cam(s,lt){const c=s.cam?s.cam(lt,s.L):{x:540,y:860,s:lerp(1,1.045,lt/Math.max(1,s.dur))};
+  s.el.style.transformOrigin="0 0";s.el.style.transform=`translate(${c.x-c.x*c.s}px,${c.y-c.y*c.s}px) scale(${c.s})`}
 function fit(){const k=Math.min(innerWidth/W,(innerHeight-(document.body.classList.contains("render")?0:44))/H);stage.style.transform=`scale(${k})`;
   stage.style.left=((innerWidth-W*k)/2)+"px";stage.style.top="0px"}
 addEventListener("resize",fit);

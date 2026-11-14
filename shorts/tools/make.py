@@ -30,6 +30,11 @@ def build(ep_js, out, timing=None, audio_url=None):
     from fontTools.ttLib import TTFont
     tpl = open(os.path.join(ROOT, "shorts", "engine", "template.html"), encoding="utf-8").read()
     src_ep = open(ep_js, encoding="utf-8").read()
+    adir = os.path.join(ROOT, "shorts", "assets", "fluent")
+    used = {f[:-4]: os.path.join(adir, f) for f in os.listdir(adir) if f.endswith(".png") and '"%s"' % f[:-4] in src_ep}
+    if used:
+        src_ep = "const ASSET_DATA=" + json.dumps({k: "data:image/png;base64," + base64.b64encode(open(v, "rb").read()).decode()
+                                                  for k, v in used.items()}) + ";\n" + src_ep
     if timing:
         src_ep = "const TIMING=" + json.dumps(timing, ensure_ascii=False) + ";\n" + src_ep
     title = re.search(r'title:\s*"([^"]+)"', src_ep).group(1)
@@ -184,7 +189,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("ep"); ap.add_argument("--tts", required=True); ap.add_argument("--asr")
     ap.add_argument("--work"); ap.add_argument("--speed", type=float, default=1.25); ap.add_argument("--tries", type=int, default=5); ap.add_argument("--sid", type=int, default=0)
-    ap.add_argument("--par", type=int, default=4); ap.add_argument("--only", choices=["build", "audio", "video"])
+    ap.add_argument("--par", type=int, default=4); ap.add_argument("--out"); ap.add_argument("--only", choices=["build", "audio", "video"])
     a = ap.parse_args()
     ep = os.path.abspath(a.ep); name = os.path.basename(ep.rstrip("/"))
     work = a.work or os.path.join(os.environ.get("SCRATCH", "/tmp"), "shorts", name); os.makedirs(work, exist_ok=True)
@@ -211,7 +216,7 @@ def main():
     silent = os.path.join(work, "silent.mp4")
     sh("node", os.path.join(HERE, "render.js"), html, silent, str(a.par))
     vids = os.path.join(ROOT, "shorts", "videos"); os.makedirs(vids, exist_ok=True)
-    out = os.path.join(vids, name + ".mp4")
+    out = a.out or os.path.join(vids, name + ".mp4")
     sh("ffmpeg", "-loglevel", "error", "-y", "-i", silent, "-i", m4a, "-map", "0:v", "-map", "1:a", "-c:v", "libx264", "-preset", "slow",
        "-crf", "23", "-pix_fmt", "yuv420p", "-c:a", "copy", "-shortest", "-movflags", "+faststart", out)
     print(f"[6] 완성 → {out} ({os.path.getsize(out)/1e6:.1f} MB)")
