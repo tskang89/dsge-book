@@ -8,7 +8,7 @@ description: 「오늘의 경제」 세로 쇼츠(경제 이론·현상 하나�
 결과물: `shorts/videos/NNN_slug.mp4` (1080×1920, 30fps, ≤ 59초, AAC 48k 스테레오, −14 LUFS).
 원본: `shorts/episodes/NNN_slug/episode.js` 한 파일(화면 + 자막 + 낭독문). 교재 내용이 아니므로 **암호화하지 않는다**.
 기준 예시는 `shorts/episodes/001_hotelling/episode.js`(**v2 스타일**) — 새 편은 이것을 복사해 시작한다.
-**모든 편은 v2 스타일(`style: "v2"`)로 만든다**(사용자 지시). 아래 “4절 v2 그래픽 규칙”을 반드시 지킨다.
+**모든 편은 v2 스타일(`style: "v2"`)로 만든다**(사용자 지시). 아래 2절의 “v2 그래픽 규칙”을 반드시 지킨다.
 
 ## 0. 준비 (세션마다)
 ```bash
