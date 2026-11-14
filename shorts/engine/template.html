@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>@@TITLE@@</title>
+<style>
+/*@@FONTS@@*/
+/*@@KATEXCSS@@*/
+/* 오늘의 경제 쇼츠 — 세로 1080×1920. 색은 style-guide.md 토큰을 그대로 쓴다. */
+:root{--bg:#111a2b;--card:#1c2840;--ink:#ece6d6;--muted:#9aa3b5;--dim:#5f6a80;
+  --gold:#d8b76a;--blue:#7fb3e6;--teal:#6fcfb7;--red:#e88a6f;--rule:#2f3a52;--sand:#c9b48a;--sea:#2a5d86;
+  --sans:"Pretendard","KFall","Apple SD Gothic Neo","Malgun Gothic",sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#0a0f1a;color:var(--ink);font-family:var(--sans);overflow:hidden}
+#stage{position:absolute;left:0;top:0;width:1080px;height:1920px;transform-origin:0 0;overflow:hidden;
+  word-break:keep-all;overflow-wrap:break-word;line-break:strict;
+  background:radial-gradient(ellipse at 30% 18%,#1d2a48 0%,var(--bg) 52%,#0b111d 100%)}
+.scene{position:absolute;inset:0;display:none}
+.a{position:absolute}
+/* 머리(시리즈 표시) */
+#hd{position:absolute;left:70px;right:70px;top:120px}
+#hd .badge{display:inline-block;font-size:34px;font-weight:700;letter-spacing:.08em;color:#111a2b;background:var(--gold);
+  padding:8px 22px;border-radius:40px}
+#hd .ttl{font-size:56px;font-weight:700;margin-top:22px;line-height:1.2}
+#hd .bar{height:4px;background:var(--gold);margin-top:22px;width:200px}
+/* 자막: 크게, 화면 중하단(쇼츠 아래쪽 UI 를 피한다) */
+#cap{position:absolute;left:60px;right:60px;top:1300px;height:300px;display:flex;align-items:flex-start;justify-content:center;pointer-events:none}
+#cap .in{padding:22px 36px;background:rgba(8,12,22,.82);border-radius:18px;border:2px solid rgba(216,183,106,.35);
+  font-size:62px;font-weight:700;line-height:1.32;text-align:center;max-width:960px}
+#cap b{color:var(--gold);font-weight:700}
+#prog{position:absolute;left:0;top:0;height:10px;width:100%;background:rgba(255,255,255,.06)}
+#prog .f{height:100%;background:var(--gold);width:0}
+.big{font-size:60px;font-weight:700;line-height:1.3}
+.mid{font-size:46px;line-height:1.35}
+.sm{font-size:36px;line-height:1.4;color:var(--muted)}
+.card{background:var(--card);border:2px solid var(--rule);border-radius:22px;padding:34px 40px}
+.gold{color:var(--gold)}.blue{color:var(--blue)}.teal{color:var(--teal)}.red{color:var(--red)}.mut{color:var(--muted)}
+.chip{display:inline-block;padding:10px 28px;border-radius:40px;border:3px solid var(--gold);font-size:40px;font-weight:700}
+svg text{font-family:var(--sans)}svg text:not([fill]){fill:var(--ink)}
+#ui{position:fixed;left:0;right:0;bottom:0;display:flex;gap:10px;align-items:center;padding:10px 16px;background:rgba(0,0,0,.7);font-size:14px;color:#ddd}
+#ui button{background:#c9a75c;color:#111a2b;border:0;border-radius:3px;padding:7px 14px;font-weight:700;cursor:pointer}
+#ui input{flex:1;accent-color:#c9a75c}
+body.render #ui{display:none}
+</style>
+</head>
+<body>
+<div id="stage"><div id="hd"></div><div id="cap"><div class="in"></div></div><div id="prog"><div class="f"></div></div></div>
+<div id="ui"><button id="pp">▶</button><span id="tm">0:00</span><input id="sk" type="range" min="0" max="1000" value="0"></div>
+<audio id="aud" preload="auto" src="@@AUDIO@@"></audio>
+<script>/*@@KATEXJS@@*/</script>
+<script>
+"use strict";
+const W=1080,H=1920,NS="http://www.w3.org/2000/svg";
+const stage=document.getElementById("stage");
+const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const ease=x=>{x=clamp(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};
+const eout=x=>{x=clamp(x);return 1-Math.pow(1-x,3)};
+const eback=x=>{x=clamp(x);const c=1.70158,d=c+1;return 1+d*Math.pow(x-1,3)+c*Math.pow(x-1,2)};
+const P=(lt,a,d=.6)=>ease((lt-a)/d);
+const lerp=(a,b,u)=>a+(b-a)*u;
+const mixc=(c1,c2,u)=>{const h=s=>[1,3,5].map(i=>parseInt(s.slice(i,i+2),16));const a=h(c1),b=h(c2);
+  return"#"+a.map((v,i)=>Math.round(lerp(v,b[i],clamp(u))).toString(16).padStart(2,"0")).join("")};
+function K(tex,disp){return typeof katex==="undefined"?tex:katex.renderToString(tex,{displayMode:!!disp,throwOnError:false,strict:false})}
+function tx(s){return s.replace(/\$([^$]+)\$/g,(m,t)=>K(t,false)).replace(/\*\*([^*]+)\*\*/g,"<b>$1</b>")}
+function E(tag,cls,html,css,parent){const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;
+  if(css)Object.assign(e.style,css);if(parent)parent.appendChild(e);return e}
+function A(parent,x,y,html,cls,css){return E("div","a "+(cls||""),html,Object.assign({left:x+"px",top:y+"px"},css||{}),parent)}
+const CX=(el,y,html,cls,css)=>A(el,0,y,html,cls,Object.assign({width:W+"px",textAlign:"center"},css||{}));
+function S(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e}
+function ST(g,x,y,s,attrs){const t=S("text",Object.assign({x,y,"text-anchor":"middle","font-size":36},attrs||{}),g);t.textContent=s;return t}
+function svgLayer(parent){return S("svg",{width:W,height:H,viewBox:`0 0 ${W} ${H}`,style:"position:absolute;left:0;top:0;overflow:visible"},parent)}
+/* 등장/퇴장: 0.5초 ease-in-out 페이드 + 이동(기본 아래→위 40px). o.s 를 주면 확대하며 등장 */
+function ap(el,lt,a,b,o){o=o||{};const d=o.d||.5,dy=o.dy==null?40:o.dy,dx=o.dx||0;
+  const ui=(o.back?eback:ease)((lt-a)/d),uo=b!=null?1-ease((lt-b)/(o.od||.5)):1;const u=Math.min(clamp(ui,0,1.2),uo);
+  el.style.opacity=clamp(u);const s=o.s?lerp(o.s,1,u):1;
+  el.style.transform=`translate(${(1-u)*dx}px,${(1-u)*dy}px) scale(${s})`;el.style.visibility=u<=0.001?"hidden":"visible";return u}
+function sap(el,lt,a,b,o){o=o||{};const u=Math.min(ease((lt-a)/(o.d||.5)),b!=null?1-ease((lt-b)/.5):1);el.setAttribute("opacity",clamp(u));return u}
+function draw(p,u){if(!p._L){p._L=p.getTotalLength();p.style.strokeDasharray=p._L+" "+p._L}p.style.strokeDashoffset=p._L*(1-clamp(u));p.style.opacity=u>0?1:0}
+function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function poly(pts){return"M"+pts.map(p=>p[0].toFixed(1)+","+p[1].toFixed(1)).join(" L")}
+function axes(g,x0,y0,w,h,o){o=o||{};S("line",{x1:x0,y1:y0+h,x2:x0+w,y2:y0+h,stroke:"#5f6a80","stroke-width":3},g);
+  S("line",{x1:x0,y1:y0,x2:x0,y2:y0+h,stroke:"#5f6a80","stroke-width":3},g);
+  if(o.xl)ST(g,x0+w,y0+h+56,o.xl,{"text-anchor":"end","font-size":32,fill:"#9aa3b5"});
+  if(o.yl)ST(g,x0+10,y0-20,o.yl,{"text-anchor":"start","font-size":32,fill:"#9aa3b5"})}
+/* 수치가 올라가는 카운터 */
+function countTo(el,lt,a,from,to,fmt,d){el.textContent=fmt(lerp(from,to,ease((lt-a)/(d||.8))))}
+
+/* ---------------- 에피소드 등록 ----------------
+   EP = {no, title, hook, bgm:{seed, bpm, mood}}
+   scene({id, lines:[[자막, 낭독문, 효과음?], …], build(el)→c, update(c, lt, L)})
+     L[i] = i번째 줄이 시작하는 장면 안 시각(초), L.end = 장면 길이.
+     줄 길이는 음성 길이(TIMING, 빌드 때 주입)로 정해진다. 없으면 글자 수로 어림한다. */
+const EP={};const SC=[];let TOTAL=0;const XF=.4;
+function scene(o){SC.push(o)}
+function layout(){TOTAL=0;const TM=(typeof TIMING!=="undefined")?TIMING:{};
+  SC.forEach(s=>{const L=[];let t=0;s.lines.forEach((ln,i)=>{L.push(t);const k=s.id+" "+i;
+      t+=TM[k]!=null?TM[k]:Math.max(1.6,.2+ln[1].replace(/\s/g,"").length*.135+.35)});
+    if(s.tail)t+=s.tail;L.end=t;s.L=L;s.dur=t;s.start=TOTAL;TOTAL+=t});}
+/* 소리 계획: 음성 줄 시작 시각 + 효과음(장면 전환 쉭, 줄별 효과음) → 렌더 도구가 읽어 믹싱한다 */
+function PLAN(){const lines=[],sfx=[];SC.forEach((s,si)=>{if(si>0)sfx.push({t:s.start-.15,type:"whoosh"});
+  s.lines.forEach((ln,i)=>{lines.push({key:s.id+" "+i,t:s.start+s.L[i],say:ln[1]});if(ln[2])[].concat(ln[2]).forEach(x=>{
+    const m=/^(\w+)(?:@([\d.]+))?$/.exec(x);sfx.push({t:s.start+s.L[i]+(m[2]?+m[2]:0),type:m[1]})})})});
+  return{total:TOTAL,lines,sfx,ep:EP}}
+/*@@EPISODE@@*/
+/* ---------------- 구동부 ---------------- */
+layout();
+document.getElementById("hd").innerHTML=`<div class="badge">오늘의 경제 · ${String(EP.no||0).padStart(3,"0")}</div><div class="ttl">${tx(EP.title||"")}</div><div class="bar"></div>`;
+const capEl=document.querySelector("#cap .in"),progF=document.querySelector("#prog .f");
+SC.forEach(s=>{s.el=E("div","scene",null,null,stage);stage.insertBefore(s.el,document.getElementById("hd"));s.ctx=s.build(s.el);
+  s.capH=s.lines.map(l=>tx(l[0]))});
+let lastCap=null;
+function renderAt(T){T=clamp(T,0,TOTAL-1e-3);
+  SC.forEach((s,i)=>{const lt=T-s.start,on=lt>=-.001&&lt<s.dur+(i<SC.length-1?XF:0);
+    s.el.style.display=on?"block":"none";if(!on)return;
+    s.el.style.opacity=i>0&&lt<XF?ease(lt/XF):1;s.update(s.ctx,Math.min(lt,s.dur),s.L)});
+  const s=SC.find(s=>T>=s.start&&T<s.start+s.dur)||SC[SC.length-1],lt=T-s.start;
+  let ci=0;while(ci<s.L.length-1&&lt>=s.L[ci+1])ci++;
+  const h=s.capH[ci]||"";if(h!==lastCap){capEl.innerHTML=h;lastCap=h}
+  const cu=ease((lt-s.L[ci])/.25);capEl.style.opacity=h?cu:0;capEl.style.transform=`scale(${lerp(.92,1,eback(Math.min(1,(lt-s.L[ci])/.3)))})`;
+  const hd=document.getElementById("hd");hd.style.opacity=(s.noHd?0:1)*1;
+  progF.style.width=(T/TOTAL*100)+"%"}
+function fit(){const k=Math.min(innerWidth/W,(innerHeight-(document.body.classList.contains("render")?0:44))/H);stage.style.transform=`scale(${k})`;
+  stage.style.left=((innerWidth-W*k)/2)+"px";stage.style.top="0px"}
+addEventListener("resize",fit);
+if(location.search.includes("render"))document.body.classList.add("render");
+fit();
+/* 미리보기 재생기 */
+const aud=document.getElementById("aud"),pp=document.getElementById("pp"),sk=document.getElementById("sk"),tm=document.getElementById("tm");
+let playing=false,t0=0,tStart=0,T=0;
+const fmt=x=>Math.floor(x/60)+":"+String(Math.floor(x%60)).padStart(2,"0");
+function tick(){if(playing){T=aud.src&&!aud.paused?aud.currentTime:tStart+(performance.now()-t0)/1000;if(T>=TOTAL){playing=false;T=TOTAL}}
+  renderAt(T);sk.value=T/TOTAL*1000;tm.textContent=fmt(T)+" / "+fmt(TOTAL);requestAnimationFrame(tick)}
+pp.onclick=()=>{playing=!playing;if(playing){if(T>=TOTAL-.1)T=0;tStart=T;t0=performance.now();if(aud.getAttribute("src")){aud.currentTime=T;aud.play().catch(()=>{})}}else aud.pause()};
+sk.oninput=()=>{T=sk.value/1000*TOTAL;tStart=T;t0=performance.now();if(aud.getAttribute("src"))aud.currentTime=T};
+if(!document.body.classList.contains("render"))requestAnimationFrame(tick);else renderAt(0);
+</script>
+</body>
+</html>
