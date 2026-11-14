@@ -25,7 +25,7 @@ def sh(*a, **k):
     return subprocess.run(a, check=True, **k)
 
 
-def build(ep_js, out, timing=None, audio_url=None):
+def build(ep_js, out, timing=None, audio_url=None, env=None):
     from build import subset_font, PRET, NOTO
     from fontTools.ttLib import TTFont
     tpl = open(os.path.join(ROOT, "shorts", "engine", "template.html"), encoding="utf-8").read()
@@ -35,10 +35,13 @@ def build(ep_js, out, timing=None, audio_url=None):
     if used:
         src_ep = "const ASSET_DATA=" + json.dumps({k: "data:image/png;base64," + base64.b64encode(open(v, "rb").read()).decode()
                                                   for k, v in used.items()}) + ";\n" + src_ep
+    if env is not None:
+        src_ep = "const VOICE_ENV=" + json.dumps(env, separators=(",", ":")) + ";\n" + src_ep
     if timing:
         src_ep = "const TIMING=" + json.dumps(timing, ensure_ascii=False) + ";\n" + src_ep
     title = re.search(r'title:\s*"([^"]+)"', src_ep).group(1)
-    src = tpl.replace("/*@@EPISODE@@*/", src_ep).replace("@@TITLE@@", "오늘의 경제 · " + title)
+    src = tpl.replace("/*@@MASCOT@@*/", open(os.path.join(ROOT, "shorts", "engine", "mascot.js"), encoding="utf-8").read())
+    src = src.replace("/*@@EPISODE@@*/", src_ep).replace("@@TITLE@@", "오늘의 경제 · " + title)
     text = "".join(sorted(set(src) | {chr(i) for i in range(32, 127)} | set("·—–→…“”‘’〈〉×▶①②③④⑤")))
     face = '@font-face{font-family:"%s";font-weight:%d;font-display:block;src:url(data:font/woff2;base64,%s) format("woff2")}\n'
     ff = "".join(face % ("Pretendard", w, subset_font(os.path.join(PRET, p), text))
@@ -126,6 +129,20 @@ def tts_lines(lines, wavdir, a):
     return out
 
 
+def voice_env(pl, wavs, rate=50):
+    """줄별 음성을 시간에 놓고 20ms 마다 크기(RMS)를 0~1로. 마스코트 입 움직임용."""
+    import numpy as np, soundfile as sf
+    n = int(pl["total"] * rate) + 2; env = np.zeros(n)
+    for ln in pl["lines"]:
+        x, sr = sf.read(wavs[ln["key"]], dtype="float32")
+        if x.ndim > 1: x = x.mean(1)
+        hop = sr // rate; k0 = int((ln["t"] + LEAD) * rate)
+        for j in range(len(x) // hop):
+            if k0 + j < n: env[k0 + j] = max(env[k0 + j], float(np.sqrt(np.mean(x[j * hop:(j + 1) * hop] ** 2))))
+    ref = np.percentile(env[env > 0], 95) if (env > 0).any() else 1
+    return [round(float(v), 2) for v in np.clip(env / ref, 0, 1)]
+
+
 def mix(pl, wavs, bgm_cfg, out_m4a):
     import numpy as np, soundfile as sf
     from bgm import make_bgm, sfx
@@ -189,7 +206,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("ep"); ap.add_argument("--tts", required=True); ap.add_argument("--asr")
     ap.add_argument("--work"); ap.add_argument("--speed", type=float, default=1.25); ap.add_argument("--tries", type=int, default=8); ap.add_argument("--sid", type=int, default=0)
-    ap.add_argument("--par", type=int, default=4); ap.add_argument("--out"); ap.add_argument("--only", choices=["build", "audio", "video"])
+    ap.add_argument("--par", type=int, default=4); ap.add_argument("--fps", type=int, default=30); ap.add_argument("--mb", type=int, default=1); ap.add_argument("--out"); ap.add_argument("--only", choices=["build", "audio", "video"])
     a = ap.parse_args()
     ep = os.path.abspath(a.ep); name = os.path.basename(ep.rstrip("/"))
     work = a.work or os.path.join(os.environ.get("SCRATCH", "/tmp"), "shorts", name); os.makedirs(work, exist_ok=True)
@@ -203,6 +220,7 @@ def main():
     print(f"[2] TTS 완료")
     html = os.path.join(work, name + ".html"); build(js, html, timing, audio_url=name + ".m4a")
     pl = plan(html)
+    build(js, html, timing, audio_url=name + ".m4a", env=voice_env(pl, wavs))
     print(f"[3] 길이 {pl['total']:.1f}s" + ("  ⚠ 60초 초과" if pl["total"] > 60 else ""))
     write_upload(p0["ep"], os.path.join(ep, "upload.txt"))
     json.dump(pl, open(os.path.join(work, "plan.json"), "w"), ensure_ascii=False, indent=1)
@@ -214,7 +232,7 @@ def main():
     if a.only == "audio":
         return
     silent = os.path.join(work, "silent.mp4")
-    sh("node", os.path.join(HERE, "render.js"), html, silent, str(a.par))
+    sh("node", os.path.join(HERE, "render.js"), html, silent, str(a.par), str(a.fps), str(a.mb))
     vids = os.path.join(ROOT, "shorts", "videos"); os.makedirs(vids, exist_ok=True)
     out = a.out or os.path.join(vids, name + ".mp4")
     sh("ffmpeg", "-loglevel", "error", "-y", "-i", silent, "-i", m4a, "-map", "0:v", "-map", "1:a", "-c:v", "libx264", "-preset", "slow",

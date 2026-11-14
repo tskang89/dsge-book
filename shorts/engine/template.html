@@ -102,6 +102,14 @@ function axes(g,x0,y0,w,h,o){o=o||{};S("line",{x1:x0,y1:y0+h,x2:x0+w,y2:y0+h,str
   if(o.xl)ST(g,x0+w,y0+h+56,o.xl,{"text-anchor":"end","font-size":32,fill:"#9aa3b5"});
   if(o.yl)ST(g,x0+10,y0-20,o.yl,{"text-anchor":"start","font-size":32,fill:"#9aa3b5"})}
 /* ===== v2 도우미 ===== */
+let GT=0;   // 지금 영상 전체 시각(초)
+/* 목소리 크기(0~1): 빌드 때 넣은 VOICE_ENV(50Hz)에서 읽는다 — 마스코트 입 움직임용 */
+function voiceAt(T){try{const E=VOICE_ENV,i=T*50,k=Math.floor(i),f=i-k;return E[k]==null?0:lerp(E[k],E[k+1]||0,f)}catch(e){return 0}}
+/* 마스코트를 화면(카메라 영향 없는 층)에 세운다: talk·blink·bob 은 자동 */
+function host(parent,kind,o){const sv=S("svg",{width:W,height:H,viewBox:`0 0 ${W} ${H}`,style:"position:absolute;left:0;top:0;overflow:visible;z-index:4"},parent);
+  const m=mascot(sv,kind||"owl");m.o=Object.assign({x:200,y:1250,s:.9},o||{});
+  m.up=(lt,st)=>{st=st||{};const b=GT%3.9,blink=b<.14?Math.sin(b/.14*Math.PI):0;
+    m.set(Object.assign({},m.o,{talk:clamp(voiceAt(GT)*1.4),blink,bob:(GT*.8)%1},st))};return m}
 const boldW=s=>s.replace(/\*\*([^*]+)\*\*/g,(m,x)=>x.trim().split(/\s+/).map(w=>"**"+w+"**").join(" "));
 const VLEAD=.12,VGAP=.28;              // make.py 의 LEAD·GAP 과 같아야 한다(단어 강조 자막 시간)
 const spr=x=>x<=0?0:1-Math.exp(-6.5*x)*Math.cos(9.5*x);   // 스프링(살짝 튐)
@@ -147,6 +155,7 @@ function PLAN(){const lines=[],sfx=[];SC.forEach((s,si)=>{if(si>0)sfx.push({t:s.
   s.lines.forEach((ln,i)=>{lines.push({key:s.id+" "+i,t:s.start+s.L[i],say:ln[1]});if(ln[2])[].concat(ln[2]).forEach(x=>{
     const m=/^(\w+)(?:@([\d.]+))?$/.exec(x);sfx.push({t:s.start+s.L[i]+(m[2]?+m[2]:0),type:m[1]})})})});
   return{total:TOTAL,lines,sfx,ep:EP}}
+/*@@MASCOT@@*/
 /*@@EPISODE@@*/
 /* ---------------- 구동부 ---------------- */
 const V2=EP.style==="v2";if(V2)document.body.classList.add("v2");
@@ -158,7 +167,7 @@ SC.forEach(s=>{s.el=E("div","scene",null,null,stage);stage.insertBefore(s.el,doc
   s.hud=E("div","scene",null,null,stage);stage.insertBefore(s.hud,document.getElementById("hd"));s.ctx=s.build(s.el,s.hud);
   s.capH=s.lines.map(l=>V2?boldW(l[0]).split(/\s+/).filter(Boolean).map(w=>`<span class="w">${tx(w)}</span>`).join(" "):tx(l[0]))});
 let lastCap=null,capW=[];
-function renderAt(T){T=clamp(T,0,TOTAL-1e-3);
+function renderAt(T){T=clamp(T,0,TOTAL-1e-3);GT=T;
   SC.forEach((s,i)=>{const lt=T-s.start,on=lt>=-.001&&lt<s.dur+(i<SC.length-1?XF:0);
     s.el.style.display=s.hud.style.display=on?"block":"none";if(!on)return;
     s.el.style.opacity=s.hud.style.opacity=i>0&&lt<XF?ease(lt/XF):1;s.update(s.ctx,Math.min(lt,s.dur),s.L)});
