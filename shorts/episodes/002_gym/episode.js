@@ -9,14 +9,15 @@
    - 4.3회 × $17 > $70: 정액은 '$70 넘는' 계약들이라 1회당 값이 $70/4.3 보다 크다 → 화면에 $70÷4.3 계산을 보이지 않는다
    - 주된 설명: 미래의 자기 통제·효율에 대한 과신
    본전 7회 = $70 ÷ $10 (단순 산수, 화면 그래프는 월 $70 정액 vs 1회 $10).
-   4.3번 × $10 ≈ $43 (단순 산수). 영상에서는 '한 번 $10'(논문의 10회권 기준 단가)과 '한 달 $70 이상'으로만 비교(사용자 지시). */
+   4.3번 × $10 ≈ $43, $70 ÷ 4.3 ≈ $16.3 (단순 산수). 영상은 '1회 $10'과 '한 달 $70'으로 단순화(사용자 지시) —
+   논문의 '1회당 $17 넘게'는 회비가 $70 넘는 계약들의 값이라 $70 기준 화면과 맞지 않으므로 영상에선 $70÷4.3≈$16 을 쓰고, 설명란에 원래 수치를 밝힌다. */
 Object.assign(EP, {no: 2, style: "v2", title: "헬스장 회원권의 역설", hook: "헬스장 월 정액권, 정말 이득일까?",
   bgm: {seed: 23, bpm: 104, mood: "bright"},
   paper: {journal: "American Economic Review", year: 2006, authors: "Stefano DellaVigna & Ulrike Malmendier",
-          title: "Paying Not to Go to the Gym", ko: "헬스장에 안 가려고 돈 내기", cite: "96(3): 694–719",
+          title: "Paying Not to Go to the Gym", ko: "헬스장에 가지 않기 위해 돈 내기", cite: "96(3): 694–719",
           url: "https://doi.org/10.1257/aer.96.3.694"},
-  yt: {title: "헬스장 월 정액권, 정말 이득일까? | 헬스장에 안 가려고 돈 내기 #경제 #shorts",
-       desc: "미국 헬스장 3곳 회원 7,752명의 3년 치 출석 기록. 한 달 $70 이상 정액은 한 달 7번 넘게 가야 한 번에 $10씩 내는 것보다 싸다. 그런데 정액 회원은 한 달 평균 4.3번 가서, 한 번에 $17 넘게 낸 셈이었다. 한 번씩 냈다면 가입 기간 동안 평균 $600을 아낄 수 있었다. 저자들은 미래의 자기 통제에 대한 과신을 가장 유력한 설명으로 꼽는다. (1회 $10은 논문 속 10회권 기준 단가)",
+  yt: {title: "헬스장 월 정액권, 정말 이득일까? | 헬스장에 가지 않기 위해 돈 내기 #경제 #shorts",
+       desc: "미국 헬스장 3곳 회원 7,752명의 3년 치 출석 기록. 한 달 정액(약 $70)은 한 달 7번 넘게 가야 1회 $10보다 싸다. 그런데 정액 회원은 한 달 평균 4.3번 갔다. 1회씩 냈다면 가입 기간 동안 평균 $600을 아낄 수 있었다. 저자들은 미래의 자기 통제에 대한 과신을 가장 유력한 설명으로 꼽는다. (영상은 단순화를 위해 월 $70로 계산. 논문의 정액은 월 $70 넘는 계약들이라 1회당 실제 비용은 $17 이상, 1회 $10은 10회권 기준 단가)",
        tags: ["경제", "행동경제학", "헬스장", "과신", "현재편향", "shorts"]}});
 
 const GOLD = "#f2c14e", BLUE = "#5ab0ff", TEAL = "#6fcfb7", CORAL = "#ff8a65";
@@ -113,14 +114,14 @@ scene({id: "hook", lines: [
 
 /* 3. 선택지와 본전 */
 scene({id: "choice", lines: [
-  ["**한 달 $70 이상**: 몇 번을 가든 같은 돈", "하나는 한 달에 칠십 달러 이상. 몇 번을 가든 같은 돈입니다.", "pop"],
+  ["**한 달 $70**: 몇 번을 가든 같은 돈", "하나는 한 달 칠십 달러. 몇 번을 가든 같은 돈입니다.", "pop"],
   ["**1회 $10**: 간 만큼만 낸다", "다른 하나는 일 회 십 달러. 간 만큼만 내죠.", "pop"],
   ["한 달 **7번** 넘게 가야 정액이 이득", "그러니 한 달에 일곱 번 넘게 가야 정액이 이득입니다.", "ding"]],
   build(el, hud) {
     const c = {w: gym(el, {rack: false})};
     const sv = svgLayer(hud);
     c.t = S("g", {}, sv); passCard(c.t, 400, "1회 $10", "간 만큼만", "#9fe3cf", "#4fb39a");
-    c.m = S("g", {}, sv); passCard(c.m, 400, "한 달 $70+", "몇 번을 가든", "#ffd977", "#e0a43a");
+    c.m = S("g", {}, sv); passCard(c.m, 400, "한 달 $70", "몇 번을 가든", "#ffd977", "#e0a43a");
     c.vs = CX(hud, 300, "VS", "", {fontSize: "70px", fontWeight: 800, color: "#fff", textShadow: "0 4px 0 rgba(0,0,0,.4)"});
     // 그래프: x 방문 횟수 0~12, y 한 달 비용 0~130
     c.gr = S("g", {}, sv);
@@ -133,7 +134,7 @@ scene({id: "choice", lines: [
     c.l1 = S("path", {d: `M${X(0)},${Y(0)} L${X(12)},${Y(120)}`, stroke: TEAL, "stroke-width": 9, fill: "none", "stroke-linecap": "round"}, c.gr);
     c.l2 = S("path", {d: `M${X(0)},${Y(70)} L${X(12)},${Y(70)}`, stroke: GOLD, "stroke-width": 9, fill: "none", "stroke-linecap": "round"}, c.gr);
     ST(c.gr, X(12) - 10, Y(120) - 20, "1회 $10", {"font-size": 38, "font-weight": 800, fill: TEAL, "text-anchor": "end"});
-    ST(c.gr, X(.3), Y(70) + 52, "한 달 정액($70 이상)", {"font-size": 36, "font-weight": 800, fill: GOLD, "text-anchor": "start"});
+    ST(c.gr, X(.3), Y(70) + 52, "한 달 정액 $70", {"font-size": 36, "font-weight": 800, fill: GOLD, "text-anchor": "start"});
     c.zone = S("g", {opacity: 0}, c.gr);
     S("rect", {x: X(0), y: y0, width: X(7) - X(0), height: h, fill: TEAL, opacity: .12}, c.zone);
     S("rect", {x: X(7), y: y0, width: X(12) - X(7), height: h, fill: GOLD, opacity: .12}, c.zone);
@@ -162,7 +163,7 @@ scene({id: "choice", lines: [
 /* 4. 실제 출석 */
 scene({id: "reality", lines: [
   ["정액 회원의 실제 출석: 한 달 평균 **4.3번**", "그런데 정액을 고른 회원들은, 한 달에 평균 사 점 삼 번 갔습니다.", "pop"],
-  ["1회씩 냈다면 약 **$43**, 그런데 **$70 이상** 냈다", "한 번씩 냈다면 사십삼 달러 정도인데, 칠십 달러 이상을 낸 거죠.", "coin"]],
+  ["1회씩 냈다면 약 **$43**, 그런데 **$70**을 냈다", "한 번씩 냈다면 사십삼 달러 정도인데, 칠십 달러를 낸 거죠.", "coin"]],
   build(el, hud) {
     const c = {w: gym(el)};
     const sv = svgLayer(hud);
@@ -185,7 +186,7 @@ scene({id: "reality", lines: [
       <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px"><span style="font-size:48px;font-weight:800">1회씩 냈다면</span>
         <span style="font-size:40px;color:#cfd6e4">4.3번 × $10 ≈ <b style="font-size:70px;color:${TEAL}">$43</b></span></div>
       <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:48px;font-weight:800">한 달 정액</span>
-        <span style="font-size:40px;color:#cfd6e4">횟수 무관 <b style="font-size:70px;color:${CORAL}">$70+</b></span></div>`;
+        <span style="font-size:40px;color:#cfd6e4">횟수 무관 <b style="font-size:70px;color:${CORAL}">$70</b></span></div>`;
     c.bills = [0, 1, 2].map(() => img(hud, "dollar", 0, 0, 150));
     return c;
   },
@@ -203,7 +204,7 @@ scene({id: "reality", lines: [
 
 /* 5. 놓친 돈 */
 scene({id: "loss", lines: [
-  ["1회 $10이면 될 걸, 한 번에 **$17 넘게** 낸 셈", "십 달러면 될 걸, 한 번 갈 때마다 십칠 달러 넘게 낸 셈입니다.", "coin"],
+  ["$70 ÷ 4.3번 = 한 번에 **약 $16**", "칠십 달러를 사 점 삼 번으로 나누면, 한 번에 십육 달러꼴. 십 달러면 될 걸요.", "coin"],
   ["1회씩 냈다면, 가입 기간 동안 평균 **$600** 절약", "한 번씩 냈다면, 가입해 있던 동안 평균 육백 달러를 아낄 수 있었어요.", "coin"]],
   build(el, hud) {
     const c = {w: gym(el)};
@@ -212,11 +213,11 @@ scene({id: "loss", lines: [
     S("rect", {x: 90, y: 300, width: 900, height: 470, rx: 30, fill: "rgba(10,15,28,.75)"}, c.bars);
     ST(c.bars, 140, 370, "한 번 갈 때 낸 돈", {"font-size": 40, "font-weight": 800, fill: "#cfd6e4", "text-anchor": "start"});
     ST(c.bars, 140, 495, "1회씩", {"font-size": 42, "font-weight": 800, fill: "#fff", "text-anchor": "start"});
-    ST(c.bars, 140, 655, "정액(실제)", {"font-size": 42, "font-weight": 800, fill: "#fff", "text-anchor": "start"});
+    ST(c.bars, 140, 655, "$70 정액", {"font-size": 42, "font-weight": 800, fill: "#fff", "text-anchor": "start"});
     c.b1 = S("rect", {x: 360, y: 450, height: 70, rx: 16, fill: TEAL}, c.bars);
     c.b2 = S("rect", {x: 360, y: 610, height: 70, rx: 16, fill: CORAL}, c.bars);
     c.t1 = ST(c.bars, 0, 500, "$10", {"font-size": 50, "font-weight": 800, fill: TEAL, "text-anchor": "start"});
-    c.t2 = ST(c.bars, 0, 660, "$17+", {"font-size": 50, "font-weight": 800, fill: CORAL, "text-anchor": "start"});
+    c.t2 = ST(c.bars, 0, 660, "약 $16", {"font-size": 50, "font-weight": 800, fill: CORAL, "text-anchor": "start"});
     c.big = bigNum(hud, 0, 280, "$0", GOLD, 210); c.big.style.width = W + "px"; c.big.style.textAlign = "center";
     c.cap2 = CX(hud, 530, "1회씩 냈다면 아낄 수 있었던 돈(평균)", "", {fontSize: "44px", fontWeight: 800, color: "#fff", textShadow: "0 3px 10px rgba(0,0,0,.6)"});
     c.fly = [0, 1, 2, 3, 4].map(() => img(hud, "money_wings", 0, 0, 140));
@@ -226,7 +227,7 @@ scene({id: "loss", lines: [
     c.w.anim(lt);
     const out = 1 - ease((lt - L[1] + .1) / .4);
     c.bars.setAttribute("opacity", P(lt, 0) * out);
-    const w1 = 280 * ease((lt - .4) / .7), w2 = 280 * 1.7 * ease((lt - .8) / .9);
+    const w1 = 280 * ease((lt - .4) / .7), w2 = 280 * 1.63 * ease((lt - .8) / .9);
     c.b1.setAttribute("width", w1); c.b2.setAttribute("width", w2);
     c.t1.setAttribute("x", 380 + w1); c.t2.setAttribute("x", 380 + w2);
     c.t1.setAttribute("opacity", P(lt, 1)); c.t2.setAttribute("opacity", P(lt, 1.6));
@@ -271,7 +272,7 @@ scene({id: "why", lines: [
 
 /* 7. 마무리 */
 scene({id: "outro", tail: .7, lines: [
-  ["논문 제목: 〈헬스장에 **안 가려고** 돈 내기〉", "그래서 논문 제목이, 헬스장에 안 가려고 돈 내기.", "ding"],
+  ["논문 제목: 〈헬스장에 **가지 않기 위해** 돈 내기〉", "논문 제목은, 헬스장에 가지 않기 위해 돈 내기.", "ding"],
   ["매일 하나씩, **오늘의 경제**", "구독하고 매일 하나씩 만나요."]],
   build(el, hud) {
     const c = {w: gym(el)};
