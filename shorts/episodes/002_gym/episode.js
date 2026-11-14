@@ -8,14 +8,15 @@
    - (영상에서 뺌) 월 계약 회원은 1년 계약 회원보다 가입 1년 뒤에도 회원일 확률이 17% 높다 — 설명이 길어 오해 소지가 커서 제외
    - 4.3회 × $17 > $70: 정액은 '$70 넘는' 계약들이라 1회당 값이 $70/4.3 보다 크다 → 화면에 $70÷4.3 계산을 보이지 않는다
    - 주된 설명: 미래의 자기 통제·효율에 대한 과신
-   본전 7회 = $70 ÷ $10 (단순 산수, 화면 그래프는 월 $70 정액 vs 1회 $10). */
+   본전 7회 = $70 ÷ $10 (단순 산수, 화면 그래프는 월 $70 정액 vs 1회 $10).
+   4.3번 × $10 ≈ $43 (단순 산수). 10회권 유효기간은 확인 못 해 말하지 않는다. */
 Object.assign(EP, {no: 2, style: "v2", title: "헬스장 회원권의 역설", hook: "헬스장 월 정액권, 정말 이득일까?",
   bgm: {seed: 23, bpm: 104, mood: "bright"},
   paper: {journal: "American Economic Review", year: 2006, authors: "Stefano DellaVigna & Ulrike Malmendier",
           title: "Paying Not to Go to the Gym", ko: "헬스장에 안 가려고 돈 내기", cite: "96(3): 694–719",
           url: "https://doi.org/10.1257/aer.96.3.694"},
   yt: {title: "헬스장 월 정액권, 정말 이득일까? | 헬스장에 안 가려고 돈 내기 #경제 #shorts",
-       desc: "미국 헬스장 3곳 회원 7,752명의 3년 치 출석 기록. 매달 $70 넘게 내는 월 정액권 회원은 한 달 평균 4.3번 가서, 월 회비를 출석 횟수로 나누면 한 번에 $17 넘게 낸 셈이었다. 10회권(한 번에 $10)을 썼다면 가입 기간 동안 평균 $600을 아낄 수 있었다. 저자들은 미래의 자기 통제에 대한 과신을 가장 유력한 설명으로 꼽는다.",
+       desc: "미국 헬스장 3곳 회원 7,752명의 3년 치 출석 기록. 월 정액권(매달 $70 넘게, 횟수 무관)은 한 달 7번 넘게 가야 10회권($100에 10번)보다 싸다. 그런데 정액권 회원은 한 달 평균 4.3번 가서 한 번에 $17 넘게 낸 셈이었다. 10회권을 썼다면 가입 기간 동안 평균 $600을 아낄 수 있었다. 저자들은 미래의 자기 통제에 대한 과신을 가장 유력한 설명으로 꼽는다.",
        tags: ["경제", "행동경제학", "헬스장", "과신", "현재편향", "shorts"]}});
 
 const GOLD = "#f2c14e", BLUE = "#5ab0ff", TEAL = "#6fcfb7", CORAL = "#ff8a65";
@@ -85,7 +86,7 @@ function passCard(parent, w, label, sub, col1, col2) {
 /* 1. 질문 */
 scene({id: "hook", lines: [
   ["헬스장 **월 정액권**, 정말 이득일까?", "헬스장 월 정액권, 정말 이득일까요?", "pop"],
-  ["2006년 AER 논문: 회원 **7,752명**의 3년 치 출석", "이천육 년 아메리칸 이코노믹 리뷰 논문이, 헬스장 회원 칠천칠백여 명의 삼 년 치 출석 기록을 분석했습니다."]],
+  ["2006년 AER 논문: 회원 **7,752명**의 3년 치 출석", "이천육 년 경제학 논문이, 헬스장 회원 칠천칠백여 명의 삼 년 치 출석을 분석했습니다."]],
   build(el, hud) {
     const c = {w: gym(el)};
     c.lifter = img(el, "lifter", 540, 1180, 330);
@@ -112,14 +113,14 @@ scene({id: "hook", lines: [
 
 /* 3. 선택지와 본전 */
 scene({id: "choice", lines: [
-  ["10회권: **$100**에 10번, 한 번에 $10", "회원권은 두 종류. 십 회권은 백 달러에 열 번, 한 번에 십 달러꼴이고,", "pop"],
-  ["월 정액권: 매달 **$70 넘게**, 횟수 무제한", "월 정액권은 매달 칠십 달러 넘게 내고, 횟수 제한 없이 다닙니다.", "pop"],
-  ["정액권이 10회권보다 싸려면 **한 달 7번 넘게**", "정액권이 십 회권보다 싸려면, 한 달에 일곱 번 넘게 가야 하죠.", "ding"]],
+  ["**월 정액권**: 매달 $70 넘게, 몇 번을 가든 같은 돈", "월 정액권은 매달 칠십 달러 넘게 내고, 몇 번을 가든 같은 돈입니다.", "pop"],
+  ["**10회권**: $100에 10번, 갈 때마다 $10씩 쓰는 셈", "십 회권은 백 달러에 열 번. 갈 때마다 십 달러씩 쓰는 셈이죠.", "pop"],
+  ["한 달 **7번** 넘게 가면 정액권, 덜 가면 10회권이 싸다", "그래서 한 달에 일곱 번 넘게 가면 정액권이, 그보다 덜 가면 십 회권이 쌉니다.", "ding"]],
   build(el, hud) {
     const c = {w: gym(el, {rack: false})};
     const sv = svgLayer(hud);
-    c.t = S("g", {}, sv); passCard(c.t, 400, "10회권", "$100 = 10번", "#9fe3cf", "#4fb39a");
-    c.m = S("g", {}, sv); passCard(c.m, 400, "월 정액권", "매달 $70+ · 무제한", "#ffd977", "#e0a43a");
+    c.t = S("g", {}, sv); passCard(c.t, 400, "10회권", "$100 · 10번 이용", "#9fe3cf", "#4fb39a");
+    c.m = S("g", {}, sv); passCard(c.m, 400, "월 정액권", "매달 $70+ · 횟수 무관", "#ffd977", "#e0a43a");
     c.vs = CX(hud, 300, "VS", "", {fontSize: "70px", fontWeight: 800, color: "#fff", textShadow: "0 4px 0 rgba(0,0,0,.4)"});
     // 그래프: x 방문 횟수 0~12, y 한 달 비용 0~130
     c.gr = S("g", {}, sv);
@@ -133,6 +134,11 @@ scene({id: "choice", lines: [
     c.l2 = S("path", {d: `M${X(0)},${Y(70)} L${X(12)},${Y(70)}`, stroke: GOLD, "stroke-width": 9, fill: "none", "stroke-linecap": "round"}, c.gr);
     ST(c.gr, X(12) - 10, Y(120) - 20, "10회권", {"font-size": 38, "font-weight": 800, fill: TEAL, "text-anchor": "end"});
     ST(c.gr, X(.3), Y(70) + 52, "월 정액권(최소 $70)", {"font-size": 36, "font-weight": 800, fill: GOLD, "text-anchor": "start"});
+    c.zone = S("g", {opacity: 0}, c.gr);
+    S("rect", {x: X(0), y: y0, width: X(7) - X(0), height: h, fill: TEAL, opacity: .12}, c.zone);
+    S("rect", {x: X(7), y: y0, width: X(12) - X(7), height: h, fill: GOLD, opacity: .12}, c.zone);
+    ST(c.zone, (X(0) + X(7)) / 2, y0 + h - 30, "10회권이 쌈", {"font-size": 40, "font-weight": 800, fill: TEAL});
+    ST(c.zone, (X(7) + X(12)) / 2 + 40, y0 + h - 30, "정액권이 쌈", {"font-size": 40, "font-weight": 800, fill: GOLD});
     c.be = S("g", {}, c.gr);
     S("line", {x1: X(7), y1: Y(70), x2: X(7), y2: y0 + h, stroke: "#fff", "stroke-width": 4, "stroke-dasharray": "10 8"}, c.be);
     S("circle", {cx: X(7), cy: Y(70), r: 16, fill: "#fff"}, c.be);
@@ -143,20 +149,20 @@ scene({id: "choice", lines: [
   update(c, lt, L) {
     c.w.anim(lt);
     const out = 1 - ease((lt - L[2] + .2) / .4);
-    const a = clamp(spr((lt - .1) / .6), 0, 1.2) * out, b = clamp(spr((lt - L[1]) / .6), 0, 1.2) * out;
+    const b = clamp(spr((lt - .1) / .6), 0, 1.2) * out, a = clamp(spr((lt - L[1]) / .6), 0, 1.2) * out;
     c.t.setAttribute("transform", `translate(${lerp(300, 290, a)},${640 + 8 * Math.sin(lt * 2)}) rotate(-6) scale(${a})`);
     c.m.setAttribute("transform", `translate(${lerp(780, 790, b)},${640 + 8 * Math.sin(lt * 2 + 1)}) rotate(6) scale(${b})`);
     c.vs.style.opacity = P(lt, L[1]) * out;
     sap(c.gr, lt, L[2] - .1);
     draw(c.l1, P(lt, L[2] + .2, 1)); draw(c.l2, P(lt, L[2] + .4, 1));
-    sap(c.be, lt, L[2] + 1.3);
+    sap(c.be, lt, L[2] + 1.3); c.zone.setAttribute("opacity", P(lt, L[2] + 1.8, .5));
   }
 });
 
 /* 4. 실제 출석 */
 scene({id: "reality", lines: [
-  ["정액권 회원의 실제 출석: 월평균 **4.3번**", "그런데 정액권 회원들은, 실제로 한 달 평균 사 점 삼 번 갔습니다.", "pop"],
-  ["월 회비 ÷ 출석 = 한 번에 **$17** 넘게", "월 회비를 출석 횟수로 나누면, 한 번 가는 데 십칠 달러 넘게 낸 셈.", "coin"]],
+  ["정액권 회원의 실제 출석: 월평균 **4.3번**", "그런데 정액권을 고른 회원들은, 한 달에 평균 사 점 삼 번 갔습니다.", "pop"],
+  ["4.3번이면 10회권으로 약 **$43**, 정액권은 **$70 넘게**", "사 점 삼 번이면 십 회권으로는 사십삼 달러 정도인데, 정액권으로 칠십 달러 넘게 낸 거죠.", "coin"]],
   build(el, hud) {
     const c = {w: gym(el)};
     const sv = svgLayer(hud);
@@ -173,8 +179,13 @@ scene({id: "reality", lines: [
     c.chk = c.days.map(() => img(hud, "check", 0, 0, 90));
     c.part = img(hud, "check", 0, 0, 90);
     c.num = bigNum(hud, 0, 150, "4.3번", GOLD, 150); c.num.style.width = W + "px"; c.num.style.textAlign = "center";
-    c.tag = A(hud, 0, 1080, "", "", {width: W + "px", textAlign: "center"});
-    c.tag.innerHTML = `<span style="display:inline-block;background:${CORAL};color:#10182a;font-size:60px;font-weight:800;padding:14px 40px;border-radius:60px;box-shadow:0 10px 30px rgba(0,0,0,.4)">월 회비 ÷ 출석 = 한 번에 $17+</span>`;
+    c.tag = A(hud, 90, 560, "", "", {width: "900px", padding: "34px 44px", borderRadius: "30px", background: "rgba(10,15,28,.9)",
+      border: "2px solid rgba(255,255,255,.15)", boxShadow: "0 20px 50px rgba(0,0,0,.5)"});
+    c.tag.innerHTML = `<div style="font-size:42px;font-weight:800;color:#cfd6e4;margin-bottom:24px">한 달에 4.3번 가면, 한 달 비용은</div>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px"><span style="font-size:48px;font-weight:800">10회권</span>
+        <span style="font-size:40px;color:#cfd6e4">4.3번 × $10 ≈ <b style="font-size:70px;color:${TEAL}">$43</b></span></div>
+      <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:48px;font-weight:800">월 정액권</span>
+        <span style="font-size:40px;color:#cfd6e4">횟수 무관 <b style="font-size:70px;color:${CORAL}">$70+</b></span></div>`;
     c.bills = [0, 1, 2].map(() => img(hud, "dollar", 0, 0, 150));
     return c;
   },
@@ -185,15 +196,15 @@ scene({id: "reality", lines: [
     c.days.forEach((d, i) => pop(c.chk[i], lt, .6 + i * .35, c.cells[d][0] + 10, c.cells[d][1] + 45, 0));
     const p = pop(c.part, lt, .6 + 4 * .35, c.cells[29][0] + 10, c.cells[29][1] + 45, 0); c.part.style.opacity = .3 * clamp(p * 2);
     ap(c.num, lt, 2.2, null, {s: .5, back: true});
-    ap(c.tag, lt, L[1] + .2, null, {s: .6, back: true});
-    c.bills.forEach((e, i) => pop(e, lt, L[1] + .5 + i * .15, 300 + i * 240, 1060 + 10 * Math.sin(lt * 3 + i), -15 + i * 15));
+    ap(c.tag, lt, L[1] + .2, null, {s: .85});
+    c.bills.forEach((e, i) => {e.style.opacity = 0});
   }
 });
 
 /* 5. 놓친 돈 */
 scene({id: "loss", lines: [
-  ["한 번에 $10인 10회권을 썼다면", "한 번에 십 달러인 십 회권을 썼다면,"],
-  ["가입해 있던 동안 평균 **$600** 절약", "가입해 있던 기간 동안, 평균 육백 달러를 아낄 수 있었습니다.", "coin"]],
+  ["한 번 갈 때마다 **$17 넘게** 낸 셈 (10회권은 $10)", "한 번 갈 때마다 십칠 달러 넘게 낸 셈입니다.", "coin"],
+  ["10회권을 썼다면 가입 기간 동안 평균 **$600** 절약", "십 회권을 썼다면, 가입해 있던 동안 평균 육백 달러를 아낄 수 있었어요.", "coin"]],
   build(el, hud) {
     const c = {w: gym(el)};
     const sv = svgLayer(hud);
@@ -223,7 +234,7 @@ scene({id: "loss", lines: [
     c.big.style.transform = `scale(${1 + .12 * Math.sin(Math.PI * clamp((lt - L[1] - 1.5) / .5))})`;
     ap(c.cap2, lt, L[1] + .5);
     c.fly.forEach((e, i) => {const t = lt - L[1] - .4 - i * .25; if (t < 0) {e.style.opacity = 0; return}
-      imgAt(e, 200 + i * 170 + 40 * Math.sin(t * 2 + i), 1000 - t * 160, 1, 10 * Math.sin(t * 3 + i)); e.style.opacity = clamp(t * 3) * (1 - clamp((t - 2.2) / .6))});
+      imgAt(e, 200 + i * 170 + 40 * Math.sin(t * 2 + i), 1180 - t * 90, 1, 10 * Math.sin(t * 3 + i)); e.style.opacity = clamp(t * 3) * (1 - clamp((t - 2) / .6))});
   }
 });
 
