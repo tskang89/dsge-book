@@ -16,7 +16,7 @@ Object.assign(EP, {no: 2, style: "v2", title: "헬스장 회원권의 역설", h
           title: "Paying Not to Go to the Gym", ko: "헬스장에 안 가려고 돈 내기", cite: "96(3): 694–719",
           url: "https://doi.org/10.1257/aer.96.3.694"},
   yt: {title: "헬스장 월 정액권, 정말 이득일까? | 헬스장에 안 가려고 돈 내기 #경제 #shorts",
-       desc: "미국 헬스장 3곳 회원 7,752명의 3년 치 출석 기록. 한 달 $70 이상 정액은 한 달 7번 넘게 가야 한 번에 $10씩 내는 것보다 싸다. 그런데 정액 회원은 한 달 평균 4.3번 가서, 한 번에 $17 넘게 낸 셈이었다. 한 번씩 냈다면 가입 기간 동안 평균 $600을 아낄 수 있었다. 저자들은 미래의 자기 통제에 대한 과신을 가장 유력한 설명으로 꼽는다. (한 번 $10은 논문 속 10회권 기준)",
+       desc: "미국 헬스장 3곳 회원 7,752명의 3년 치 출석 기록. 한 달 $70 이상 정액은 한 달 7번 넘게 가야 한 번에 $10씩 내는 것보다 싸다. 그런데 정액 회원은 한 달 평균 4.3번 가서, 한 번에 $17 넘게 낸 셈이었다. 한 번씩 냈다면 가입 기간 동안 평균 $600을 아낄 수 있었다. 저자들은 미래의 자기 통제에 대한 과신을 가장 유력한 설명으로 꼽는다. (1회 $10은 논문 속 10회권 기준 단가)",
        tags: ["경제", "행동경제학", "헬스장", "과신", "현재편향", "shorts"]}});
 
 const GOLD = "#f2c14e", BLUE = "#5ab0ff", TEAL = "#6fcfb7", CORAL = "#ff8a65";
@@ -114,12 +114,12 @@ scene({id: "hook", lines: [
 /* 3. 선택지와 본전 */
 scene({id: "choice", lines: [
   ["**한 달 $70 이상**: 몇 번을 가든 같은 돈", "하나는 한 달에 칠십 달러 이상. 몇 번을 가든 같은 돈입니다.", "pop"],
-  ["**한 번 갈 때 $10**: 간 만큼만 낸다", "다른 하나는 한 번 갈 때 십 달러. 간 만큼만 내죠.", "pop"],
+  ["**1회 $10**: 간 만큼만 낸다", "다른 하나는 일 회 십 달러. 간 만큼만 내죠.", "pop"],
   ["한 달 **7번** 넘게 가야 정액이 이득", "그러니 한 달에 일곱 번 넘게 가야 정액이 이득입니다.", "ding"]],
   build(el, hud) {
     const c = {w: gym(el, {rack: false})};
     const sv = svgLayer(hud);
-    c.t = S("g", {}, sv); passCard(c.t, 400, "한 번에 $10", "간 만큼만", "#9fe3cf", "#4fb39a");
+    c.t = S("g", {}, sv); passCard(c.t, 400, "1회 $10", "간 만큼만", "#9fe3cf", "#4fb39a");
     c.m = S("g", {}, sv); passCard(c.m, 400, "한 달 $70+", "몇 번을 가든", "#ffd977", "#e0a43a");
     c.vs = CX(hud, 300, "VS", "", {fontSize: "70px", fontWeight: 800, color: "#fff", textShadow: "0 4px 0 rgba(0,0,0,.4)"});
     // 그래프: x 방문 횟수 0~12, y 한 달 비용 0~130
@@ -132,12 +132,12 @@ scene({id: "choice", lines: [
     [[70, "$70"], [120, "$120"]].forEach(([v, t]) => ST(c.gr, x0 - 14, Y(v) + 12, t, {"font-size": 32, fill: "#cfd6e4", "text-anchor": "end"}));
     c.l1 = S("path", {d: `M${X(0)},${Y(0)} L${X(12)},${Y(120)}`, stroke: TEAL, "stroke-width": 9, fill: "none", "stroke-linecap": "round"}, c.gr);
     c.l2 = S("path", {d: `M${X(0)},${Y(70)} L${X(12)},${Y(70)}`, stroke: GOLD, "stroke-width": 9, fill: "none", "stroke-linecap": "round"}, c.gr);
-    ST(c.gr, X(12) - 10, Y(120) - 20, "한 번에 $10", {"font-size": 38, "font-weight": 800, fill: TEAL, "text-anchor": "end"});
+    ST(c.gr, X(12) - 10, Y(120) - 20, "1회 $10", {"font-size": 38, "font-weight": 800, fill: TEAL, "text-anchor": "end"});
     ST(c.gr, X(.3), Y(70) + 52, "한 달 정액($70 이상)", {"font-size": 36, "font-weight": 800, fill: GOLD, "text-anchor": "start"});
     c.zone = S("g", {opacity: 0}, c.gr);
     S("rect", {x: X(0), y: y0, width: X(7) - X(0), height: h, fill: TEAL, opacity: .12}, c.zone);
     S("rect", {x: X(7), y: y0, width: X(12) - X(7), height: h, fill: GOLD, opacity: .12}, c.zone);
-    ST(c.zone, (X(0) + X(7)) / 2, y0 + h - 30, "한 번씩이 쌈", {"font-size": 40, "font-weight": 800, fill: TEAL});
+    ST(c.zone, (X(0) + X(7)) / 2, y0 + h - 30, "1회씩이 쌈", {"font-size": 40, "font-weight": 800, fill: TEAL});
     ST(c.zone, (X(7) + X(12)) / 2 + 40, y0 + h - 30, "정액이 쌈", {"font-size": 40, "font-weight": 800, fill: GOLD});
     c.be = S("g", {}, c.gr);
     S("line", {x1: X(7), y1: Y(70), x2: X(7), y2: y0 + h, stroke: "#fff", "stroke-width": 4, "stroke-dasharray": "10 8"}, c.be);
@@ -162,7 +162,7 @@ scene({id: "choice", lines: [
 /* 4. 실제 출석 */
 scene({id: "reality", lines: [
   ["정액 회원의 실제 출석: 한 달 평균 **4.3번**", "그런데 정액을 고른 회원들은, 한 달에 평균 사 점 삼 번 갔습니다.", "pop"],
-  ["한 번씩 냈다면 약 **$43**, 그런데 **$70 이상** 냈다", "한 번씩 냈다면 사십삼 달러 정도인데, 칠십 달러 이상을 낸 거죠.", "coin"]],
+  ["1회씩 냈다면 약 **$43**, 그런데 **$70 이상** 냈다", "한 번씩 냈다면 사십삼 달러 정도인데, 칠십 달러 이상을 낸 거죠.", "coin"]],
   build(el, hud) {
     const c = {w: gym(el)};
     const sv = svgLayer(hud);
@@ -182,7 +182,7 @@ scene({id: "reality", lines: [
     c.tag = A(hud, 90, 560, "", "", {width: "900px", padding: "34px 44px", borderRadius: "30px", background: "rgba(10,15,28,.9)",
       border: "2px solid rgba(255,255,255,.15)", boxShadow: "0 20px 50px rgba(0,0,0,.5)"});
     c.tag.innerHTML = `<div style="font-size:42px;font-weight:800;color:#cfd6e4;margin-bottom:24px">한 달에 4.3번 가면, 한 달 비용은</div>
-      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px"><span style="font-size:48px;font-weight:800">한 번씩 냈다면</span>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px"><span style="font-size:48px;font-weight:800">1회씩 냈다면</span>
         <span style="font-size:40px;color:#cfd6e4">4.3번 × $10 ≈ <b style="font-size:70px;color:${TEAL}">$43</b></span></div>
       <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:48px;font-weight:800">한 달 정액</span>
         <span style="font-size:40px;color:#cfd6e4">횟수 무관 <b style="font-size:70px;color:${CORAL}">$70+</b></span></div>`;
@@ -203,22 +203,22 @@ scene({id: "reality", lines: [
 
 /* 5. 놓친 돈 */
 scene({id: "loss", lines: [
-  ["$10이면 될 걸, 한 번에 **$17 넘게** 낸 셈", "십 달러면 될 걸, 한 번 갈 때마다 십칠 달러 넘게 낸 셈입니다.", "coin"],
-  ["한 번씩 냈다면, 가입 기간 동안 평균 **$600** 절약", "한 번씩 냈다면, 가입해 있던 동안 평균 육백 달러를 아낄 수 있었어요.", "coin"]],
+  ["1회 $10이면 될 걸, 한 번에 **$17 넘게** 낸 셈", "십 달러면 될 걸, 한 번 갈 때마다 십칠 달러 넘게 낸 셈입니다.", "coin"],
+  ["1회씩 냈다면, 가입 기간 동안 평균 **$600** 절약", "한 번씩 냈다면, 가입해 있던 동안 평균 육백 달러를 아낄 수 있었어요.", "coin"]],
   build(el, hud) {
     const c = {w: gym(el)};
     const sv = svgLayer(hud);
     c.bars = S("g", {}, sv);
     S("rect", {x: 90, y: 300, width: 900, height: 470, rx: 30, fill: "rgba(10,15,28,.75)"}, c.bars);
     ST(c.bars, 140, 370, "한 번 갈 때 낸 돈", {"font-size": 40, "font-weight": 800, fill: "#cfd6e4", "text-anchor": "start"});
-    ST(c.bars, 140, 495, "한 번씩", {"font-size": 42, "font-weight": 800, fill: "#fff", "text-anchor": "start"});
+    ST(c.bars, 140, 495, "1회씩", {"font-size": 42, "font-weight": 800, fill: "#fff", "text-anchor": "start"});
     ST(c.bars, 140, 655, "정액(실제)", {"font-size": 42, "font-weight": 800, fill: "#fff", "text-anchor": "start"});
     c.b1 = S("rect", {x: 360, y: 450, height: 70, rx: 16, fill: TEAL}, c.bars);
     c.b2 = S("rect", {x: 360, y: 610, height: 70, rx: 16, fill: CORAL}, c.bars);
     c.t1 = ST(c.bars, 0, 500, "$10", {"font-size": 50, "font-weight": 800, fill: TEAL, "text-anchor": "start"});
     c.t2 = ST(c.bars, 0, 660, "$17+", {"font-size": 50, "font-weight": 800, fill: CORAL, "text-anchor": "start"});
     c.big = bigNum(hud, 0, 280, "$0", GOLD, 210); c.big.style.width = W + "px"; c.big.style.textAlign = "center";
-    c.cap2 = CX(hud, 530, "한 번씩 냈다면 아낄 수 있었던 돈(평균)", "", {fontSize: "44px", fontWeight: 800, color: "#fff", textShadow: "0 3px 10px rgba(0,0,0,.6)"});
+    c.cap2 = CX(hud, 530, "1회씩 냈다면 아낄 수 있었던 돈(평균)", "", {fontSize: "44px", fontWeight: 800, color: "#fff", textShadow: "0 3px 10px rgba(0,0,0,.6)"});
     c.fly = [0, 1, 2, 3, 4].map(() => img(hud, "money_wings", 0, 0, 140));
     return c;
   },
