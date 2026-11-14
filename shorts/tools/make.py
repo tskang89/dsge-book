@@ -110,18 +110,18 @@ def tts_lines(lines, wavdir, a):
         x, sr = v.gen(ln["say"])
         if v.rec:
             best, hyp = v.score(x, sr, ln["say"]); c0 = best
-            for _ in range(a.tries if best > .2 else 0):
+            for _ in range(a.tries if best > .03 else 0):   # 한 글자라도 틀리게 들리면 다시 만든다
                 y, sr2 = v.gen(ln["say"]); c, hy = v.score(y, sr2, ln["say"])
                 if c < best:
                     best, hyp, x, sr = c, hy, y, sr2
-                if best <= .1:
+                if best <= .03:
                     break
             report.append((best, c0, ln["key"], ln["say"], hyp))
         sf.write(fn, x, sr)
     if report:
         report.sort(key=lambda r: -r[0])
         print(f"asr: 평균 CER {sum(r[0] for r in report)/len(report):.3f} (새로 만든 {len(report)}줄)")
-        for c, c0, k, t, hy in report[:6]:
+        for c, c0, k, t, hy in report:   # 모든 줄의 받아쓰기를 보인다(뭉개진 발음은 CER 이 낮아도 눈으로 찾는다)
             print(f"  {c:.2f} (처음 {c0:.2f}) {k}\n     원고: {t}\n     인식: {hy}")
     return out
 
@@ -188,7 +188,7 @@ def write_upload(E, fn):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("ep"); ap.add_argument("--tts", required=True); ap.add_argument("--asr")
-    ap.add_argument("--work"); ap.add_argument("--speed", type=float, default=1.25); ap.add_argument("--tries", type=int, default=5); ap.add_argument("--sid", type=int, default=0)
+    ap.add_argument("--work"); ap.add_argument("--speed", type=float, default=1.25); ap.add_argument("--tries", type=int, default=8); ap.add_argument("--sid", type=int, default=0)
     ap.add_argument("--par", type=int, default=4); ap.add_argument("--out"); ap.add_argument("--only", choices=["build", "audio", "video"])
     a = ap.parse_args()
     ep = os.path.abspath(a.ep); name = os.path.basename(ep.rstrip("/"))
