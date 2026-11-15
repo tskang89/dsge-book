@@ -165,7 +165,33 @@ document.getElementById("hd").innerHTML=`<div class="badge">오늘의 경제 · 
 const capEl=document.querySelector("#cap .in"),progF=document.querySelector("#prog .f");
 SC.forEach(s=>{s.el=E("div","scene",null,null,stage);stage.insertBefore(s.el,document.getElementById("hd"));
   s.hud=E("div","scene",null,null,stage);stage.insertBefore(s.hud,document.getElementById("hd"));s.ctx=s.build(s.el,s.hud);
-  s.capH=s.lines.map(l=>V2?boldW(l[0]).split(/\s+/).filter(Boolean).map(w=>`<span class="w">${tx(w)}</span>`).join(" "):tx(l[0]))});
+  s.capH=s.lines.map(l=>V2?capTok(boldW(l[0])).map(w=>`<span class="w">${tx(w).replace(/_/g,"&nbsp;")}</span>`).join(" "):tx(l[0]))});
+/* 자막 낱말 묶기: 괄호 안(영어 병기 등)은 한 덩어리로 붙인다. */
+function capTok(t){const raw=[],out=[];let cur=null,d=0;
+  t.split(/\s+/).filter(Boolean).forEach(w=>{const i=w.indexOf("(");                 // "가입(Automatic" → "가입" + "(Automatic"
+    if(i>0&&w.indexOf(")",i)<0){raw.push(w.slice(0,i));raw.push(w.slice(i))}else raw.push(w)});   // 401(k) 처럼 닫히면 그대로
+  raw.forEach(w=>{const o=(w.match(/\(/g)||[]).length,c=(w.match(/\)/g)||[]).length;
+    if(cur!==null){cur+="_"+w;d+=o-c;if(d<=0){out.push(cur);cur=null}}else if(o>c){cur=w;d=o-c}else out.push(w)});
+  if(cur!==null)out.push(cur);return out}
+/* 자막 줄 나눔: 화면 폭(1000px)을 넘으면 가장 적은 줄 수로, 줄 길이가 고르게 나눈다.
+   숫자와 단위("15만 장"), "약 7달러" 같은 묶음은 가르지 않도록 벌점을 준다. 꼭 붙일 말은 자막에 _ 로 잇는다(예: 약_15만_장). */
+function balanceCap(){const ws=[...capEl.querySelectorAll(".w")],n=ws.length;if(n<2)return;
+  capEl.style.whiteSpace="nowrap";capEl.style.maxWidth="none";
+  const m=76*.12,X=ws.map(w=>w.offsetLeft),wd=(a,b)=>X[b]-X[a]+ws[b].offsetWidth+2*m,MAX=950,T=ws.map(w=>w.textContent);
+  const pen=i=>{const a=T[i],b=T[i+1];let p=0;                      // i 뒤에서 끊을 때 벌점
+    if(/\d/.test(a)&&/^[가-힣%]{1,2}[.,:!?)]*$/.test(b))p+=400;           // 15만 | 장, 2배 | 넘게
+    if(/^(약|한|두|세|매|연|총|단|더|안|못|그|이|저)$/.test(a))p+=400;      // 약 | 7달러
+    if(/^\(/.test(b))p+=150;                                                // 기본값 | (Default) 는 되도록 붙인다
+    if(/[:,)]$/.test(a)||/^→/.test(b))p-=80;return p};
+  let best=null;
+  if(wd(0,n-1)>MAX)for(let k=2;k<=4&&!best;k++){
+    const rec=(st,left)=>{if(left===1){const w=wd(st,n-1);return w<=MAX?{w,p:0,br:[]}:null}
+      let bb=null;for(let e=st;e<=n-left;e++){const w=wd(st,e);if(w>MAX)break;const r=rec(e+1,left-1);if(!r)continue;
+        const c={w:Math.max(w,r.w),p:pen(e)+r.p,br:[e+1,...r.br]};if(!bb||c.w+c.p<bb.w+bb.p)bb=c}
+      return bb};
+    best=rec(0,k)}
+  capEl.style.whiteSpace="";capEl.style.maxWidth="";
+  if(best)best.br.forEach(i=>capEl.insertBefore(document.createElement("br"),ws[i]))}
 let lastCap=null,capW=[];
 function renderAt(T){T=clamp(T,0,TOTAL-1e-3);GT=T;
   SC.forEach((s,i)=>{const lt=T-s.start,on=lt>=-.001&&lt<s.dur+(i<SC.length-1?XF:0);
@@ -173,7 +199,7 @@ function renderAt(T){T=clamp(T,0,TOTAL-1e-3);GT=T;
     s.el.style.opacity=s.hud.style.opacity=i>0&&lt<XF?ease(lt/XF):1;s.update(s.ctx,Math.min(lt,s.dur),s.L)});
   const s=SC.find(s=>T>=s.start&&T<s.start+s.dur)||SC[SC.length-1],lt=T-s.start;
   let ci=0;while(ci<s.L.length-1&&lt>=s.L[ci+1])ci++;
-  const h=s.capH[ci]||"";if(h!==lastCap){capEl.innerHTML=h;lastCap=h;capW=[...capEl.querySelectorAll(".w")]}
+  const h=s.capH[ci]||"";if(h!==lastCap){capEl.innerHTML=h;lastCap=h;if(V2)balanceCap();capW=[...capEl.querySelectorAll(".w")]}
   const cu=ease((lt-s.L[ci])/.25);capEl.style.opacity=h?cu:0;capEl.style.transform=`scale(${lerp(.92,1,eback(Math.min(1,(lt-s.L[ci])/.3)))})`;
   if(V2&&capW.length){const ln=s.lines[ci],TM=(typeof TIMING!=="undefined")?TIMING:{},tot=TM[s.id+" "+ci]||((s.L[ci+1]??s.L.end)-s.L[ci]);
     const v0=s.L[ci]+VLEAD,v1=s.L[ci]+tot-VGAP,len=capW.map(w=>Math.max(1,w.textContent.length)),sum=len.reduce((a,b)=>a+b,0);let acc=0;

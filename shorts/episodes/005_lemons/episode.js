@@ -107,7 +107,7 @@ const pill = (hud, y, html, bg, fs) => CX(hud, y, `<span style="display:inline-b
 
 /* 1. 질문 (입구) */
 scene({id: "hook", lines: [
-  ["중고차 시장에서 **좋은 차**가 사라지는 이유", "중고차 시장에서, 좋은 차가 사라지는 이유가 있습니다.", "pop"],
+  ["중고차 시장에서 **좋은_차**가 사라지는 이유", "중고차 시장에서, 좋은 차가 사라지는 이유가 있습니다.", "pop"],
   ["1970년 **QJE**, 애컬로프의 논문", "천구백칠십 년, 경제학자 애컬로프가 쓴 논문입니다."]],
   build(el, hud) {
     const c = {w: lotWorld(el)};

@@ -17,7 +17,7 @@ Object.assign(EP, {no: 2, style: "v2", title: "헬스장 회원권의 역설", h
           title: "Paying Not to Go to the Gym", ko: "헬스장에 가지 않기 위해 돈 내기", cite: "96(3): 694–719",
           url: "https://doi.org/10.1257/aer.96.3.694"},
   yt: {title: "헬스장 월 정액권, 정말 이득일까? | 헬스장에 가지 않기 위해 돈 내기 #경제 #shorts",
-       desc: "미국 헬스장 3곳 회원 7,752명의 3년 치 출석 기록. 한 달 정액(약 $70)은 한 달 7번 넘게 가야 1회 $10보다 싸다. 그런데 정액 회원은 한 달 평균 4.3번 갔다. 1회씩 냈다면 가입 기간 동안 평균 $600을 아낄 수 있었다. 저자들은 미래의 자기 통제에 대한 과신을 가장 유력한 설명으로 꼽는다. (영상은 단순화를 위해 월 $70로 계산. 논문의 정액은 월 $70 넘는 계약들이라 1회당 실제 비용은 $17 이상, 1회 $10은 10회권 기준 단가)",
+       desc: "미국 헬스장 3곳 회원 7,752명의 3년 치 출석 기록. 한 달 정액(약 $70)은 한 달 7번 넘게 가야 1회 $10보다 싸다. 그런데 정액 회원은 한 달 평균 4.3번 갔다. 1회씩 냈다면 가입_기간_동안 평균 $600을 아낄 수 있었다. 저자들은 미래의 자기 통제에 대한 과신을 가장 유력한 설명으로 꼽는다. (영상은 단순화를 위해 월 $70로 계산. 논문의 정액은 월 $70 넘는 계약들이라 1회당 실제 비용은 $17 이상, 1회 $10은 10회권 기준 단가)",
        tags: ["경제", "행동경제학", "헬스장", "과신", "현재편향", "shorts"]}});
 
 const GOLD = "#f2c14e", BLUE = "#5ab0ff", TEAL = "#6fcfb7", CORAL = "#ff8a65";
@@ -168,7 +168,7 @@ scene({id: "hook", lines: [
 
 /* 2. 요금 비교 (카운터로 이동, 동전 기둥) */
 scene({id: "choice", lines: [
-  ["**한 달 $70**: 몇 번을 가든 같은 돈", "하나는 한 달 칠십 달러. 몇 번을 가든 같은 돈입니다.", "pop"],
+  ["**한 달 $70**: 몇_번을 가든 같은 돈", "하나는 한 달 칠십 달러. 몇 번을 가든 같은 돈입니다.", "pop"],
   ["**1회 $10**: 간 만큼만 낸다", "다른 하나는 한 번에 십 달러. 간 만큼만 냅니다.", "pop"],
   ["한 달 **7번** 넘게 가야 정액이 이득", "그러니 한 달에 일곱 번 넘게 가야 정액이 이득입니다.", "ding"]],
   build(el, hud) {
@@ -225,7 +225,7 @@ scene({id: "reality", lines: [
 /* 4. 1회당 값과 놓친 돈 (카운터) */
 scene({id: "loss", lines: [
   ["$70 ÷ 4.3번 = 한 번에 **약 $16**", "칠십 달러를 사 점 삼 번으로 나누면, 한 번에 약 십육 달러입니다.", "coin"],
-  ["1회씩 냈다면, 가입 기간 동안 평균 **$600** 절약", "한 번씩 냈다면, 가입해 있던 동안 평균 육백 달러를 아낄 수 있었어요.", "coin"]],
+  ["1회씩 냈다면, 가입_기간_동안 평균 **$600** 절약", "한 번씩 냈다면, 가입해 있던 동안 평균 육백 달러를 아낄 수 있었어요.", "coin"]],
   build(el, hud) {
     const c = {w: gymWorld(el)};
     const tag = (x, y, html, bg) => A(hud, x, y, `<span style="display:inline-block;background:${bg};color:#10182a;font-size:56px;font-weight:800;padding:10px 30px;border-radius:50px;box-shadow:0 10px 26px rgba(0,0,0,.4)">${html}</span>`, "", {width: "420px", textAlign: "center"});
@@ -233,7 +233,7 @@ scene({id: "loss", lines: [
     c.tb.style.left = "620px"; c.ta.style.left = "260px";
     c.dim = A(hud, 0, 0, "", "", {width: W + "px", height: "1250px", background: "linear-gradient(rgba(8,12,22,.85),rgba(8,12,22,.6) 70%,rgba(8,12,22,0))", opacity: 0});
     c.big = bigNum(hud, 230, "", GOLD, 220);
-    c.sub = CX(hud, 500, "가입 기간 동안 아낄 수 있었던 돈(평균)", "", {fontSize: "44px", fontWeight: 800, color: "#fff", textShadow: "0 3px 10px rgba(0,0,0,.6)"});
+    c.sub = CX(hud, 500, "가입_기간_동안 아낄 수 있었던 돈(평균)", "", {fontSize: "44px", fontWeight: 800, color: "#fff", textShadow: "0 3px 10px rgba(0,0,0,.6)"});
     // 동전 비
     const sv = svgLayer(hud), r = rng(77); c.rain = [];
     for (let i = 0; i < 26; i++) {const g = S("g", {opacity: 0}, sv);
