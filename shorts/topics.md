@@ -22,7 +22,7 @@
 | 11 | Chiappori, Levitt & Groseclose (2002) "Testing Mixed-Strategy Equilibria When Players Are Heterogeneous: The Case of Penalty Kicks in Soccer", *AER* | 페널티킥, 어느 쪽으로 찰까? | 키커·골키퍼 혼합전략 | 완료 (011, 2026-11-15) |
 | 12 | Gneezy & Rustichini (2000) "Pay Enough or Don't Pay at All", *QJE* | 돈을 조금 주면 오히려 덜 열심히? | 보상 0 / 조금 / 많이 성과 | 완료 (012, 2026-11-15) |
 | 13 | Camerer, Babcock, Loewenstein & Thaler (1997) "Labor Supply of New York City Cabdrivers: One Day at a Time", *QJE* | 손님 많은 날 택시 기사는 일찍 퇴근한다? | 하루 목표 소득과 노동 공급 | 완료 (013, 2026-11-15) |
-| 14 | Pope & Schweitzer (2011) "Is Tiger Woods Loss Averse?", *AER* | 타이거 우즈도 손실은 두렵다? | 버디 퍼트 vs 파 퍼트 성공률 | 대기 |
+| 14 | Pope & Schweitzer (2011) "Is Tiger Woods Loss Averse?", *AER* | 타이거 우즈도 손실은 두렵다? | 버디 퍼트 vs 파 퍼트 성공률 | 완료 (014, 2026-11-15) |
 | 15 | Ariely, Loewenstein & Prelec (2003) "Coherent Arbitrariness", *QJE* | 주민번호 끝자리가 와인 값을 정한다? | 끝 두 자리와 입찰가 | 대기 |
 | 16 | Radford (1945) "The Economic Organisation of a P.O.W. Camp", *Economica* | 포로수용소에선 담배가 돈이었다? | 담배 화폐와 물가 | 대기 |
 | 17 | Kremer (1993) "The O-Ring Theory of Economic Development", *QJE* | 우주왕복선 고무링 하나가 빈부 격차를 설명한다? | 곱셈 생산함수 | 대기 |
