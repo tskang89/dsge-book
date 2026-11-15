@@ -13,7 +13,7 @@ Object.assign(EP, {no: 14, style: "v2", title: "타이거 우즈도 손실을 �
           title: "Is Tiger Woods Loss Averse? Persistent Bias in the Face of Experience, Competition, and High Stakes",
           ko: "타이거 우즈도 손실을 싫어할까? 경험·경쟁·큰 판돈에도 남는 편향", cite: "101(1): 129–157", url: "https://doi.org/10.1257/aer.101.1.129"},
   yt: {title: "같은 거리 퍼트, 성공률이 달라진다? | 타이거 우즈와 손실 회피 #경제 #shorts",
-       desc: "골프에는 홀마다 정해진 기준 타수, 파(Par)가 있다. 버디 퍼트는 넣으면 기준보다 한 타 적게 끝나는 퍼트이고, 파 퍼트는 놓치면 기준보다 한 타 많아지는 퍼트다. 연구진은 미국 프로 골프(PGA) 대회에서 친 퍼트 250만 개를 레이저로 측정한 거리와 함께 분석했다. 같은 거리에서 100번 치면 버디 퍼트가 2번쯤 덜 들어갔다(약 2%p). 버디 퍼트는 홀에 못 미치게 짧게 치는 경우가 더 많았다. 타이거 우즈 같은 최정상 선수도 마찬가지였다. 연구진은 이것을 손실 회피(Loss Aversion)로 해석했다. 얻는 기쁨보다 잃는 아픔을 더 크게 느끼는 것이다. 기준 타수를 잃지 않으려고 파 퍼트에 더 집중한다는 것. ※ 이 차이를 모두 손실 회피로 설명할 수는 없다는 반론도 있다.",
+       desc: "골프에는 홀마다 정해진 기준 타수, 파(Par)가 있다. 버디 퍼트는 넣으면 기준보다 한 타 적은 버디가 되고, 파 퍼트는 넣으면 기준 타수인 파, 놓치면 한 타 더 친 보기(Bogey)가 된다. 연구진은 미국 프로 골프(PGA) 대회에서 친 퍼트 250만 개를 레이저로 측정한 거리와 함께 분석했다. 같은 거리에서 100번 치면 버디 퍼트가 2번쯤 덜 들어갔다(약 2%p). 버디 퍼트는 홀에 못 미치게 짧게 치는 경우가 더 많았다. 타이거 우즈 같은 최정상 선수도 마찬가지였다. 연구진은 이것을 손실 회피(Loss Aversion)로 해석했다. 얻는 기쁨보다 잃는 아픔을 더 크게 느끼는 것이다. 기준 타수를 잃지 않으려고 파 퍼트에 더 집중한다는 것. ※ 이 차이를 모두 손실 회피로 설명할 수는 없다는 반론도 있다.",
        tags: ["경제", "행동경제학", "손실회피", "골프", "타이거우즈", "shorts"]}});
 
 const GOLD = "#f2c14e", BLUE = "#5ab0ff", TEAL = "#6fcfb7", CORAL = "#ff8a65", RED = "#e85d5d";
@@ -44,7 +44,7 @@ function golfWorld(el) {
   const cx = 1080 + 540;
   S("rect", {x: cx - 360, y: 330, width: 720, height: 640, rx: 26, fill: U("card"), stroke: "#c9b98a", "stroke-width": 6}, g);
   ST(g, cx, 420, "이 홀의 기준 타수: 4타", {"font-size": 48, "font-weight": 800, fill: "#2b2b2b"});
-  w.sc = [["버디", 3, TEAL, "기준보다 1타 적게"], ["파", 4, "#2b2b2b", "기준 타수"], ["보기", 5, CORAL, "기준보다 1타 많게"]].map(([t, k, col, sub], i) => {
+  w.sc = [["버디", 3, TEAL, "기준보다 1타 적게"], ["파", 4, "#2b2b2b", "기준 타수"], ["보기", 5, CORAL, "기준보다 1타 더"]].map(([t, k, col, sub], i) => {
     const gg = S("g", {opacity: .25}, g), y = 540 + i * 140;
     ST(gg, cx - 220, y + 14, t, {"font-size": 52, "font-weight": 900, fill: col});
     for (let j = 0; j < k; j++) S("circle", {cx: cx - 90 + j * 52, cy: y, r: 20, fill: col}, gg);
@@ -76,7 +76,7 @@ function golfWorld(el) {
   w.putt = (u, stop) => {u = clamp(u); const e = 1 - Math.pow(1 - u, 3), k = e * stop;
     w.ball.setAttribute("cx", lerp(480, 760, k)); w.ball.setAttribute("cy", lerp(1160, 990, k));
     w.ball.setAttribute("opacity", stop >= 1 && u > .95 ? 0 : 1)};
-  w.score = k => w.sc.forEach((s, i) => s.setAttribute("opacity", k < 0 || i === k ? 1 : .25));
+  w.score = k => w.sc.forEach((s, i) => s.setAttribute("opacity", k === -1 || i === k || (Array.isArray(k) && k.indexOf(i) >= 0) ? 1 : .25));
   w.measure = u => {u = clamp(u); w.laser.setAttribute("opacity", u > 0 ? 1 : 0);
     w.laser.setAttribute("x2", lerp(2160 + 280, 2160 + 760, ease(u))); w.laser.setAttribute("y2", lerp(1000, 900, ease(u)));
     w.dist.textContent = u > .9 ? "거리 정확히 측정" : ""};
@@ -112,8 +112,8 @@ scene({id: "hook", lines: [
 /* 2. 파와 버디 (점수 카드) */
 scene({id: "rules", lines: [
   ["**파**(Par): 홀마다 정해진 기준 타수", "골프에는 홀마다 정해진 기준 타수, 파가 있습니다.", "pop"],
-  ["**버디 퍼트**: 넣으면 기준보다 1타 적게", "버디 퍼트는, 넣으면 기준보다 한 타 적게 끝나는 퍼트이고,", "coin"],
-  ["**파 퍼트**: 놓치면 기준보다 1타 많게", "파 퍼트는, 놓치면 기준보다 한 타 많아지는 퍼트입니다."]],
+  ["**버디 퍼트**: 넣으면 버디(기준보다 1타 적게)", "버디 퍼트는, 넣으면 기준보다 한 타 적은 버디가 되고,", "coin"],
+  ["**파 퍼트**: 넣으면 파, 놓치면 **보기**(기준보다 1타 더)", "파 퍼트는, 넣으면 기준 타수인 파, 놓치면 한 타 더 친 보기가 됩니다."]],
   build(el, hud) {
     const c = {w: golfWorld(el)};
     c.o = host(hud, "owl", {x: 140, y: 1280, s: .6});
@@ -122,7 +122,7 @@ scene({id: "rules", lines: [
   cam(lt, L) {return {x: 540, y: 700, s: lerp(1, 1.05, ease(lt / 6))}},
   update(c, lt, L) {
     const w = c.w; w.anim(lt); w.pan(whip(lt, 0, 0, 1080, .9));
-    w.score(lt < L[1] ? (lt > 1 ? 1 : -2) : lt < L[2] ? 0 : 2);
+    w.score(lt < L[1] ? (lt > 1 ? 1 : -2) : lt < L[2] ? 0 : lt < L[2] + 1.6 ? 1 : 2);
     c.o.up(lt, {mood: lt > L[2] ? "skeptical" : "normal", point: ease((lt - 1) / .5), look: [.8, -.5]});
   }
 });
