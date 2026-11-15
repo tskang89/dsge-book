@@ -111,7 +111,8 @@ const pill = (hud, y, html, bg, fs) => CX(hud, y, `<span style="display:inline-b
 /* 1. 질문 + 실험 (강의실) */
 scene({id: "hook", lines: [
   ["내 손에 들어온 머그컵은 왜 **비싸 보일까**?", "내 손에 들어온 머그컵은, 왜 갑자기 비싸 보일까요?", "pop"],
-  ["1990년 JPE 실험: 대학생 **절반**에게 머그컵을 무작위로", "연구진은 대학생 절반에게, 머그컵을 무작위로 나눠 줬습니다.", "pop"]],
+  ["1990년 **JPE**, 카너먼·네치·세일러", "천구백구십 년, 카너먼 등이 쓴 논문입니다."],
+  ["대학생 **절반**에게 머그컵을 무작위로", "연구진은 대학생 절반에게, 머그컵을 무작위로 나눠 줬습니다.", "pop"]],
   build(el, hud) {
     const c = {w: roomWorld(el)};
     c.h = kin(hud, 560, "왜 **내 컵**은<br>비싸 보일까?", 96);
@@ -122,8 +123,8 @@ scene({id: "hook", lines: [
   cam(lt) {return {x: 540, y: 880, s: lerp(1.15, 1, ease(lt / 2.4))}},
   update(c, lt, L) {
     const w = c.w; w.anim(lt); w.pan(0);
-    w.desks(lt, .3, L[1] + .3);
-    kinUp(c.h, lt, .2, L[1] - .2); kinUp(c.j, lt, L[1] + .1);
+    w.desks(lt, .3, L[2] + .3);
+    kinUp(c.h, lt, .2, L[1] - .2); kinUp(c.j, lt, L[1] + .1, L[2] - .2);
     c.o.up(lt, {x: lerp(-200, 110, ease((lt - .3) / .7)), mood: lt < L[1] ? "skeptical" : "normal", look: [.7, -.5]});
   }
 });
