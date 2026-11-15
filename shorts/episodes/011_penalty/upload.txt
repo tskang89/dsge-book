@@ -1,0 +1,10 @@
+페널티킥, 어느 쪽으로 찰까? | 혼합전략 #경제 #shorts
+
+공이 워낙 빨라서, 골키퍼는 공을 차기 전에 미리 한쪽으로 몸을 던진다. 키커와 골키퍼가 동시에 방향을 고르는 게임이다. 늘 같은 쪽으로만 차면 상대가 읽어 내므로, 방향을 예측할 수 없게 섞는 것이 혼합전략(Mixed Strategy)이다. 이 이론의 예측은 어느 쪽으로 차든 골이 들어갈 확률이 같아야 한다는 것. 연구진이 프랑스와 이탈리아 리그의 페널티킥 459개를 분석한 결과, 방향에 따른 골 확률에는 뚜렷한 차이가 없었다. 선수들은 이론의 예측과 맞게 방향을 섞고 있었다.
+
+📄 논문: Pierre-André Chiappori, Steven Levitt & Timothy Groseclose (2002). "Testing Mixed-Strategy Equilibria When Players Are Heterogeneous: The Case of Penalty Kicks in Soccer." American Economic Review 92(4): 1138–1151.
+https://doi.org/10.1257/00028280260344678
+
+#경제 #게임이론 #혼합전략 #축구 #페널티킥 #레빗 #shorts
+
+음악·효과음: 자체 합성 / 음성: 합성 음성(Supertonic)
