@@ -18,7 +18,7 @@
 | 7 | Fisman & Miguel (2007) "Corruption, Norms, and Legal Enforcement: Evidence from Diplomatic Parking Tickets", *JPE* | 외교관 주차 위반으로 나라별 부패를 잰다? | 면책특권 아래 국가별 미납 딱지 | 완료 (007, 2026-11-14) |
 | 8 | Goldin & Rouse (2000) "Orchestrating Impartiality", *AER* | 오디션에 커튼을 쳤더니 생긴 일 | 블라인드 오디션과 여성 합격 | 완료 (008, 2026-11-14) |
 | 9 | Kahneman, Knetsch & Thaler (1990) "Experimental Tests of the Endowment Effect and the Coase Theorem", *JPE* | 내 손에 들어온 머그컵은 왜 두 배로 비쌀까? | 팔려는 값 vs 사려는 값 | 완료 (009, 2026-11-15) |
-| 10 | Madrian & Shea (2001) "The Power of Suggestion: Inertia in 401(k) Participation", *QJE* | 체크박스 하나가 노후를 바꾼다? | 자동 가입 → 가입률 급등 | 대기 |
+| 10 | Madrian & Shea (2001) "The Power of Suggestion: Inertia in 401(k) Participation", *QJE* | 체크박스 하나가 노후를 바꾼다? | 자동 가입 → 가입률 급등 | 완료 (010, 2026-11-15) |
 | 11 | Chiappori, Levitt & Groseclose (2002) "Testing Mixed-Strategy Equilibria When Players Are Heterogeneous: The Case of Penalty Kicks in Soccer", *AER* | 승부차기, 어디로 차야 할까? | 키커·골키퍼 혼합전략 | 대기 |
 | 12 | Gneezy & Rustichini (2000) "Pay Enough or Don't Pay at All", *QJE* | 돈을 조금 주면 오히려 덜 열심히? | 보상 0 / 조금 / 많이 성과 | 대기 |
 | 13 | Camerer, Babcock, Loewenstein & Thaler (1997) "Labor Supply of New York City Cabdrivers: One Day at a Time", *QJE* | 손님 많은 날 택시 기사는 일찍 퇴근한다? | 하루 목표 소득과 노동 공급 | 대기 |
