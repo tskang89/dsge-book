@@ -37,9 +37,13 @@ function classWorld(el) {
   for (let x = 0; x < WW; x += 180) S("line", {x1: x, y1: 1000, x2: x - 300, y2: H, stroke: "#3a2614", "stroke-width": 3, opacity: .4}, g);
   // 칠판 띠
   S("rect", {x: 60, y: 140, width: WW - 120, height: 330, rx: 16, fill: U("board"), stroke: "#8a6a4a", "stroke-width": 16}, g);
-  w.chalk = [];
-  [[540, ""], [1620, "?"], [2700, "정답 수"], [3780, "기부금"]].forEach(([x, t]) =>
-    w.chalk.push(ST(g, x + 300, 300, t, {"font-size": 60, "font-weight": 700, fill: "#e8f1e0", opacity: .35})));
+  // 칠판: 장면마다 그 구역의 제목·단위를 쓴다
+  w.chalk = [["지능검사 50문제", "대학생 160명"], ["맞힌 문제당 추가 보상", "참가비는 모두 같음 · 단위: 셰켈"],
+    ["평균 정답 수", "50문제 중 · 답안지 한 장 = 1문제"], ["모둠 평균 모금액", "단위: 셰켈 · 동전 1개 ≈ 10셰켈"]].map(([a, b], i) => {
+    const gg = S("g", {opacity: 0}, g), x = i * 1080 + 540;
+    ST(gg, x, 290, a, {"font-size": 72, "font-weight": 800, fill: "#f4f1e6"});
+    ST(gg, x, 390, b, {"font-size": 42, "font-weight": 700, fill: GOLD});
+    return gg});
   w.sun = [400, 1500, 2600, 3700].map(x => S("path", {d: `M${x},470 L${x + 200},470 L${x + 560},1000 L${x + 120},1000 Z`, fill: U("win")}, g));
   // 0: 시험지
   S("rect", {x: 230, y: 520, width: 620, height: 470, rx: 12, fill: "#6a4a2a"}, g);
@@ -89,6 +93,7 @@ function classWorld(el) {
   w.coinUp = (lt, t0) => w.coins.forEach((cs, i) => {const tt = t0 + i * .5;
     cs.forEach((c, k) => c.setAttribute("opacity", lt > tt + k * .04 ? 1 : 0));
     w.coinN[i].setAttribute("opacity", clamp((lt - tt - cs.length * .04) / .3))});
+  w.board = (i, lt, t0) => w.chalk.forEach((c, k) => c.setAttribute("opacity", k === i ? clamp((lt - t0) / .5) : 0));
   w.tags(-99, 0); w.stack(-99, 0); w.coinUp(-99, 0);
   return w;
 }
@@ -120,14 +125,13 @@ scene({id: "setup", lines: [
   ["추가_없음, **아주_조금**, 그_10배, 그_30배", "추가 없음, 아주 조금, 그 열 배, 그 서른 배.", "coin"]],
   build(el, hud) {
     const c = {w: classWorld(el)};
-    c.u = CX(hud, 1150, "맞힌 문제당 추가 보상 (셰켈)", "", {fontSize: "38px", fontWeight: 800, color: "#fff", opacity: .85});
     c.o = host(hud, "owl", {x: 120, y: 1290, s: .55});
     return c;
   },
   cam(lt, L) {return {x: 540, y: 780, s: lt < L[1] ? lerp(1.1, 1.15, ease(lt / 3)) : 1.02}},
   update(c, lt, L) {
     const w = c.w; w.anim(lt); w.pan(whip(lt, L[1], 0, 1080, .9));
-    w.tags(lt, L[2]); ap(c.u, lt, L[2] + .2);
+    w.tags(lt, L[2]); if (lt < L[1]) w.board(0, lt, .3); else w.board(1, lt, L[1] + .7);
     c.o.up(lt, {mood: lt > L[2] ? "normal" : "normal", point: ease((lt - L[2]) / .5), look: [.8, -.5]});
   }
 });
@@ -139,7 +143,6 @@ scene({id: "result", lines: [
   ["조금 주는 것은 **안 주는 것보다 못했다**", "조금 주는 것은, 안 주는 것보다 못했던 거죠.", "ding"]],
   build(el, hud) {
     const c = {w: classWorld(el)};
-    c.u = CX(hud, 1150, "답안지 한 장 = 정답 1문제 (평균)", "", {fontSize: "36px", fontWeight: 700, color: "#fff", opacity: .8});
     c.o = host(hud, "owl", {x: 120, y: 1290, s: .55});
     return c;
   },
@@ -150,7 +153,7 @@ scene({id: "result", lines: [
     if (lt > L[1]) w.sheets.forEach((ss, i) => {if (i > 1) {const tt = L[1] + .2 + (i - 2) * .4; ss.forEach((r, k) => r.setAttribute("opacity", lt > tt + k * .035 ? 1 : 0));
       w.sheetN[i].setAttribute("opacity", clamp((lt - tt - ss.length * .035) / .3))}});
     else w.sheets.forEach((ss, i) => {if (i > 1) {ss.forEach(r => r.setAttribute("opacity", 0)); w.sheetN[i].setAttribute("opacity", 0)}});
-    ap(c.u, lt, 1.2);
+    w.board(2, lt, .8);
     c.o.up(lt, {mood: lt > L[2] ? "skeptical" : lt > 2.5 && lt < L[1] ? "surprised" : "normal", look: [.7, -.6]});
   }
 });
@@ -161,14 +164,13 @@ scene({id: "donate", lines: [
   ["모은 돈의 **1%**를 준 모둠이 **가장 적게** 모았다", "모은 돈의 일 퍼센트를 준 모둠이, 가장 적게 모았죠.", "coin"]],
   build(el, hud) {
     const c = {w: classWorld(el)};
-    c.u = CX(hud, 1150, "모둠 평균 모금액 (셰켈) · 동전 1개 ≈ 10셰켈", "", {fontSize: "36px", fontWeight: 700, color: "#fff", opacity: .8});
     c.o = host(hud, "owl", {x: 120, y: 1290, s: .55});
     return c;
   },
   cam(lt, L) {return {x: 540, y: 760, s: lerp(1.02, 1.06, ease(lt / 6))}},
   update(c, lt, L) {
     const w = c.w; w.anim(lt); w.pan(whip(lt, 0, 2160, 3240, .9));
-    w.coinUp(lt, 1); ap(c.u, lt, 1.6);
+    w.coinUp(lt, 1); w.board(3, lt, .8);
     imgAt(w.box, 3240 + 920, 700 - 14 * Math.abs(Math.sin(lt * 3)), clamp(spr((lt - .9) / .5), 0, 1.2), 0);
     c.o.up(lt, {mood: lt > L[1] + .5 ? "surprised" : "normal", look: [.7, -.6]});
   }
@@ -190,7 +192,7 @@ scene({id: "why", lines: [
   },
   cam(lt) {return {x: 540, y: 820, s: 1.02}},
   update(c, lt, L) {
-    const w = c.w; w.anim(lt); w.pan(3240); w.box.style.opacity = 0;
+    const w = c.w; w.anim(lt); w.pan(3240); w.box.style.opacity = 0; w.board(-1, 9, 0);
     c.dim.style.opacity = P(lt, 0, .5);
     const ta = spr((lt - .4) / .5), tb = spr((lt - L[1] + .1) / .5), ts = spr((lt - L[1] - 2) / .5);
     imgAt(c.a, 300, 760, clamp(ta, 0, 1.2), 0); c.a.style.opacity = clamp(ta * 2) * (1 - .5 * P(lt, L[1], .5));
@@ -215,7 +217,7 @@ scene({id: "outro", tail: .7, lines: [
   },
   cam(lt) {return {x: 540, y: 900, s: lerp(1.06, .96, ease(lt / 3))}},
   update(c, lt, L) {
-    const w = c.w; w.anim(lt); w.pan(whip(lt, 0, 3240, 2160, 1)); w.stack(99, 0);
+    const w = c.w; w.anim(lt); w.pan(whip(lt, 0, 3240, 2160, 1)); w.stack(99, 0); w.board(2, 9, 0);
     c.dim.style.opacity = P(lt, 0, .5); ap(c.p, lt, .3, null, {s: .92}); ap(c.f, lt, L[1], null, {s: .7, back: true});
     c.o.up(lt, {mood: "happy", point: lt > L[1] ? .5 + .5 * Math.sin((lt - L[1]) * 6) : 0, look: [.5, -.6]});
   }
