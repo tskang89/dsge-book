@@ -5,16 +5,16 @@
    - 설계: 머그컵을 피험자 절반에게 무작위로 나눠 주고, 컵 시장을 열었다(초록·여러 요약). 코넬대 학생.
    - 결과: 파는 값 중간값 $7.12, 사는 값 중간값 $2.87(여러 2차 자료 일치) — 영상은 '약 7달러', '약 3달러', '두 배 넘게'.
      저자들의 1991년 JEP 글(Fermat's Library 원문): "median selling prices are about twice median buying prices and volume is less than half of that expected"
-   - 코스 정리 예측: 컵의 약 절반이 거래돼야 하지만 실제 거래량은 늘 그보다 훨씬 적었다(초록 요약)
+   - 코즈 정리 예측: 컵의 약 절반이 거래돼야 하지만 실제 거래량은 늘 그보다 훨씬 적었다(초록 요약)
    - 해석: 손실 회피(가진 것을 내놓는 아픔이 크다) — 저자들의 해석
    동전 1개 = 1달러: 7.12개 vs 2.87개. 거래 그림(10쌍 중 예상 5, 실제 2)은 개념도로 표시. */
 Object.assign(EP, {no: 9, style: "v2", title: "머그컵과 소유 효과", hook: "내 손에 들어온 머그컵은 왜 비싸 보일까?",
   bgm: {seed: 104, bpm: 102, mood: "bright"},
   paper: {journal: "Journal of Political Economy", year: 1990, authors: "Daniel Kahneman, Jack L. Knetsch & Richard H. Thaler",
-          title: "Experimental Tests of the Endowment Effect and the Coase Theorem", ko: "소유 효과와 코스 정리의 실험적 검증",
+          title: "Experimental Tests of the Endowment Effect and the Coase Theorem", ko: "소유 효과와 코즈 정리의 실험적 검증",
           cite: "98(6): 1325–1348", url: "https://doi.org/10.1086/261737"},
   yt: {title: "내 손에 들어온 머그컵은 왜 비싸 보일까? | 소유 효과 #경제 #shorts",
-       desc: "대학생 절반에게 머그컵을 무작위로 나눠 주고 컵을 사고파는 시장을 열었다. 컵을 가진 사람이 부른 값은 중간값 약 7달러($7.12), 못 가진 사람이 내려던 값은 약 3달러($2.87) — 같은 컵인데 두 배 넘게 차이 났다. 그래서 절반쯤 거래될 거란 예상과 달리 실제 거래는 훨씬 적었다. 연구진은 가진 것을 내놓는 아픔이 더 크게 느껴지는 손실 회피로 설명했다. (거래 그림은 개념도)",
+       desc: "대학생 절반에게 머그컵을 무작위로 나눠 주고 컵을 사고파는 시장을 열었다. 컵을 가진 사람이 부른 값은 중간값 약 7달러($7.12), 못 가진 사람이 내려던 값은 약 3달러($2.87) — 같은 컵인데 두 배 넘게 차이 났다. 코즈 정리(처음 누가 가졌든 물건은 더 원하는 사람에게 간다)대로라면 무작위로 나눠 준 컵은 절반쯤 거래돼야 하지만, 실제 거래는 훨씬 적었다. 연구진은 가진 것을 내놓는 아픔이 더 크게 느껴지는 손실 회피로 설명했다. (거래 그림은 개념도)",
        tags: ["경제", "행동경제학", "소유효과", "손실회피", "카너먼", "세일러", "shorts"]}});
 
 const GOLD = "#f2c14e", BLUE = "#5ab0ff", TEAL = "#6fcfb7", CORAL = "#ff8a65", RED = "#e85d5d";
@@ -111,7 +111,7 @@ const pill = (hud, y, html, bg, fs) => CX(hud, y, `<span style="display:inline-b
 /* 1. 질문 + 실험 (강의실) */
 scene({id: "hook", lines: [
   ["내 손에 들어온 머그컵은 왜 **비싸 보일까**?", "내 손에 들어온 머그컵은, 왜 갑자기 비싸 보일까요?", "pop"],
-  ["1990년 **JPE**, 카너먼·네치·세일러", "천구백구십 년, 카너먼과 네치, 세일러가 함께 쓴 논문입니다."],
+  ["1990년 **JPE**, 카너먼·네치·세일러", "천구백구십 년, 카너먼 등이 쓴 논문입니다."],
   ["대학생 **절반**에게 머그컵을 무작위로", "연구진은 대학생 절반에게, 머그컵을 무작위로 나눠 줬습니다.", "pop"]],
   build(el, hud) {
     const c = {w: roomWorld(el)};
@@ -179,13 +179,17 @@ scene({id: "result", lines: [
 
 /* 4. 거래가 적었다 + 소유 효과 (거래) */
 scene({id: "trade", lines: [
-  ["절반쯤 거래될 거란 예상과 달리, **훨씬 적게** 거래", "그래서 컵의 절반쯤 거래될 거란 예상과 달리, 실제 거래는 훨씬 적었습니다.", "pop"],
+  ["**코즈 정리**: 물건은 결국 **더 원하는 사람**에게 간다", "코즈 정리라는 이론에 따르면, 물건은 처음 누가 가졌든, 결국 더 원하는 사람에게 갑니다.", "pop"],
+  ["그렇다면 무작위로 나눠 준 컵은 **절반쯤** 거래돼야 한다", "그렇다면 무작위로 나눠 준 컵은, 절반쯤 거래돼야 합니다."],
+  ["하지만 실제 거래는 **훨씬 적었다**", "하지만 실제 거래는 훨씬 적었습니다.", "pop"],
   ["**소유 효과**(Endowment Effect)", "이것을 소유 효과라고 부릅니다.", "ding"],
-  ["연구진의 설명: 가진 것을 **잃는 아픔**이 더 크다", "연구진은, 가진 것을 내놓는 아픔이 더 크게 느껴지기 때문으로 봤습니다."]],
+  ["연구진의 설명: 가진 것을 **잃는 아픔**이 더 크다", "연구진은, 가진 것을 내놓는 아픔이 더 크기 때문으로 봤습니다."]],
   build(el, hud) {
     const c = {w: roomWorld(el)};
     c.ex = A(hud, 120, 420, "", "", {width: "840px", textAlign: "center", fontSize: "48px", fontWeight: 800, color: "#fff", textShadow: "0 3px 10px rgba(0,0,0,.6)"});
     c.c = A(hud, 760, 540, "개념도", "", {width: "200px", textAlign: "center", fontSize: "32px", fontWeight: 800, color: "#fff", opacity: .8});
+    c.k = kin(hud, 170, "**코즈 정리**", 110);
+    c.ken = CX(hud, 310, "Coase Theorem", "", {fontSize: "48px", fontWeight: 800, color: "#fff", textShadow: "0 3px 10px rgba(0,0,0,.6)"});
     c.h = kin(hud, 170, "**소유 효과**", 120);
     c.en = CX(hud, 320, "Endowment Effect", "", {fontSize: "52px", fontWeight: 800, color: "#fff", textShadow: "0 3px 10px rgba(0,0,0,.6)"});
     c.o = host(hud, "owl", {x: 190, y: 1250, s: .85});
@@ -194,18 +198,19 @@ scene({id: "trade", lines: [
   cam(lt, L) {return {x: 540, y: 860, s: lerp(1, 1.05, ease(lt / 6))}},
   update(c, lt, L) {
     const w = c.w; w.anim(lt); w.pan(whip(lt, 0, 2160, 3240, .9));
-    const done = lt < 2.4 ? 5 : 2;
-    w.trades(lt, .8, done, lt < 2.4 ? 1.2 : 2.4);
-    c.ex.innerHTML = lt < 2.4 ? "예상: 10쌍 중 <b style='color:#f2c14e'>5쌍</b> 거래" : "실제: <b style='color:#ff8a65'>훨씬 적게</b>";
-    c.ex.style.opacity = P(lt, 1, .3) * (1 - P(lt, L[1] - .1, .3)); c.c.style.opacity = P(lt, 1, .3) * (1 - P(lt, L[1] - .1, .3)) * .8;
-    kinUp(c.h, lt, L[1] + .1); ap(c.en, lt, L[1] + .6);
-    c.o.up(lt, {mood: lt > L[2] ? "skeptical" : lt > L[1] ? "happy" : "surprised", look: [.8, -.4]});
+    kinUp(c.k, lt, .9, L[1] - .2); c.ken.style.opacity = P(lt, 1.4, .3) * (1 - P(lt, L[1] - .2, .3));
+    const exp = lt < L[2];
+    w.trades(lt, .8, exp ? 5 : 2, exp ? L[1] + .5 : L[2] + .2);
+    c.ex.innerHTML = exp ? "예상: 10쌍 중 <b style='color:#f2c14e'>5쌍</b> 거래" : "실제: <b style='color:#ff8a65'>훨씬 적게</b>";
+    c.ex.style.opacity = P(lt, L[1] + .1, .3) * (1 - P(lt, L[3] - .1, .3)); c.c.style.opacity = c.ex.style.opacity * .8;
+    kinUp(c.h, lt, L[3] + .1); ap(c.en, lt, L[3] + .6);
+    c.o.up(lt, {mood: lt > L[4] ? "skeptical" : lt > L[3] ? "happy" : lt > L[2] ? "surprised" : "normal", point: ease((lt - .8) / .5) * (1 - ease((lt - L[1]) / .5)), look: [.8, -.4]});
   }
 });
 
 /* 5. 마무리 */
 scene({id: "outro", tail: .7, lines: [
-  ["논문 제목: 〈**소유 효과**와 코스 정리의 실험적 검증〉", "논문 제목은, 소유 효과와 코스 정리의 실험적 검증입니다.", "ding"],
+  ["논문 제목: 〈**소유 효과**와 코즈 정리의 실험적 검증〉", "논문 제목은, 소유 효과와 코즈 정리의 실험적 검증입니다.", "ding"],
   ["매일 하나씩, **오늘의 경제**", "구독하고 매일 하나씩 만나요."]],
   build(el, hud) {
     const c = {w: roomWorld(el)};
