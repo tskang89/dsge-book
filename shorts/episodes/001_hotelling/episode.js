@@ -153,7 +153,7 @@ scene({id: "hook", lines: [
 /* 2. 설정 */
 scene({id: "setup", lines: [
   ["**1km** 바닷가에 손님이 고르게", "일 킬로미터 바닷가에 손님이 고르게 있고,"],
-  ["두 가게 **값은 같고**, 손님은 가장 가까운 가게로", "두 가게의 값은 같고, 손님은 가장 가까운 가게로 갑니다."]],
+  ["두 가게는 **값이 똑같고**, 손님은 가장 가까운 가게로", "두 가게는 값이 똑같고, 손님은 가장 가까운 가게로 갑니다."]],
   build(el, hud) {
     const c = {w: world(el)};
     c.arrow = S("path", {d: `M${bx(.6)},1050 Q${bx(.66)},930 ${bx(.75) - 110},960`, stroke: "#fff", "stroke-width": 7, fill: "none", "stroke-linecap": "round"}, c.w.fx);
