@@ -202,6 +202,7 @@ scene({id: "why", lines: [
 
 /* 6. 마무리 */
 scene({id: "outro", tail: .7, lines: [
+  ["다만 다른 자료로는 이 경향이 **약하게** 나온다는 반론도", "다만 다른 자료로 분석하면, 이 경향이 약하거나 나타나지 않는다는 반론도 있습니다.", "pop"],
   ["논문 제목: 〈**하루씩, 그날그날**〉", "논문 제목은, 하루씩, 그날그날 입니다.", "ding"],
   ["매일 하나씩, **오늘의 경제**", "구독하고, 매일 하나씩 만나요."]],
   build(el, hud) {
@@ -215,7 +216,7 @@ scene({id: "outro", tail: .7, lines: [
   cam(lt) {return {x: 540, y: 900, s: lerp(1.06, .96, ease(lt / 3))}},
   update(c, lt, L) {
     const w = c.w; w.anim(lt); w.pan(whip(lt, 0, 3240, 0, 1)); w.paxOn(lt, -9);
-    c.dim.style.opacity = P(lt, 0, .5); ap(c.p, lt, .3, null, {s: .92}); ap(c.f, lt, L[1], null, {s: .7, back: true});
-    c.o.up(lt, {mood: "happy", point: lt > L[1] ? .5 + .5 * Math.sin((lt - L[1]) * 6) : 0, look: [.5, -.6]});
+    c.dim.style.opacity = P(lt, L[1] - .3, .5); ap(c.p, lt, L[1], null, {s: .92}); ap(c.f, lt, L[2], null, {s: .7, back: true});
+    c.o.up(lt, {mood: lt < L[1] ? "skeptical" : "happy", point: lt > L[2] ? .5 + .5 * Math.sin((lt - L[2]) * 6) : 0, look: [.5, -.6]});
   }
 });
