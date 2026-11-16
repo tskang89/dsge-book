@@ -28,7 +28,7 @@
 | 17 | Kremer (1993) "The O-Ring Theory of Economic Development", *QJE* | 우주왕복선 고무링 하나가 빈부 격차를 설명한다? | 곱셈 생산함수 | 완료 (016, 2026-11-16) |
 | 18 | Chen, Moskowitz & Shue (2016) "Decision Making Under the Gambler's Fallacy", *QJE* | 판사도 ‘이번엔 반대겠지’ 하고 판결한다? | 연속 판정의 음의 상관 | 완료 (017, 2026-11-16) |
 | 19 | Hamermesh & Biddle (1994) "Beauty and the Labor Market", *AER* | 외모가 연봉을 바꾼다? | 외모 프리미엄·페널티 | 완료 (018, 2026-11-16) |
-| 20 | Persico, Postlewaite & Silverman (2004) "The Effect of Adolescent Experience on Labor Market Outcomes: The Case of Height", *JPE* | 키가 연봉을 정한다? 그런데 ‘고1 때’ 키라면? | 성인 키보다 청소년기 키 | 대기 |
+| 20 | Persico, Postlewaite & Silverman (2004) "The Effect of Adolescent Experience on Labor Market Outcomes: The Case of Height", *JPE* | 키가 연봉을 정한다? 그런데 ‘고1 때’ 키라면? | 성인 키보다 청소년기 키 | 완료 (019, 2026-11-16) |
 | 21 | Levitt & Venkatesh (2000) "An Economic Analysis of a Drug-Selling Gang's Finances", *QJE* | 마약 판매상은 왜 엄마랑 같이 살까? | 조직 임금 피라미드 | 대기 |
 | 22 | Card & Krueger (1994) "Minimum Wages and Employment", *AER* | 최저임금이 오르면 일자리가 줄까? | 뉴저지 vs 펜실베이니아 패스트푸드 | 대기 |
 | 23 | Angrist & Krueger (1991) "Does Compulsory School Attendance Affect Schooling and Earnings?", *QJE* | 태어난 달이 소득을 바꾼다? | 출생 분기와 교육 연수 | 대기 |
