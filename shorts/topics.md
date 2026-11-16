@@ -24,7 +24,7 @@
 | 13 | Camerer, Babcock, Loewenstein & Thaler (1997) "Labor Supply of New York City Cabdrivers: One Day at a Time", *QJE* | 손님 많은 날 택시 기사는 일찍 퇴근한다? | 하루 목표 소득과 노동 공급 | 완료 (013, 2026-11-15) |
 | 14 | Pope & Schweitzer (2011) "Is Tiger Woods Loss Averse?", *AER* | 타이거 우즈도 손실은 두렵다? | 버디 퍼트 vs 파 퍼트 성공률 | 제외 (골프 규칙을 알아야 이해됨 — 사용자 판단, 2026-11-15) |
 | 15 | Ariely, Loewenstein & Prelec (2003) "Coherent Arbitrariness", *QJE* | 주민번호 끝자리가 와인 값을 정한다? | 끝 두 자리와 입찰가 | 완료 (014, 2026-11-15) |
-| 16 | Radford (1945) "The Economic Organisation of a P.O.W. Camp", *Economica* | 포로수용소에선 담배가 돈이었다? | 담배 화폐와 물가 | 대기 |
+| 16 | Radford (1945) "The Economic Organisation of a P.O.W. Camp", *Economica* | 포로수용소에선 담배가 돈이었다? | 담배 화폐와 물가 | 완료 (015, 2026-11-16) |
 | 17 | Kremer (1993) "The O-Ring Theory of Economic Development", *QJE* | 우주왕복선 고무링 하나가 빈부 격차를 설명한다? | 곱셈 생산함수 | 대기 |
 | 18 | Chen, Moskowitz & Shue (2016) "Decision Making Under the Gambler's Fallacy", *QJE* | 판사도 ‘이번엔 반대겠지’ 하고 판결한다? | 연속 판정의 음의 상관 | 대기 |
 | 19 | Hamermesh & Biddle (1994) "Beauty and the Labor Market", *AER* | 외모가 연봉을 바꾼다? | 외모 프리미엄·페널티 | 대기 |
