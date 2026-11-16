@@ -13,7 +13,7 @@ Object.assign(EP, {no: 22, style: "v2", title: "태어난 달과 학력", hook: 
           title: "Does Compulsory School Attendance Affect Schooling and Earnings?", ko: "의무교육은 학력과 소득에 영향을 줄까?",
           cite: "106(4): 979–1014", url: "https://www.nber.org/papers/w3572"},
   yt: {title: "태어난 달이 학력을 바꾼다? | 도구변수 #경제 #shorts",
-       desc: "학교를 더 다닌 사람이 더 버는 건 정말 학교 때문일까? 원래 능력이 좋은 사람이 학교도 오래 다니는 것일 수도 있다. 미국에서는 보통 연초에 태어난 아이가 같은 학년에서 나이가 많다. 그런데 법으로 정한 나이(예: 16살)가 되면 학교를 그만둘 수 있었다. 그래서 연초에 태어난 사람은 조금 덜 다니고 그만둘 수 있었다. 실제로 인구조사 자료에서 태어난 분기에 따라 학력이 조금씩 달랐다. 연구진은 그만둘 수도 있었던 학생의 약 25%가 이 법 때문에 학교에 남았다고 추정했다. 태어난 시기는 능력과 상관이 없으니 학교를 더 다닌 효과만 따로 볼 수 있다. 이런 방법을 도구변수(Instrumental Variable)라고 한다. 그렇게 구한 교육의 임금 효과는 단순 비교 결과와 비슷했다. 앵그리스트 교수는 2021년 노벨 경제학상을 받았다.",
+       desc: "학교를 더 다닌 사람이 더 버는 건 정말 학교 때문일까? 원래 능력이 좋은 사람이 학교도 오래 다니는 것일 수도 있다. 미국에선 보통 같은 해에 태어난 아이들이 같은 해 9월에 함께 1학년이 된다. 그래서 입학할 때 1월생은 만 6살 8개월, 12월생은 만 5살 9개월이다. 그런데 의무교육은 몇 학년까지가 아니라 16번째 생일까지였다(주마다 다름). 1월생은 10학년 중간에, 12월생은 11학년이 돼서야 16살이 된다. 그래서 그만두려는 학생이라면 1월생이 거의 1년 덜 다니고 나갈 수 있었다. 연구진은 그만둘 수도 있었던 학생의 약 25%가 이 법 때문에 학교에 남았다고 추정했다. 태어난 시기는 능력과 상관이 없으니 학교를 더 다닌 효과만 따로 볼 수 있다. 이런 방법을 도구변수(Instrumental Variable)라고 한다. 그렇게 구한 교육의 임금 효과는 단순 비교 결과와 비슷했다. 앵그리스트 교수는 2021년 노벨 경제학상을 받았다.",
        tags: ["경제", "계량경제학", "도구변수", "교육", "노벨경제학상", "shorts"]}});
 
 const GOLD = "#f2c14e", BLUE = "#5ab0ff", TEAL = "#6fcfb7", CORAL = "#ff8a65", RED = "#e85d5d";
@@ -44,6 +44,8 @@ function classWorld(el) {
     ST(g, x, 1060, t, {"font-size": 44, "font-weight": 900, fill: col}); return {p, x, s}});
   w.ageL = ST(g, 1080 + 540, 420, "같은 학년", {"font-size": 60, "font-weight": 900, fill: "#fff", opacity: 0});
   w.older = ST(g, 1080 + 220, 560, "", {"font-size": 42, "font-weight": 800, fill: CORAL});
+  w.ages = [[1080 + 220, "만 6살 8개월", CORAL], [1080 + 860, "만 5살 9개월", TEAL]].map(([x, t, col]) => ST(g, x, 640, t, {"font-size": 40, "font-weight": 900, fill: col, opacity: 0}));
+  w.sep = ST(g, 1080 + 540, 340, "같은 해 9월 1학년 입학 (예시 규칙)", {"font-size": 40, "font-weight": 800, fill: GOLD, opacity: 0});
   // 2160: 다닌 기간 막대 (단순화)
   const tx = 2160 + 120;
   w.tl = [["1월생", CORAL, 540], ["12월생", TEAL, 820]].map(([t, col, y]) => {
@@ -51,7 +53,11 @@ function classWorld(el) {
     const bar = S("rect", {x: tx, y: y - 30, width: 0, height: 60, rx: 12, fill: col}, g);
     const cake = img(w.layer, "birthday_cake", 0, 0, 90);
     return {bar, cake, y}});
-  w.cut = ST(g, tx + 420, 980, "", {"font-size": 40, "font-weight": 800, fill: "#fff"});
+  for (let k = 1; k <= 12; k++) {S("line", {x1: tx + (k - 1) * 70, y1: 880, x2: tx + (k - 1) * 70, y2: 905, stroke: "#c9cfe6", "stroke-width": 3}, g);
+    ST(g, tx + (k - 1) * 70 + 35, 940, k, {"font-size": 30, "font-weight": 800, fill: "#c9cfe6"})}
+  ST(g, tx + 420, 380, "다닌 학년 (1칸 = 1년)", {"font-size": 40, "font-weight": 800, fill: "#fff"});
+  w.cut = ST(g, tx + 420, 990, "", {"font-size": 40, "font-weight": 800, fill: "#fff"});
+  w.endLab = [["→ 10학년 중간에 16살", CORAL, 495], ["→ 11학년에 16살", TEAL, 775]].map(([t, col, y]) => ST(g, tx + 150, y, t, {"font-size": 38, "font-weight": 900, fill: col, "text-anchor": "start", opacity: 0}));
   // 3240: 분기별 학력 (단순화)
   w.q = [["1~3월", .9, CORAL], ["4~6월", .96, "#c9cfe6"], ["7~9월", .98, "#c9cfe6"], ["10~12월", 1, TEAL]].map(([t, v, col], i) => {
     const x = 3240 + 180 + i * 240, r = S("rect", {x: x - 80, y: 1000, width: 160, height: 0, rx: 12, fill: col}, g);
@@ -69,8 +75,9 @@ function classWorld(el) {
   w.cal = (lt, t0) => w.months.forEach((m, i) => {const u = clamp((lt - t0 - i * .08) / .3); m.setAttribute("opacity", u);
     m.setAttribute("transform", `translate(0,${(1 - u) * 30})`)});
   // 다닌 기간: u 진행, 1월생은 0.82 지점에서 '그만둘 수 있음'
-  w.years = u => w.tl.forEach((t, j) => {const len = 760 * clamp(u) * (j === 0 ? .86 : 1);
-    t.bar.setAttribute("width", len); imgAt(t.cake, tx + 760 * (j === 0 ? .86 : 1), t.y - 60, u > .9 ? 1 : 0, 0); t.cake.style.opacity = u > .9 ? 1 : 0});
+  w.years = u => w.tl.forEach((t, j) => {const L1 = (j === 0 ? 9.33 : 10.25) * 70, len = L1 * clamp(u);
+    t.bar.setAttribute("width", len); imgAt(t.cake, tx + L1, t.y - 40, u > .9 ? 1 : 0, 0); t.cake.style.opacity = u > .9 ? 1 : 0;
+    w.endLab[j].setAttribute("opacity", u > .95 ? 1 : 0)});
   w.qGrow = (lt, t0) => {w.q.forEach((q, i) => {const u = ease((lt - t0 - i * .2) / .7), h = 520 * q.v * u;
     q.r.setAttribute("height", h); q.r.setAttribute("y", 1000 - h)}); w.qNote.textContent = lt > t0 + 1.4 ? "태어난 분기별 평균 학력 (단순화)" : ""};
   w.cal(-99, 0); w.years(0); w.qGrow(-99, 0);
@@ -123,27 +130,29 @@ scene({id: "problem", lines: [
 
 /* 3. 장치: 입학 나이 + 의무교육 */
 scene({id: "mech", lines: [
-  ["미국에선 보통 연초생이 같은 학년에서 **나이가 많다**", "미국에서는 보통, 연초에 태어난 아이가 같은 학년에서 나이가 많습니다.", "pop"],
-  ["법으로 정한 나이(16살 등)에 **그만둘_수_있다**", "그런데 법으로 정한 나이, 예를 들어 열여섯 살이 되면, 학교를 그만둘 수 있었죠."],
-  ["그래서 연초생은 **조금 덜** 다니고 그만둘 수 있었다", "그래서 연초에 태어난 사람은, 조금 덜 다니고 그만둘 수 있었습니다.", "whoosh@0.2"]],
+  ["같은 해에 태어나면 **같은_해_9월**에 함께 1학년", "미국에선 보통, 같은 해에 태어난 아이들이 같은 해 구월에 함께 일 학년이 됩니다.", "pop"],
+  ["입학 때 1월생 **만 6살 8개월**, 12월생 **만 5살 9개월**", "그래서 입학할 때, 일월생은 만 여섯 살 팔 개월, 십이월생은 만 다섯 살 구 개월이죠."],
+  ["의무교육은 학년이 아니라 **16번째 생일**까지", "그런데 의무교육은, 몇 학년까지가 아니라 열여섯 번째 생일까지였습니다.", "whoosh@0.2"],
+  ["1월생은 **10학년 중간**, 12월생은 **11학년**에 16살", "일월생은 십 학년 중간에, 십이월생은 십일 학년이 돼서야 열여섯 살이 됩니다."],
+  ["그만두려면 1월생이 **거의 1년 덜** 다니고 나갈 수 있다", "그래서 그만두려는 학생이라면, 일월생이 거의 일 년 덜 다니고 나갈 수 있었죠.", "ding"]],
   build(el, hud) {
     const c = {w: classWorld(el)};
-    c.u = CX(hud, 1150, "막대 길이는 단순화한 그림", "", {fontSize: "34px", fontWeight: 700, color: "#fff", opacity: .85});
+    c.u = CX(hud, 1150, "입학 규칙·16살은 예시 (주마다 다름)", "", {fontSize: "34px", fontWeight: 700, color: "#fff", opacity: .85});
     c.o = host(hud, "owl", {x: 120, y: 1290, s: .55});
     return c;
   },
   cam(lt, L) {return {x: 540, y: 760, s: 1.02}},
   update(c, lt, L) {
-    const w = c.w; w.anim(lt); w.pan(lt < L[1] ? whip(lt, 0, 0, 1080, .9) : whip(lt, L[1], 1080, 2160, .9));
-    w.ageL.setAttribute("opacity", P(lt, 1, .3)); w.older.textContent = lt > 1.8 ? "나이 많음" : "";
-    w.years((lt - L[1] - 1) / 2); w.cut.textContent = lt > L[2] ? "케이크 = 그만둘 수 있는 나이" : ""; ap(c.u, lt, L[1] + 1.2);
-    c.o.up(lt, {mood: lt > L[2] ? "surprised" : "normal", look: [.7, -.6]});
+    const w = c.w; w.anim(lt); w.pan(lt < L[2] ? whip(lt, 0, 0, 1080, .9) : whip(lt, L[2], 1080, 2160, .9));
+    w.ageL.setAttribute("opacity", P(lt, 1, .3)); w.sep.setAttribute("opacity", P(lt, 1.4, .3));
+    w.ages.forEach((a, i) => a.setAttribute("opacity", P(lt, L[1] + .5 + i * .6, .3)));
+    w.years((lt - L[3]) / 2); w.cut.textContent = lt > L[3] + 2 ? "케이크 = 16번째 생일" : ""; ap(c.u, lt, 1.6);
+    c.o.up(lt, {mood: lt > L[4] ? "surprised" : "normal", look: [.7, -.6]});
   }
 });
 
 /* 4. 결과와 도구변수 */
 scene({id: "result", lines: [
-  ["인구조사 자료: 태어난 분기에 따라 **학력이 달랐다**", "실제로 인구조사 자료에서, 태어난 분기에 따라 학력이 조금씩 달랐습니다.", "coin"],
   ["그만둘 수 있던 학생의 **약 25%**가 법 때문에 남았다", "연구진은, 그만둘 수도 있었던 학생의 약 이십오 퍼센트가 이 법 때문에 학교에 남았다고 추정했죠."],
   ["태어난 시기는 능력과 무관 → 학교 효과만 **따로**", "태어난 시기는 능력과 상관이 없으니, 학교를 더 다닌 효과만 따로 볼 수 있습니다.", "pop"],
   ["이런 방법 = **도구변수**(Instrumental Variable)", "이런 방법을, 도구변수라고 합니다.", "ding"],
@@ -157,7 +166,7 @@ scene({id: "result", lines: [
   update(c, lt, L) {
     const w = c.w; w.anim(lt); w.pan(whip(lt, 0, 2160, 3240, .9)); w.years(1);
     w.qGrow(lt, 1);
-    c.o.up(lt, {mood: lt > L[3] ? "happy" : "normal", look: [.7, -.6]});
+    c.o.up(lt, {mood: lt > L[2] ? "happy" : "normal", look: [.7, -.6]});
   }
 });
 
