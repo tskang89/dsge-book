@@ -31,7 +31,7 @@
 | 20 | Persico, Postlewaite & Silverman (2004) "The Effect of Adolescent Experience on Labor Market Outcomes: The Case of Height", *JPE* | 키가 연봉을 정한다? 그런데 ‘고1 때’ 키라면? | 성인 키보다 청소년기 키 | 완료 (019, 2026-11-16) |
 | 21 | Levitt & Venkatesh (2000) "An Economic Analysis of a Drug-Selling Gang's Finances", *QJE* | 마약 판매상은 왜 엄마랑 같이 살까? | 조직 임금 피라미드 | 완료 (020, 2026-11-16) |
 | 22 | Card & Krueger (1994) "Minimum Wages and Employment", *AER* | 최저임금이 오르면 일자리가 줄까? | 뉴저지 vs 펜실베이니아 패스트푸드 | 완료 (021, 2026-11-16) |
-| 23 | Angrist & Krueger (1991) "Does Compulsory School Attendance Affect Schooling and Earnings?", *QJE* | 태어난 달이 소득을 바꾼다? | 출생 분기와 교육 연수 | 대기 |
+| 23 | Angrist & Krueger (1991) "Does Compulsory School Attendance Affect Schooling and Earnings?", *QJE* | 태어난 달이 소득을 바꾼다? | 출생 분기와 교육 연수 | 완료 (022, 2026-11-16) |
 | 24 | Barber & Odean (2001) "Boys Will Be Boys: Gender, Overconfidence, and Common Stock Investment", *QJE* | 주식 많이 사고파는 사람이 덜 번다? | 거래 회전율과 수익률 | 대기 |
 | 25 | Card & Dahl (2011) "Family Violence and Football", *QJE* | 응원 팀의 예상 밖 패배가 남긴 것 | 기대 대비 패배와 가정 폭력 | 대기 |
 | 26 | Ashraf, Karlan & Yin (2006) "Tying Odysseus to the Mast", *QJE* | 스스로 돈을 묶어 두는 통장, 누가 가입할까? | 약정 저축과 저축액 | 대기 |
