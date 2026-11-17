@@ -53,7 +53,7 @@ function streetWorld(el) {
   w.boss = img(w.layer, "man", px, 560, 130);
   w.offi = [-1, 1].map(k => img(w.layer, "man", px + k * 110, 760, 120));
   w.soldiers = Array.from({length: 7}, (_, i) => img(w.layer, "person", px - 300 + i * 100, 990, 110));
-  w.pLab = [["두목", 300], ["간부", 700], ["길거리 판매원", 1060]].map(([t, y]) => ST(g, px + (t === "길거리 판매원" ? 0 : 330), y + (t === "길거리 판매원" ? 0 : 0), t, {"font-size": 40, "font-weight": 800, fill: "#e8e0ff", opacity: 0}));
+  w.pLab = [["두목", 505], ["간부", 715], ["길거리 판매원", 1060]].map(([t, y]) => ST(g, px + (t === "길거리 판매원" ? 0 : 330), y + (t === "길거리 판매원" ? 0 : 0), t, {"font-size": 40, "font-weight": 800, fill: "#e8e0ff", opacity: 0}));
   // 2160: 시급 막대 (단순화)
   const bx = 2160;
   w.minLine = S("line", {x1: bx + 120, y1: 760, x2: bx + 960, y2: 760, stroke: RED, "stroke-width": 6, "stroke-dasharray": "20 12", opacity: 0}, g);
