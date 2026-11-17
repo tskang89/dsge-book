@@ -14,7 +14,7 @@ Object.assign(EP, {no: 29, style: "v2", title: "노예무역과 불신", hook: "
           title: "The Slave Trade and the Origins of Mistrust in Africa", ko: "노예무역과 아프리카 불신의 기원",
           cite: "101(7): 3221–3252", url: "https://doi.org/10.1257/aer.101.7.3221"},
   yt: {title: "수백 년 전 노예무역이 오늘의 신뢰를 낮췄을까? | 불신의 기원 #경제 #shorts",
-       desc: "15세기부터 19세기까지 아프리카에서는 수많은 사람이 노예로 끌려갔다. 이웃이나 심지어 친척에게 붙잡혀 팔려 가는 일도 있었다. 연구진은 2005년 아프리카 여러 나라의 설문(아프로바로미터)과 부족별로 끌려간 노예 수 기록을 맞대어 봤다. 그 결과 조상이 노예로 많이 끌려간 부족의 사람일수록 오늘날 남을 덜 믿었다. 친척도, 이웃도, 지방 정부도. 혹시 원래 남을 덜 믿던 부족이 더 많이 끌려간 건 아닐까? 연구진은 조상이 바닷가에서 얼마나 가까이 살았는지를 이용해 따져 봤는데, 그래도 같은 결론이 나왔다. 연구진은 이 불신이 주로 사람들의 믿음과 문화로 대대로 이어져 왔다고 봤다. (후속 재현 연구도 같은 결과를 확인했다. 영상의 신뢰 막대는 방향만 나타낸 그림이다.)",
+       desc: "15세기부터 19세기까지 아프리카에서는 수많은 사람이 노예로 끌려갔다. 노예무역 후반에는 이웃이나 친구, 심지어 가족에게 팔려 가는 일도 드물지 않았다. 가까운 사람조차 나를 팔 수 있다면 남을 믿지 않는 편이 안전했을 것이다. 연구진은 2005년 아프리카 여러 나라 사람들에게 남을 얼마나 믿는지 물은 설문(아프로바로미터)을 쓰고, 응답자가 속한 부족마다 옛날 그 부족에서 노예가 얼마나 끌려갔는지 기록을 붙였다. 그 결과 조상이 노예로 많이 끌려간 부족의 사람일수록 오늘날 남을 덜 믿었다. 친척도, 이웃도, 지방 정부도. 혹시 원래 남을 덜 믿던 부족이 더 많이 끌려간 건 아닐까? 노예는 배에 실려 갔기 때문에 바닷가에 가까이 살던 부족일수록 더 많이 끌려갔다. 연구진은 바닷가와의 거리를 그 부족이 원래 남을 잘 믿었는지와는 상관없는 지리 조건으로 봤고, 실제로 아프리카 밖에서는 바닷가와의 거리와 신뢰 사이에 관계가 없었다. 그래서 바닷가와의 거리 때문에 더 끌려간 부분만 따로 떼어 봐도(도구변수, Instrumental Variable) 같은 결론이 나왔다. 연구진은 나쁜 제도 같은 바깥 환경보다, 사람들 마음속의 믿음과 문화로 불신이 대대로 이어져 왔다고 봤다. (후속 재현 연구도 같은 결과를 확인했다. 영상의 신뢰 막대는 방향만 나타낸 그림이다.)",
        tags: ["경제", "경제사", "신뢰", "노예무역", "아프리카", "shorts"]}});
 
 const GOLD = "#f2c14e", BLUE = "#5ab0ff", TEAL = "#6fcfb7", CORAL = "#ff8a65", RED = "#e85d5d";
@@ -42,10 +42,12 @@ function coastWorld(el) {
   // 1080: 바닷가에서 먼 마을들
   w.huts = [[1080 + 180, "가까운 마을"], [1080 + 540, ""], [1080 + 900, "먼 마을"]].map(([x, t]) => {
     const h = img(w.layer, "hut", x, 980, 200); if (t) ST(g, x, 1060, t, {"font-size": 40, "font-weight": 900, fill: "#fff"}); return h});
-  w.arrow = S("path", {d: `M${1080 + 900},700 L${1080 + 140},700`, stroke: "#fff", "stroke-width": 6, "stroke-dasharray": "16 12", fill: "none", opacity: 0}, g);
-  w.arrowLab = ST(g, 1080 + 540, 660, "바닷가에서의 거리", {"font-size": 44, "font-weight": 900, fill: "#fff", opacity: 0});
+  w.arrow = S("path", {d: `M${1080 + 900},620 L${1080 + 140},620`, stroke: "#fff", "stroke-width": 6, "stroke-dasharray": "16 12", fill: "none", opacity: 0}, g);
+  w.arrowLab = ST(g, 1080 + 540, 580, "← 바닷가 쪽", {"font-size": 44, "font-weight": 900, fill: "#fff", opacity: 0});
+  w.tags = [[1080 + 180, "많이 끌려감", CORAL], [1080 + 900, "적게 끌려감", TEAL]].map(([x, t, col]) => ST(g, x, 760, t, {"font-size": 44, "font-weight": 900, fill: col, "paint-order": "stroke", stroke: "#2a1a0a", "stroke-width": 8, opacity: 0}));
   // 2160: 설문 + 신뢰 막대(방향만)
-  w.clip = img(w.layer, "clipboard", 2160 + 540, 470, 200);
+  w.clip = img(w.layer, "clipboard", 2160 + 380, 560, 220);
+  w.ledger = img(w.layer, "ledger", 2160 + 720, 560, 220);
   w.bars = [["적게 끌려간\n부족", TEAL, 2160 + 330, 420], ["많이 끌려간\n부족", CORAL, 2160 + 750, 250]].map(([t, col, x, h]) => {
     const r = S("rect", {x: x - 110, y: 960, width: 220, height: 0, rx: 14, fill: col, opacity: .9}, g);
     const lab = t.split("\n").map((s, k) => ST(g, x, 1030 + k * 44, s, {"font-size": 40, "font-weight": 900, fill: "#fff", opacity: 0}));
@@ -68,9 +70,12 @@ function coastWorld(el) {
     imgAt(w.ship, 260, 930 + 6 * Math.sin(lt * 1.5), 1, 2 * Math.sin(lt))};
   w.march = (lt, t0) => {w.era.setAttribute("opacity", P(lt, t0, .3));
     w.walk.forEach((e, i) => {const u = clamp((lt - t0 - i * .3) / 4); imgAt(e, lerp(900 - i * 70, 560, u), 990, 1, 0); e.style.opacity = (lt > t0 + i * .3 ? 1 : 0) * (1 - P(lt, t0 + 3.6 + i * .3, .4)) * .85})};
+  w.tagOn = (lt, t0) => w.tags.forEach((t, i) => t.setAttribute("opacity", P(lt, t0 + i * .4, .3)));
   w.dist = (lt, t0) => {w.arrow.setAttribute("opacity", P(lt, t0, .3)); w.arrowLab.setAttribute("opacity", P(lt, t0 + .2, .3));
     if (lt > t0) w.arrow.style.strokeDashoffset = -lt * 40};
-  w.survey = (lt, t0) => {const u = spr((lt - t0) / .5); imgAt(w.clip, 2160 + 540, 470, clamp(u, 0, 1.2) * (1 - P(lt, t0 + 2.2, .3)), -6); w.clip.style.opacity = clamp(u * 2)};
+  w.survey = (lt, t0, t1, tEnd) => {const u = spr((lt - t0) / .5), v = spr((lt - t1) / .5), off = 1 - P(lt, tEnd, .3);
+    imgAt(w.clip, 2160 + 380, 560, clamp(u, 0, 1.2) * off, -6); w.clip.style.opacity = clamp(u * 2) * off;
+    imgAt(w.ledger, 2160 + 720, 560, clamp(v, 0, 1.2) * off, 6); w.ledger.style.opacity = clamp(v * 2) * off};
   w.grow = (lt, t0) => {w.bTitle.setAttribute("opacity", P(lt, t0, .3)); w.bNote.setAttribute("opacity", P(lt, t0, .3));
     w.bars.forEach((b, j) => {const u = ease((lt - t0 - j * .6) / .8), h = b.h * u; b.r.setAttribute("y", 960 - h); b.r.setAttribute("height", h);
       b.lab.forEach(l => l.setAttribute("opacity", P(lt, t0 + j * .6, .3)))})};
@@ -78,7 +83,7 @@ function coastWorld(el) {
   w.chain = (lt, t0) => {w.links.forEach((l, i) => l.setAttribute("opacity", P(lt, t0 + .6 + i * .6, .3)));
     const u = clamp((lt - t0) / 2.4); const cx = lerp(3240 + 200, 3240 + 880, ease(u));
     w.cloud.setAttribute("cx", cx); w.cloudT.setAttribute("x", cx); [w.cloud, w.cloudT].forEach(e => e.setAttribute("opacity", P(lt, t0, .3) * (e === w.cloud ? .9 : 1)))};
-  w.march(-99, 99); w.dist(-99, 99); w.survey(-99, 99); w.grow(-99, 99); w.who(-99, 99); w.chain(-99, 99);
+  w.march(-99, 99); w.dist(-99, 99); w.survey(-99, 99, 99, 99); w.grow(-99, 99); w.who(-99, 99); w.chain(-99, 99); w.tagOn(-99, 99);
   return w;
 }
 const whip = (lt, t0, a, b, dd) => lerp(a, b, ease((lt - t0) / (dd || .7)));
@@ -106,7 +111,8 @@ scene({id: "hook", lines: [
 /* 2. 역사 */
 scene({id: "history", lines: [
   ["15~19세기 아프리카: **수많은 사람**이 노예로 끌려갔다", "십오 세기부터 십구 세기까지, 아프리카에서는, 수많은 사람이 노예로 끌려갔습니다.", "pop"],
-  ["이웃이나 친척에게 **붙잡혀 팔려 가는** 일도 있었다", "이웃이나 심지어 친척에게, 붙잡혀 팔려 가는 일도 있었죠."]],
+  ["이웃·친구·가족에게 **팔려 가는** 일도 드물지 않았다", "노예무역 후반에는, 이웃이나 친구, 심지어 가족에게 팔려 가는 일도 드물지 않았습니다."],
+  ["가까운 사람도 나를 팔 수 있다면, **안 믿는 게 안전**", "가까운 사람조차 나를 팔 수 있다면, 남을 믿지 않는 편이 안전했겠죠.", "pop"]],
   build(el, hud) {
     const c = {w: coastWorld(el)};
     c.o = host(hud, "owl", {x: 140, y: 1280, s: .6});
@@ -121,7 +127,8 @@ scene({id: "history", lines: [
 
 /* 3. 자료와 결과 */
 scene({id: "result", lines: [
-  ["2005년 아프리카 **여러 나라 설문** + 부족별 노예 수 기록", "연구진은, 이천오 년 아프리카 여러 나라의 설문과, 부족별로 끌려간 노예 수 기록을, 맞대어 봤습니다.", "whoosh@0.2"],
+  ["2005년 아프리카 설문: **남을 얼마나 믿나요?**", "연구진은, 이천오 년 아프리카 여러 나라 사람들에게, 남을 얼마나 믿는지 물은 설문을 썼습니다.", "whoosh@0.2"],
+  ["응답자마다 그 사람 **부족의 옛날 노예 기록**을 붙였다", "그리고 응답자 한 사람 한 사람에게, 그 사람 부족의, 옛날 노예 기록을 붙였습니다."],
   ["조상이 많이 끌려간 부족일수록 **오늘날 덜 믿었다**", "그 결과, 조상이 노예로 많이 끌려간 부족의 사람일수록, 오늘날 남을 덜 믿었습니다.", "ding"],
   ["**친척도, 이웃도, 지방 정부도**", "친척도, 이웃도, 지방 정부도요."]],
   build(el, hud) {
@@ -131,30 +138,37 @@ scene({id: "result", lines: [
   },
   cam(lt) {return {x: 540, y: 720, s: 1.02}},
   update(c, lt, L) {
-    const w = c.w; w.anim(lt); w.pan(whip(lt, 0, 0, 2160, 1.1)); w.survey(lt, 1.2); w.grow(lt, L[1] + .3); w.who(lt, L[2]);
-    c.o.up(lt, {mood: lt > L[1] + 1 ? "surprised" : "normal", look: [.7, -.6]});
+    const w = c.w; w.anim(lt); w.pan(whip(lt, 0, 0, 2160, 1.1)); w.survey(lt, 1.2, L[1] + .3, L[2]); w.grow(lt, L[2] + .3); w.who(lt, L[3]);
+    c.o.up(lt, {mood: lt > L[2] + 1 ? "surprised" : "normal", look: [.7, -.6]});
   }
 });
 
 /* 4. 반론 점검 */
 scene({id: "check", lines: [
   ["혹시 **원래 덜 믿던** 부족이 더 끌려간 건 아닐까?", "혹시 원래 남을 덜 믿던 부족이, 더 많이 끌려간 건 아닐까요?", "pop"],
-  ["**바닷가와의 거리**로 따져 봐도 같은 결론", "연구진은 조상이 바닷가에서 얼마나 가까이 살았는지를 이용해 따져 봤는데, 그래도 같은 결론이 나왔습니다."]],
+  ["**바닷가에 가까운** 부족일수록 더 끌려갔다", "노예는 배에 실려 갔기 때문에, 바닷가에 가까이 살던 부족일수록, 더 많이 끌려갔습니다.", "whoosh@0.2"],
+  ["바닷가와의 거리 = **원래의 신뢰와 상관없는** 지리 조건", "연구진은 바닷가와의 거리를, 그 부족이 원래 남을 잘 믿었는지와는 상관없는, 지리 조건으로 봤습니다."],
+  ["아프리카 밖: 바닷가 거리와 신뢰는 **관계없었다**", "실제로 아프리카 밖에서는, 바닷가와의 거리와, 남을 믿는 정도 사이에, 관계가 없었습니다."],
+  ["**거리 때문에 더 끌려간 부분**만 따로 봐도 같은 결론", "그래서 바닷가와의 거리 때문에 더 끌려간 부분만 따로 떼어 봐도, 같은 결론이 나왔습니다.", "ding"]],
   build(el, hud) {
     const c = {w: coastWorld(el)};
+    c.c1 = CX(hud, 300, "<span class='chip' style='font-size:44px'>아프리카 밖: 바닷가 거리 ↔ 신뢰 관계 없음</span>", "", {});
+    c.c2 = CX(hud, 300, "<span class='chip' style='font-size:48px;background:#f2c14e;color:#10182a;border-color:#f2c14e'>그래도 같은 결론 ✔</span>", "", {});
     c.o = host(hud, "owl", {x: 140, y: 1280, s: .6});
     return c;
   },
   cam(lt) {return {x: 540, y: 760, s: 1.02}},
   update(c, lt, L) {
-    const w = c.w; w.anim(lt); w.pan(whip(lt, 0, 2160, 1080, .9)); w.grow(99, 0); w.dist(lt, L[1] + .3);
-    c.o.up(lt, {mood: lt < L[1] ? "skeptical" : "normal", look: [.7, -.5]});
+    const w = c.w; w.anim(lt); w.pan(whip(lt, 0, 2160, 1080, .9)); w.grow(99, 0); w.dist(lt, L[1] + .2); w.tagOn(lt, L[1] + .8);
+    ap(c.c1, lt, L[3] + .2, L[4]); ap(c.c2, lt, L[4] + .6);
+    c.o.up(lt, {mood: lt < L[1] ? "skeptical" : lt > L[4] ? "happy" : "normal", look: [.7, -.5]});
   }
 });
 
 /* 5. 경로 */
 scene({id: "culture", lines: [
-  ["불신이 **믿음과 문화**로 대대로 이어졌다", "연구진은, 이 불신이 주로 사람들의 믿음과 문화로, 대대로 이어져 왔다고 봤습니다.", "ding"]],
+  ["나쁜 제도 같은 **바깥 환경**보다", "연구진은, 나쁜 제도 같은 바깥 환경보다,"],
+  ["**믿음과_문화**로 불신이 대대로 이어졌다", "사람들 마음속의 믿음과 문화로, 불신이 대대로 이어져 왔다고 봤습니다.", "ding"]],
   build(el, hud) {
     const c = {w: coastWorld(el)};
     c.o = host(hud, "owl", {x: 140, y: 1280, s: .6});
@@ -162,7 +176,7 @@ scene({id: "culture", lines: [
   },
   cam(lt) {return {x: 540, y: 780, s: lerp(1, 1.06, ease(lt / 5))}},
   update(c, lt, L) {
-    const w = c.w; w.anim(lt); w.pan(whip(lt, 0, 1080, 3240, 1.2)); w.dist(99, 0); w.chain(lt, 1.3);
+    const w = c.w; w.anim(lt); w.pan(whip(lt, 0, 1080, 3240, 1.2)); w.dist(99, 0); w.tagOn(99, 0); w.chain(lt, L[1]);
     c.o.up(lt, {mood: "normal", look: [.7, -.5]});
   }
 });
