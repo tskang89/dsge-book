@@ -36,7 +36,7 @@
 | 25 | Card & Dahl (2011) "Family Violence and Football", *QJE* | 응원 팀의 예상 밖 패배가 남긴 것 | 기대 대비 패배와 가정 폭력 | 완료 (023, 2026-11-17) |
 | 26 | Ashraf, Karlan & Yin (2006) "Tying Odysseus to the Mast", *QJE* | 스스로 돈을 묶어 두는 통장, 누가 가입할까? | 약정 저축과 저축액 | 완료 (024, 2026-11-17) |
 | 27 | Sacerdote (2001) "Peer Effects with Random Assignment: Results for Dartmouth Roommates", *QJE* | 룸메이트가 내 학점을 바꾼다? | 무작위 배정과 학점 | 완료 (025, 2026-11-17) |
-| 28 | Kahneman & Tversky (1979) "Prospect Theory", *Econometrica* | 만 원 잃는 아픔 > 만 원 얻는 기쁨? | S자 가치함수 | 대기 |
+| 28 | Kahneman & Tversky (1979) "Prospect Theory", *Econometrica* | 만 원 잃는 아픔 > 만 원 얻는 기쁨? | S자 가치함수 | 완료 (026, 2026-11-17) |
 | 29 | Shiller (1981) "Do Stock Prices Move Too Much to be Justified by Subsequent Changes in Dividends?", *AER* | 주가는 왜 이렇게 출렁일까? | 실제 주가 vs 배당 기반 가치 | 대기 |
 | 30 | Abadie & Gardeazabal (2003) "The Economic Costs of Conflict: A Case Study of the Basque Country", *AER* | 테러가 없었다면? 가상의 바스크를 만들다 | 합성 대조군 그래프 | 대기 |
 | 31 | Nunn & Wantchekon (2011) "The Slave Trade and the Origins of Mistrust in Africa", *AER* | 수백 년 전 노예무역이 오늘의 신뢰를 낮춘다? | 노예 수출 강도 vs 신뢰 | 대기 |
