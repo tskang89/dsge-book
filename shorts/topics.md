@@ -38,7 +38,7 @@
 | 27 | Sacerdote (2001) "Peer Effects with Random Assignment: Results for Dartmouth Roommates", *QJE* | 룸메이트가 내 학점을 바꾼다? | 무작위 배정과 학점 | 완료 (025, 2026-11-17) |
 | 28 | Kahneman & Tversky (1979) "Prospect Theory", *Econometrica* | 만 원 잃는 아픔 > 만 원 얻는 기쁨? | S자 가치함수 | 완료 (026, 2026-11-17) |
 | 29 | Shiller (1981) "Do Stock Prices Move Too Much to be Justified by Subsequent Changes in Dividends?", *AER* | 주가는 왜 이렇게 출렁일까? | 실제 주가 vs 배당 기반 가치 | 완료 (027, 2026-11-17) |
-| 30 | Abadie & Gardeazabal (2003) "The Economic Costs of Conflict: A Case Study of the Basque Country", *AER* | 테러가 없었다면? 가상의 바스크를 만들다 | 합성 대조군 그래프 | 대기 |
+| 30 | Abadie & Gardeazabal (2003) "The Economic Costs of Conflict: A Case Study of the Basque Country", *AER* | 테러가 없었다면? 가상의 바스크를 만들다 | 합성 대조군 그래프 | 완료 (028, 2026-11-17) |
 | 31 | Nunn & Wantchekon (2011) "The Slave Trade and the Origins of Mistrust in Africa", *AER* | 수백 년 전 노예무역이 오늘의 신뢰를 낮춘다? | 노예 수출 강도 vs 신뢰 | 대기 |
 | 32 | Kearney & Levine (2015) "Media Influences on Social Outcomes: The Impact of MTV's 16 and Pregnant on Teen Childbearing", *AER* | TV 리얼리티 쇼가 10대 출산을 줄였다? | 시청률과 출산율 | 대기 |
 | 33 | DellaVigna & Kaplan (2007) "The Fox News Effect", *QJE* | 뉴스 채널 하나가 선거를 바꿨다? | 케이블 도입 지역 득표율 | 대기 |
