@@ -61,8 +61,8 @@ function gymWorld(el) {
   ST(g, 1080 + 540, 440, "요금 안내  ·  PRICE", {"font-size": 52, "font-weight": 800, fill: "#e9e2f5"});
   S("rect", {x: 1080 + 250, y: 1060, width: 800, height: 34, rx: 12, fill: U("top")}, g);
   S("rect", {x: 1080 + 270, y: 1094, width: 760, height: 150, rx: 16, fill: U("desk")}, g);
-  w.labA = ST(g, 1080 + 470, 1180, "1회 $10씩", {"font-size": 48, "font-weight": 800, fill: TEAL});
-  w.labB = ST(g, 1080 + 830, 1180, "한 달 $70", {"font-size": 48, "font-weight": 800, fill: GOLD});
+  w.labA = ST(g, 1080 + 470, 1180, "1회권 $10", {"font-size": 48, "font-weight": 800, fill: TEAL});
+  w.labB = ST(g, 1080 + 830, 1180, "정액권 $70", {"font-size": 48, "font-weight": 800, fill: GOLD});
   // 달력 벽 구역
   const cx0 = 2160 + 120, cy0 = 370, cw = 120, ch = 104;
   S("rect", {x: cx0 - 30, y: cy0 - 6, width: 7 * cw + 60, height: 5 * ch + 150, rx: 30, fill: "#000", opacity: .3, transform: "translate(10,14)"}, g);
@@ -168,8 +168,8 @@ scene({id: "hook", lines: [
 
 /* 2. 요금 비교 (카운터로 이동, 동전 기둥) */
 scene({id: "choice", lines: [
-  ["**한 달 $70**: 몇_번을 가든 같은 돈", "하나는 한 달 칠십 달러. 몇 번을 가든 같은 돈입니다.", "pop"],
-  ["**1회 $10**: 간 만큼만 낸다", "다른 하나는 한 번에 십 달러. 간 만큼만 냅니다.", "pop"],
+  ["**정액권**: 가는 횟수와 상관없이 한 달 **$70**", "정액권은, 가는 횟수와 상관없이 한 달에 칠십 달러.", "pop"],
+  ["**1회권**: 갈 때마다 **$10**", "일회권은, 갈 때마다 십 달러를 냅니다.", "pop"],
   ["한 달 **7번** 넘게 가야 정액이 이득", "그러니 한 달에 일곱 번 넘게 가야 정액이 이득입니다.", "ding"]],
   build(el, hud) {
     const c = {w: gymWorld(el)};
