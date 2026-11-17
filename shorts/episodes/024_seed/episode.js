@@ -3,7 +3,7 @@
          Quarterly Journal of Economics 121(2): 635–672. doi:10.1162/qjec.2006.121.2.635
    확인(2026-11-17, 원문 PDF 는 이 세션에서 막힘 — 검색 요약(IPA·J-PAL·AEA 등록부·작업 논문 발췌)으로 확인):
    - 필리핀 부투안시 Green Bank of Caraga 고객 1,777명, 무작위로 약정 통장 권유·저축 권유만·아무것도 안 함 세 집단
-   - SEED 통장: 목표 날짜나 목표 금액을 정하면 그때까지 꺼낼 수 없음, 이자는 보통 통장과 같음(연 4%)
+   - SEED 통장: 목표 날짜나 목표한 돈을 정하면 그때까지 꺼낼 수 없음, 이자는 보통 통장과 같음(연 4%)
    - 권유받은 고객 중 202명(28.4%)이 가입
    - 1년 뒤 약정 통장을 권유받은 집단의 평균 저축이 비교 집단보다 81~82% 늘어남(배정 기준 = 가입 안 한 사람 포함) → 영상은 “80% 넘게”
    - 확인 못 한 것(쓰지 않음): 저축 권유만 받은 집단의 효과 크기, 설문상 성향과 가입의 관계
@@ -12,9 +12,9 @@ Object.assign(EP, {no: 24, style: "v2", title: "돈을 못 꺼내는 통장", ho
   bgm: {seed: 635, bpm: 98, mood: "bright"},
   paper: {journal: "Quarterly Journal of Economics", year: 2006, authors: "Nava Ashraf, Dean Karlan & Wesley Yin",
           title: "Tying Odysseus to the Mast: Evidence from a Commitment Savings Product in the Philippines",
-          ko: "오디세우스를 돛대에 묶기: 필리핀 약정 저축 상품의 증거", cite: "121(2): 635–672", url: "https://doi.org/10.1162/qjec.2006.121.2.635"},
+          ko: "오디세우스를 배 기둥(돛대)에 묶기: 필리핀 약정 저축 상품의 증거", cite: "121(2): 635–672", url: "https://doi.org/10.1162/qjec.2006.121.2.635"},
   yt: {title: "이자는 같은데 돈을 못 꺼내는 통장, 누가 가입할까? | 오디세우스의 돛대 #경제 #shorts",
-       desc: "연구진은 필리핀의 한 은행과 함께 고객 1,777명을 대상으로 실험했다. 새 통장은 목표 날짜나 목표 금액을 정하면 그때까지 돈을 꺼낼 수 없다. 그런데 이자는 보통 통장과 똑같았다(연 4%). 자유만 줄어드는 셈이니 아무도 고르지 않을 것 같지만, 이 통장을 권유받은 고객 중 28%가 가입했다. 1년 뒤, 이 통장을 권유받은 사람들은 아무 제안도 받지 않은 사람들보다 저축이 80% 넘게 늘었다(논문 81~82%). 가입하지 않은 사람까지 모두 넣은 평균이다. 그리스 신화의 오디세우스는 바다 요정의 노래에 홀리지 않으려고 자기 몸을 돛대에 묶게 했다. 이렇게 미래의 나를 미리 묶어 두는 방법을 약속 장치(Commitment Device)라고 부른다. 연구진은 돈이 생기면 써 버릴 걸 아는 사람들이 스스로 손을 묶은 것으로 봤다.",
+       desc: "연구진은 필리핀의 한 은행과 함께 고객 1,777명(영상에선 1,700명 넘게)을 대상으로 실험했다. 새 통장은 목표 날짜나 목표한 돈을 정하면 그때까지 돈을 꺼낼 수 없다. 그런데 이자는 보통 통장과 똑같았다(연 4%). 자유만 줄어드는 셈이니 아무도 고르지 않을 것 같지만, 이 통장을 권유받은 고객 중 28%가 가입했다. 1년 뒤, 이 통장을 권유받은 사람들은 아무 제안도 받지 않은 사람들보다 저축이 80% 넘게 늘었다(논문 81~82%). 가입하지 않은 사람까지 모두 넣은 평균이다. 그리스 신화의 오디세우스는 바다 요정의 노래에 홀리지 않으려고 자기 몸을 배 기둥(돛대)에 묶게 했다. 이렇게 미래의 나를 미리 묶어 두는 방법을 약속 장치(Commitment Device)라고 부른다. 연구진은 돈이 생기면 써 버릴 걸 아는 사람들이 스스로 손을 묶은 것으로 봤다.",
        tags: ["경제", "행동경제학", "약속장치", "저축", "자기통제", "shorts"]}});
 
 const GOLD = "#f2c14e", BLUE = "#5ab0ff", TEAL = "#6fcfb7", CORAL = "#ff8a65", RED = "#e85d5d";
@@ -46,9 +46,9 @@ function seedWorld(el) {
     ST(g, x, 570, "이자 연 4%", {"font-size": 52, "font-weight": 900, fill: GOLD})};
   pb(1080 + 290, U("book"), "보통 통장"); pb(1080 + 790, U("book2"), "약정 통장");
   w.free = ST(g, 1080 + 290, 720, "언제든 꺼냄", {"font-size": 46, "font-weight": 800, fill: "#e8f0ff"});
-  w.rule = [ST(g, 1080 + 790, 680, "목표 날짜·금액까지", {"font-size": 40, "font-weight": 800, fill: "#ffe8dc", opacity: 0}),
-            ST(g, 1080 + 790, 740, "못 꺼냄", {"font-size": 56, "font-weight": 900, fill: "#fff", opacity: 0})];
-  w.lock = img(w.layer, "locked", 1080 + 790, 860, 150);
+  w.rule = [ST(g, 1080 + 790, 650, "목표한 날짜·돈까지", {"font-size": 40, "font-weight": 800, fill: "#ffe8dc", opacity: 0}),
+            ST(g, 1080 + 790, 715, "못 꺼냄", {"font-size": 56, "font-weight": 900, fill: "#fff", opacity: 0})];
+  w.lock = img(w.layer, "locked", 1080 + 790, 870, 120);
   w.cal = img(w.layer, "spiral_calendar", 1080 + 990, 400, 120);
   w.eq = ST(g, 1080 + 540, 590, "=", {"font-size": 90, "font-weight": 900, fill: GOLD, opacity: 0});
   // 2160: 100칸 격자 (가입 28칸)
@@ -65,9 +65,11 @@ function seedWorld(el) {
   w.cUnit = ST(g, 2160 + 540, 1160, "1년 뒤 저축 (아무 제안 없던 쪽 = 동전 10개)", {"font-size": 34, "font-weight": 700, fill: "#c9cfe6", opacity: 0});
   // 3240: 바다·돛대·노래
   w.ship = img(w.layer, "sailboat", 3240 + 420, 960, 420);
+  w.ody = img(w.layer, "man", 3240 + 372, 880, 150);
   w.rock = img(w.layer, "rock", 3240 + 880, 960, 200);
   w.notes = [0, 1, 2].map(k => img(w.layer, "musical_notes", 3240 + 860, 760, 90));
-  w.rope = S("path", {d: "", stroke: "#c8a060", "stroke-width": 10, fill: "none", "stroke-linecap": "round", opacity: 0}, g);
+  const g2 = S("svg", {width: WW, height: H, viewBox: `0 0 ${WW} ${H}`, style: "position:absolute;left:0;top:0;overflow:visible"}, w.layer);
+  w.rope = S("path", {d: "", stroke: "#8a5a2a", "stroke-width": 12, fill: "none", "stroke-linecap": "round", opacity: 0}, g2);
   w.waves = Array.from({length: 4}, (_, i) => S("path", {d: "", stroke: "#cfefff", "stroke-width": 4, fill: "none", opacity: .35}, g));
   // 앞쪽(흐린) 갈매기·전선: 시차
   w.fg = E("div", "a", null, {left: 0, top: 0, width: WW * 1.3 + "px", height: H + "px", filter: "blur(6px)"}, el);
@@ -78,10 +80,10 @@ function seedWorld(el) {
   w.anim = lt => {w.clouds.forEach((c, i) => c.setAttribute("cx", (200 + i * 540 + lt * 14 * (1 + i % 3)) % WW));
     w.waves.forEach((p, i) => {const y = 900 + i * 60; let s = `M${3240},${y}`;
       for (let x = 0; x <= 1080; x += 40) s += ` L${3240 + x},${y + 10 * Math.sin(x / 70 + lt * 2 + i)}`; p.setAttribute("d", s)});
-    imgAt(w.ship, 3240 + 420, 960 + 8 * Math.sin(lt * 1.6), 1, 3 * Math.sin(lt * 1.2));
+    const by = 8 * Math.sin(lt * 1.6); imgAt(w.ship, 3240 + 420, 960 + by, 1, 3 * Math.sin(lt * 1.2)); imgAt(w.ody, 3240 + 372, 880 + by, 1, 0); w.rope.setAttribute("transform", `translate(0,${by})`);
     w.notes.forEach((e, k) => {const u = ((lt * .5 + k / 3) % 1); imgAt(e, 3240 + 860 - 260 * u, 800 - 200 * u, .7 + .4 * u, 15 * Math.sin(lt * 3 + k)); e.style.opacity = Math.sin(Math.PI * u) * .9})};
   w.passRule = (lt, t0) => {w.rule.forEach((t, i) => t.setAttribute("opacity", P(lt, t0 + i * .3, .3)));
-    const u = spr((lt - t0 - .5) / .5); imgAt(w.lock, 1080 + 790, 860, clamp(u, 0, 1.2), 0); w.lock.style.opacity = clamp(u * 2);
+    const u = spr((lt - t0 - .5) / .5); imgAt(w.lock, 1080 + 790, 870, clamp(u, 0, 1.2), 0); w.lock.style.opacity = clamp(u * 2);
     imgAt(w.cal, 1080 + 990, 400, clamp(spr((lt - t0) / .5), 0, 1.2), 10); w.cal.style.opacity = clamp(spr((lt - t0) / .5) * 2)};
   w.grid = (lt, t0) => {w.cells.forEach((c, i) => c.setAttribute("fill", lt > t0 + i * .012 ? (i < 28 && lt > t0 + 1.4 ? GOLD : "#8a8aa0") : "#4a4a5a"));
     w.gLab.textContent = lt > t0 + 1.6 ? "100명 중 28명 가입" : ""};
@@ -89,8 +91,8 @@ function seedWorld(el) {
   w.stack = (lt, t0) => {w.coins.forEach((s, j) => {const tt = t0 + j * .9; s.cs2.forEach((e, i) => e.setAttribute("opacity", lt > tt + i * .05 ? 1 : 0));
       s.lab.forEach(l => l.setAttribute("opacity", P(lt, tt, .3)))});
     w.cUnit.setAttribute("opacity", P(lt, t0 + .3, .3)); const u = spr((lt - t0 - 2.1) / .5); w.badge.setAttribute("opacity", clamp(u * 2))};
-  w.tie = u => {w.rope.setAttribute("opacity", u > 0 ? 1 : 0); const x = 3240 + 420;
-    w.rope.setAttribute("d", `M${x - 40},${700} L${x + 40},${720} M${x - 40},${760} L${x + 40},${780}`); w.rope.style.strokeDasharray = "120"; w.rope.style.strokeDashoffset = 120 * (1 - u)};
+  w.tie = u => {w.rope.setAttribute("opacity", u > 0 ? 1 : 0); const x = 3240 + 367;
+    w.rope.setAttribute("d", `M${x - 50},${790} L${x + 60},${805} M${x - 50},${830} L${x + 60},${845}`); w.rope.style.strokeDasharray = "120"; w.rope.style.strokeDashoffset = 120 * (1 - u)};
   w.passRule(-99, 99); w.grid(-99, 99); w.stack(-99, 99); w.tie(0);
   return w;
 }
@@ -98,7 +100,7 @@ const whip = (lt, t0, a, b, dd) => lerp(a, b, ease((lt - t0) / (dd || .7)));
 
 /* 1. 질문 */
 scene({id: "hook", lines: [
-  ["이자는 같은데 돈을 **못 꺼내는** 통장, 누가 가입할까?", "이자는 똑같은데, 돈을 마음대로 꺼낼 수 없는 통장. 누가 가입할까요?", "pop"],
+  ["돈을 **못 꺼내는** 통장, 누가 가입할까?", "이자는 똑같은데, 돈을 마음대로 꺼낼 수 없는 통장. 누가 가입할까요?", "pop"],
   ["2006년 **QJE**에 실린 논문", "이천육 년에 나온 논문입니다."],
   ["저자: 아슈라프_교수, 칼런_교수, 인_교수", "저자는, 아슈라프 교수, 칼런 교수, 그리고 인 교수입니다."]],
   build(el, hud) {
@@ -119,10 +121,10 @@ scene({id: "hook", lines: [
 
 /* 2. 실험: 통장 둘 */
 scene({id: "setup", lines: [
-  ["필리핀 한 은행의 고객 **1,777명**", "연구진은 필리핀의 한 은행과 함께, 고객 천칠백칠십칠 명을 대상으로 실험했습니다.", "pop"],
-  ["새 통장: 목표 **날짜나 금액**까지 꺼낼 수 없다", "새 통장은, 목표 날짜나 목표 금액을 정하면, 그때까지 돈을 꺼낼 수 없습니다.", "whoosh@0.2"],
+  ["필리핀 은행 한 곳의 고객 **1,700명_넘게**", "연구진은, 필리핀 은행 한 곳에서, 고객 천칠백 명이 넘는 사람들을 대상으로 실험했습니다.", "pop"],
+  ["새 통장: 목표한 **날짜나_돈**까지 꺼낼 수 없다", "새 통장은, 목표 날짜나 목표한 돈을 정하면, 그때까지 돈을 꺼낼 수 없습니다.", "whoosh@0.2"],
   ["그런데 이자는 보통 통장과 **똑같다**", "그런데 이자는, 보통 통장과 똑같았습니다.", "coin"],
-  ["자유만 줄어드니 **아무도 안 고를 것** 같다", "자유만 줄어드는 셈이니, 아무도 고르지 않을 것 같죠."]],
+  ["자유만 줄어드니 **아무도 고르지 않을 것** 같다", "자유만 줄어드니, 아무도 고르지 않을 것 같죠."]],
   build(el, hud) {
     const c = {w: seedWorld(el)};
     c.o = host(hud, "owl", {x: 140, y: 1280, s: .6});
@@ -156,8 +158,8 @@ scene({id: "result", lines: [
 
 /* 4. 왜: 오디세우스의 돛대 */
 scene({id: "why", lines: [
-  ["오디세우스: 노래에 홀리지 않으려고 **자기 몸을 돛대에** 묶게 했다", "그리스 신화의 오디세우스는, 바다 요정의 노래에 홀리지 않으려고, 자기 몸을 돛대에 묶게 했습니다.", "whoosh@0.2"],
-  ["미래의 나를 미리 묶어 두기 = **약속 장치**(Commitment Device)", "이렇게 미래의 나를 미리 묶어 두는 방법을, 약속 장치라고 부릅니다."],
+  ["오디세우스: **자기 몸을 배 기둥에** 묶으라고 했다", "그리스 신화의 오디세우스는, 바다 요정의 노래에 홀리지 않으려고, 선원들에게 자기 몸을 배 기둥에 묶으라고 했습니다.", "whoosh@0.2"],
+  ["이것이 **약속_장치**(Commitment Device)", "이렇게 미래의 나를 미리 묶어 두는 방법을, 약속 장치라고 부릅니다."],
   ["돈이 생기면 써 버릴 걸 아는 사람이 **스스로 손을 묶었다**", "연구진은, 돈이 생기면 써 버릴 걸 아는 사람들이, 스스로 손을 묶은 것으로 봤습니다.", "ding"]],
   build(el, hud) {
     const c = {w: seedWorld(el)};
@@ -174,7 +176,7 @@ scene({id: "why", lines: [
 
 /* 5. 마무리 */
 scene({id: "outro", tail: .7, lines: [
-  ["논문 제목: 〈**오디세우스를_돛대에_묶기**〉", "논문 제목이 바로, 오디세우스를 돛대에 묶기입니다.", "ding"],
+  ["논문 제목: 〈**오디세우스를_배_기둥에_묶기**〉", "논문 제목도, 오디세우스를 배 기둥에 묶기라는 뜻입니다.", "ding"],
   ["매일 하나씩, **오늘의 경제**", "구독하시고, 매일 하나씩 만나요."]],
   build(el, hud) {
     const c = {w: seedWorld(el)};

@@ -34,7 +34,7 @@
 | 23 | Angrist & Krueger (1991) "Does Compulsory School Attendance Affect Schooling and Earnings?", *QJE* | 태어난 달이 소득을 바꾼다? | 출생 분기와 교육 연수 | 제외 (도구변수 설명이 어려움 — 사용자 판단, 2026-11-16) |
 | 24 | Barber & Odean (2001) "Boys Will Be Boys: Gender, Overconfidence, and Common Stock Investment", *QJE* | 주식 많이 사고파는 사람이 덜 번다? | 거래 회전율과 수익률 | 완료 (022, 2026-11-16) |
 | 25 | Card & Dahl (2011) "Family Violence and Football", *QJE* | 응원 팀의 예상 밖 패배가 남긴 것 | 기대 대비 패배와 가정 폭력 | 완료 (023, 2026-11-17) |
-| 26 | Ashraf, Karlan & Yin (2006) "Tying Odysseus to the Mast", *QJE* | 스스로 돈을 묶어 두는 통장, 누가 가입할까? | 약정 저축과 저축액 | 대기 |
+| 26 | Ashraf, Karlan & Yin (2006) "Tying Odysseus to the Mast", *QJE* | 스스로 돈을 묶어 두는 통장, 누가 가입할까? | 약정 저축과 저축액 | 완료 (024, 2026-11-17) |
 | 27 | Sacerdote (2001) "Peer Effects with Random Assignment: Results for Dartmouth Roommates", *QJE* | 룸메이트가 내 학점을 바꾼다? | 무작위 배정과 학점 | 대기 |
 | 28 | Kahneman & Tversky (1979) "Prospect Theory", *Econometrica* | 만 원 잃는 아픔 > 만 원 얻는 기쁨? | S자 가치함수 | 대기 |
 | 29 | Shiller (1981) "Do Stock Prices Move Too Much to be Justified by Subsequent Changes in Dividends?", *AER* | 주가는 왜 이렇게 출렁일까? | 실제 주가 vs 배당 기반 가치 | 대기 |
