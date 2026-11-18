@@ -34,9 +34,31 @@ function labWorld(el) {
   for (let x = 0; x < WW; x += 90) S("line", {x1: x, y1: 0, x2: x, y2: 1000, stroke: "#fff", opacity: .03}, g);
   // 0: 미로 화면 + 학생들
   S("rect", {x: 220, y: 230, width: 640, height: 480, rx: 22, fill: "#0b1020", stroke: "#4a5a7a", "stroke-width": 10}, g);
-  const mz = "M260,270 h560 M260,270 v400 M820,270 v400 M260,670 h480 M330,270 v120 M330,390 h160 M560,330 v200 M400,470 h160 M260,560 h220 M640,410 h180 M700,520 v150";
+  // 미로: 6×4 칸, 깊이 우선 탐색으로 만든 '완전 미로' — 공은 실제로 뚫린 길만 따라 움직인다
+  const MC = 6, MR = 4, mx = 260, my = 270, cw = 560 / MC, chh = 400 / MR, mr = rng(35);
+  const R_ = Array.from({length: MR}, () => Array(MC).fill(true)), D_ = Array.from({length: MR}, () => Array(MC).fill(true));
+  const seen = Array.from({length: MR}, () => Array(MC).fill(false)), st = [[0, 0]]; seen[0][0] = true;
+  while (st.length) {const [r0, c0] = st[st.length - 1];
+    const nb = [[r0 - 1, c0], [r0 + 1, c0], [r0, c0 - 1], [r0, c0 + 1]].filter(([r1, c1]) => r1 >= 0 && r1 < MR && c1 >= 0 && c1 < MC && !seen[r1][c1]);
+    if (!nb.length) {st.pop(); continue}
+    const [r1, c1] = nb[Math.floor(mr() * nb.length)];
+    if (r1 === r0) R_[r0][Math.min(c0, c1)] = false; else D_[Math.min(r0, r1)][c0] = false;
+    seen[r1][c1] = true; st.push([r1, c1])}
+  let mz = `M${mx},${my} h560 v400 h-560 Z`;
+  for (let r0 = 0; r0 < MR; r0++) for (let c0 = 0; c0 < MC; c0++) {
+    if (c0 < MC - 1 && R_[r0][c0]) mz += ` M${mx + (c0 + 1) * cw},${my + r0 * chh} v${chh}`;
+    if (r0 < MR - 1 && D_[r0][c0]) mz += ` M${mx + c0 * cw},${my + (r0 + 1) * chh} h${cw}`}
   S("path", {d: mz, stroke: TEAL, "stroke-width": 12, fill: "none", "stroke-linecap": "round"}, g);
-  w.dot = S("circle", {cx: 290, cy: 300, r: 16, fill: GOLD}, g);
+  // 출발(왼쪽 위) → 도착(오른쪽 아래) 길 찾기
+  const prev = {}, q = [[0, 0]], key = (r1, c1) => r1 + "," + c1; prev[key(0, 0)] = null;
+  while (q.length) {const [r0, c0] = q.shift(); if (r0 === MR - 1 && c0 === MC - 1) break;
+    const mv = [];
+    if (c0 < MC - 1 && !R_[r0][c0]) mv.push([r0, c0 + 1]); if (c0 > 0 && !R_[r0][c0 - 1]) mv.push([r0, c0 - 1]);
+    if (r0 < MR - 1 && !D_[r0][c0]) mv.push([r0 + 1, c0]); if (r0 > 0 && !D_[r0 - 1][c0]) mv.push([r0 - 1, c0]);
+    mv.forEach(([r1, c1]) => {if (!(key(r1, c1) in prev)) {prev[key(r1, c1)] = [r0, c0]; q.push([r1, c1])}})}
+  w.mpath = []; for (let cur = [MR - 1, MC - 1]; cur; cur = prev[key(cur[0], cur[1])]) w.mpath.unshift([mx + (cur[1] + .5) * cw, my + (cur[0] + .5) * chh]);
+  S("rect", {x: mx + (MC - 1) * cw + 14, y: my + (MR - 1) * chh + 14, width: cw - 28, height: chh - 28, rx: 10, fill: GOLD, opacity: .25}, g);
+  w.dot = S("circle", {cx: w.mpath[0][0], cy: w.mpath[0][1], r: 16, fill: GOLD}, g);
   w.timer = ST(g, 540, 790, "15분", {"font-size": 60, "font-weight": 900, fill: GOLD});
   w.kids = [["man", 200], ["woman", 400], ["man", 680], ["woman", 880]].map(([k, x]) => img(w.layer, k, x, 1000, 150));
   // 1080: 보상 방식
@@ -68,8 +90,8 @@ function labWorld(el) {
     S("rect", {x: x - 180, y: 66, width: 360, height: 12, rx: 6, fill: "#e8f1ff", opacity: .8}, fs)});
   /* 상태 */
   w.pan = x => {w.layer.style.transform = `translateX(${-x}px)`; w.fg.style.transform = `translateX(${-x * 1.3 + 100}px)`};
-  const path = [[290, 300], [290, 520], [450, 520], [450, 620], [780, 620], [780, 470]];
-  w.anim = lt => {const u = (lt * .25) % 1, k = u * (path.length - 1), i = Math.floor(k), f = k - i, p = path[i], q = path[Math.min(i + 1, path.length - 1)];
+  const path = w.mpath;
+  w.anim = lt => {const u = Math.min(1, ((lt * .2) % 1.25)), k = u * (path.length - 1), i = Math.floor(k), f = k - i, p = path[i], q = path[Math.min(i + 1, path.length - 1)];
     w.dot.setAttribute("cx", lerp(p[0], q[0], f)); w.dot.setAttribute("cy", lerp(p[1], q[1], f));
     w.kids.forEach((e, i) => imgAt(e, [200, 400, 680, 880][i], 1000 - 4 * Math.abs(Math.sin(lt * 2 + i)), 1, 0));
     w.wom.forEach((e, i) => imgAt(e, 3240 + 190 + i * 140, 980 - 5 * Math.abs(Math.sin(lt * 2.4 + i)), 1, 0))};
