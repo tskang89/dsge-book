@@ -37,7 +37,6 @@ function golfWorld(el) {
   S("rect", {x: 0, y: 900, width: WW, height: H - 900, fill: U("green")}, g);
   for (let x = 0; x < WW; x += 200) S("path", {d: `M${x},900 L${x + 100},900 L${x - 200},${H} L${x - 300},${H} Z`, fill: "#fff", opacity: .05}, g);
   // 0: 홀과 깃대
-  S("ellipse", {cx: 760, cy: 990, rx: 34, ry: 12, fill: "#123"}, g);
   w.flag = img(w.layer, "flag_in_hole", 790, 1000, 260);
   w.ball = S("circle", {cx: 480, cy: 1160, r: 18, fill: "#fff", stroke: "#bbb", "stroke-width": 3}, g);
   w.golfer = img(w.layer, "person_golfing", 400, 1180, 230);
@@ -52,9 +51,8 @@ function golfWorld(el) {
     ST(gg, cx + 210, y + 14, sub, {"font-size": 36, "font-weight": 900, fill: col === "#2b2b2b" ? "#555" : col});
     return gg});
   // 2160: 레이저 측정
-  S("ellipse", {cx: 2160 + 760, cy: 900, rx: 34, ry: 12, fill: "#123"}, g);
   w.flag2 = img(w.layer, "flag_in_hole", 2160 + 790, 910, 220);
-  w.laser = S("line", {x1: 2160 + 280, y1: 1000, x2: 2160 + 760, y2: 900, stroke: RED, "stroke-width": 6, "stroke-dasharray": "18 10", opacity: 0}, g);
+  w.laser = S("line", {x1: 2160 + 280, y1: 1000, x2: 2160 + 760, y2: 851, stroke: RED, "stroke-width": 6, "stroke-dasharray": "18 10", opacity: 0}, g);
   w.ball2 = S("circle", {cx: 2160 + 280, cy: 1000, r: 16, fill: "#fff", stroke: "#bbb", "stroke-width": 3}, g);
   w.dist = ST(g, 2160 + 520, 920, "", {"font-size": 44, "font-weight": 800, fill: "#fff"});
   // 3240: 100번 격자 둘 (파 퍼트 / 버디 퍼트)
@@ -75,11 +73,11 @@ function golfWorld(el) {
     imgAt(w.flag, 790 + 4 * Math.sin(lt * 2), 1000, 1, 3 * Math.sin(lt * 2.4))};
   // 퍼트: u 진행, stop 0~1 (1 = 홀까지), 들어가면 사라짐
   w.putt = (u, stop) => {u = clamp(u); const e = 1 - Math.pow(1 - u, 3), k = e * stop;
-    w.ball.setAttribute("cx", lerp(480, 760, k)); w.ball.setAttribute("cy", lerp(1160, 990, k));
+    w.ball.setAttribute("cx", lerp(480, 752, k)); w.ball.setAttribute("cy", lerp(1160, 930, k));
     w.ball.setAttribute("opacity", stop >= 1 && u > .95 ? 0 : 1)};
   w.score = k => w.sc.forEach((s, i) => s.setAttribute("opacity", k === -1 || i === k || (Array.isArray(k) && k.indexOf(i) >= 0) ? 1 : .25));
   w.measure = u => {u = clamp(u); w.laser.setAttribute("opacity", u > 0 ? 1 : 0);
-    w.laser.setAttribute("x2", lerp(2160 + 280, 2160 + 760, ease(u))); w.laser.setAttribute("y2", lerp(1000, 900, ease(u)));
+    w.laser.setAttribute("x2", lerp(2160 + 280, 2160 + 760, ease(u))); w.laser.setAttribute("y2", lerp(1000, 851, ease(u)));
     w.dist.textContent = u > .9 ? "거리 정확히 측정" : ""};
   w.fill = (lt, t0, which) => w.grids.forEach((gr, j) => {if (which.indexOf(j) < 0) return;
     const tt = t0 + j * .3; gr.cells.forEach((c, i) => c.setAttribute("fill", i < gr.m && lt > tt + i * .02 ? gr.col : "#1e4d2b"));
@@ -245,9 +243,10 @@ scene({id: "why", lines: [
     c.sc = svgLayer(hud);
     const g = c.sc;
     S("line", {x1: 540, y1: 380, x2: 540, y2: 960, stroke: "#fff", "stroke-width": 8}, g);
-    S("path", {d: "M440,380 L640,380 L540,330 Z", fill: GOLD}, g);
+    S("path", {d: "M450,990 L630,990 L540,935 Z", fill: GOLD}, g);
     c.beam = S("g", {}, g);
     S("rect", {x: 170, y: 372, width: 740, height: 18, rx: 9, fill: "#fff"}, c.beam);
+    S("circle", {cx: 540, cy: 381, r: 22, fill: GOLD, stroke: "#fff", "stroke-width": 6}, g);
     c.pl = S("g", {}, g); c.pr = S("g", {}, g);
     [[c.pl, "얻는 기쁨", TEAL], [c.pr, "잃는 아픔", CORAL]].forEach(([p, t, col]) => {
       S("path", {d: "M-130,0 L130,0 Q100,70 0,70 Q-100,70 -130,0 Z", fill: col}, p);
