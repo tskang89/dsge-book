@@ -157,8 +157,8 @@ scene({id: "debate", lines: [
   build(el, hud) {
     const c = {w: seaWorld(el)};
     c.dim = A(hud, 0, 0, "", "", {width: W + "px", height: "1250px", background: "rgba(8,12,22,.35)"});
-    c.b1 = img(hud, "speech_balloon", 300, 640, 320); c.t1 = CX(hud, 440, "<span style='font-size:58px;font-weight:900;color:#e85d5d'>임금 ↓<br><span style='font-size:36px'>보하스</span></span>", "", {width: "600px", left: "0px"});
-    c.b2 = img(hud, "speech_balloon", 780, 640, 320); c.t2 = CX(hud, 440, "<span style='font-size:52px;font-weight:900;color:#1e8a6a'>효과 없음<br><span style='font-size:36px'>카드 등</span></span>", "", {width: "600px", left: "480px"});
+    c.b1 = img(hud, "speech_balloon", 290, 700, 440); c.t1 = CX(hud, 395, "<span style='font-size:58px;font-weight:900;color:#e85d5d'>임금 ↓<br><span style='font-size:36px'>보하스</span></span>", "", {width: "600px", left: "0px"});
+    c.b2 = img(hud, "speech_balloon", 790, 700, 440); c.t2 = CX(hud, 395, "<span style='font-size:52px;font-weight:900;color:#1e8a6a'>효과 없음<br><span style='font-size:36px'>카드 등</span></span>", "", {width: "600px", left: "480px"});
     c.dim.parentNode.insertBefore(c.dim, c.dim.parentNode.firstChild);
     c.o = host(hud, "owl", {x: 140, y: 1280, s: .6});
     return c;
@@ -167,8 +167,8 @@ scene({id: "debate", lines: [
   update(c, lt, L) {
     const w = c.w; w.anim(lt); w.pan(whip(lt, 0, 2160, 3240, .9)); w.comp(99, 0, 0); c.dim.style.opacity = P(lt, .5, .4);
     const u1 = spr((lt - .9) / .5), u2 = spr((lt - L[1] - .1) / .5);
-    imgAt(c.b1, 300, 640, clamp(u1, 0, 1.2), -6); c.b1.style.opacity = clamp(u1 * 2); c.t1.style.opacity = clamp(u1 * 2);
-    imgAt(c.b2, 780, 640, clamp(u2, 0, 1.2), 6); c.b2.style.opacity = clamp(u2 * 2); c.t2.style.opacity = clamp(u2 * 2);
+    imgAt(c.b1, 290, 700, clamp(u1, 0, 1.2), -6); c.b1.style.opacity = clamp(u1 * 2); c.t1.style.opacity = clamp(u1 * 2);
+    imgAt(c.b2, 790, 700, clamp(u2, 0, 1.2), 6); c.b2.style.opacity = clamp(u2 * 2); c.t2.style.opacity = clamp(u2 * 2);
     c.o.up(lt, {mood: lt < L[2] ? "skeptical" : "normal", look: [.7, -.5]});
   }
 });
