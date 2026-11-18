@@ -42,6 +42,6 @@
 | 31 | Nunn & Wantchekon (2011) "The Slave Trade and the Origins of Mistrust in Africa", *AER* | 수백 년 전 노예무역이 오늘의 신뢰를 낮춘다? | 노예 수출 강도 vs 신뢰 | 완료 (029, 2026-11-17) |
 | 32 | Kearney & Levine (2015) "Media Influences on Social Outcomes: The Impact of MTV's 16 and Pregnant on Teen Childbearing", *AER* | TV 리얼리티 쇼가 10대 출산을 줄였다? | 시청률과 출산율 | 완료 (030, 2026-11-18) |
 | 33 | DellaVigna & Kaplan (2007) "The Fox News Effect", *QJE* | 뉴스 채널 하나가 선거를 바꿨다? | 케이블 도입 지역 득표율 | 완료 (031, 2026-11-18) |
-| 34 | Jacob & Levitt (2003) "Rotten Apples", *QJE* | 시험 부정은 학생이 아니라 교사가? | 답안 패턴 탐지 | 대기 |
+| 34 | Jacob & Levitt (2003) "Rotten Apples", *QJE* | 시험 부정은 학생이 아니라 교사가? | 답안 패턴 탐지 | 완료 (034, 2026-11-18) |
 | 35 | Gneezy, Niederle & Rustichini (2003) "Performance in Competitive Environments: Gender Differences", *QJE* | 경쟁이 붙으면 성적이 달라진다? | 성과급 방식별 성과 | 대기 |
 | 36 | Ashenfelter (2008) "Predicting the Quality and Prices of Bordeaux Wine", *Economic Journal* | 와인 맛을 날씨 공식으로 맞힌다? | 기온·강수 회귀 | 대기 |
