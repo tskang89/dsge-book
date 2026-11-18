@@ -47,6 +47,6 @@
 | 36 | Ashenfelter (2008) "Predicting the Quality and Prices of Bordeaux Wine", *Economic Journal* | 와인 맛을 날씨 공식으로 맞힌다? | 기온·강수 회귀 | 완료 (036, 2026-11-18) |
 | 37 | Chetty, Hendren & Katz (2016) "The Effects of Exposure to Better Neighborhoods on Children: New Evidence from the Moving to Opportunity Experiment", *AER* | 어릴 때 사는 동네가 어른이 된 뒤 소득을 바꿀까? | 추첨 이사 지원·13살 전 이사 | 완료 (037, 2026-11-18) |
 | 38 | Gneezy & Rustichini (2000) "A Fine is a Price", *Journal of Legal Studies* | 지각 벌금을 매겼더니 지각이 늘었다? | 어린이집 늦은 하원 | 완료 (038, 2026-11-18) |
-| 39 | Card (1990) "The Impact of the Mariel Boatlift on the Miami Labor Market", *ILR Review* | 이민자가 몰려오면 임금이 떨어질까? | 마리엘 보트 이민 | 대기 |
+| 39 | Card (1990) "The Impact of the Mariel Boatlift on the Miami Labor Market", *ILR Review* | 이민자가 몰려오면 임금이 떨어질까? | 마리엘 보트 이민 | 완료 (039, 2026-11-18) |
 | 40 | Duflo, Kremer & Robinson (2011) "Nudging Farmers to Use Fertilizer", *AER* | 농부는 왜 비료를 안 살까? | 수확 직후 할인 쿠폰 | 대기 |
 | 41 | Glaeser, Sacerdote & Scheinkman (1996) "Crime and Social Interactions", *QJE* | 범죄는 전염될까? | 도시별 범죄율의 큰 차이 | 대기 |
