@@ -44,4 +44,4 @@
 | 33 | DellaVigna & Kaplan (2007) "The Fox News Effect", *QJE* | 뉴스 채널 하나가 선거를 바꿨다? | 케이블 도입 지역 득표율 | 완료 (031, 2026-11-18) |
 | 34 | Jacob & Levitt (2003) "Rotten Apples", *QJE* | 시험 부정은 학생이 아니라 교사가? | 답안 패턴 탐지 | 완료 (034, 2026-11-18) |
 | 35 | Gneezy, Niederle & Rustichini (2003) "Performance in Competitive Environments: Gender Differences", *QJE* | 경쟁이 붙으면 성적이 달라진다? | 성과급 방식별 성과 | 완료 (035, 2026-11-18) |
-| 36 | Ashenfelter (2008) "Predicting the Quality and Prices of Bordeaux Wine", *Economic Journal* | 와인 맛을 날씨 공식으로 맞힌다? | 기온·강수 회귀 | 대기 |
+| 36 | Ashenfelter (2008) "Predicting the Quality and Prices of Bordeaux Wine", *Economic Journal* | 와인 맛을 날씨 공식으로 맞힌다? | 기온·강수 회귀 | 완료 (036, 2026-11-18) |
