@@ -54,4 +54,4 @@
 | 43 | Dahl & DellaVigna (2009) "Does Movie Violence Increase Violent Crime?", *QJE* | 폭력 영화가 개봉하면 폭력 범죄가 줄었다? | 극장에 간 사람들의 시간 | 완료 (043, 2026-11-18) |
 | 44 | Bertrand, Karlan, Mullainathan, Shafir & Zinman (2010) "What's Advertising Content Worth?", *QJE* | 광고 사진 한 장이 금리 인하만큼 효과? | 대출 광고 현장 실험 | 완료 (044, 2026-11-19) |
 | 45 | Fisman, Iyengar, Kamenica & Simonson (2006) "Gender Differences in Mate Selection: Evidence from a Speed Dating Experiment", *QJE* | 스피드 데이트에서 드러난 선택 기준 | 남녀가 중시하는 것 | 완료 (045, 2026-11-19) |
-| 46 | Jensen (2007) "The Digital Provide: Information (Technology), Market Performance, and Welfare in the South Indian Fisheries Sector", *QJE* | 휴대폰이 어부의 소득을 바꿨다? | 생선 가격의 들쭉날쭉 | 대기 |
+| 46 | Jensen (2007) "The Digital Provide: Information (Technology), Market Performance, and Welfare in the South Indian Fisheries Sector", *QJE* | 휴대폰이 어부의 소득을 바꿨다? | 생선 가격의 들쭉날쭉 | 완료 (046, 2026-11-19) |
