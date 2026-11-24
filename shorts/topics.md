@@ -55,3 +55,7 @@
 | 44 | Bertrand, Karlan, Mullainathan, Shafir & Zinman (2010) "What's Advertising Content Worth?", *QJE* | 광고 사진 한 장이 금리 인하만큼 효과? | 대출 광고 현장 실험 | 완료 (044, 2026-11-19) |
 | 45 | Fisman, Iyengar, Kamenica & Simonson (2006) "Gender Differences in Mate Selection: Evidence from a Speed Dating Experiment", *QJE* | 스피드 데이트에서 드러난 선택 기준 | 남녀가 중시하는 것 | 완료 (045, 2026-11-19) |
 | 46 | Jensen (2007) "The Digital Provide: Information (Technology), Market Performance, and Welfare in the South Indian Fisheries Sector", *QJE* | 휴대폰이 어부의 소득을 바꿨다? | 생선 가격의 들쭉날쭉 | 완료 (046, 2026-11-19) |
+| 47 | Mas & Moretti (2009) "Peers at Work", *AER* | 일 잘하는 동료가 오면 나도 빨라진다? | 슈퍼마켓 계산원의 속도와 시선 | 완료 (047, 2026-11-24) |
+| 48 | Miguel & Kremer (2004) "Worms: Identifying Impacts on Education and Health in the Presence of Treatment Externalities", *Econometrica* | 구충제 한 알이 결석을 줄였다? | 케냐 학교의 단계적 투약 | 대기 |
+| 49 | Bandiera, Barankay & Rasul (2005) "Social Preferences and the Response to Incentives: Evidence from Personnel Data", *QJE* | 상대평가를 없앴더니 일을 더 잘했다? | 과일 농장 일꾼의 성과급 | 대기 |
+| 50 | Jensen & Miller (2008) "Giffen Behavior and Subsistence Consumption", *AER* | 쌀값이 오르자 쌀을 더 샀다? | 중국 가난한 가구의 쌀 보조금 | 대기 |
